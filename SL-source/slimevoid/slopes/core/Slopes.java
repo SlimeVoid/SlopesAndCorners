@@ -2,9 +2,7 @@ package slimevoid.slopes.core;
 
 import slimevoid.slopes.core.config.SlopesConfig;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 
 @Mod(

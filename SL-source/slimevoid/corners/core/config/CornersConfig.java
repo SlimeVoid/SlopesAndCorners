@@ -4,24 +4,13 @@ import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.BaseMod;
 import net.minecraft.src.ModLoader;
-import net.minecraft.world.IBlockAccess;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.SidedProxy;
-
 import slimevoid.corners.blocks.BlockCorners;
 import slimevoid.corners.core.CornerBlocks;
 import slimevoid.corners.items.ItemCorners;
-import slimevoid.lib.ICommonProxy;
 import slimevoid.slopes.core.KrushProps;
 
 public class CornersConfig {

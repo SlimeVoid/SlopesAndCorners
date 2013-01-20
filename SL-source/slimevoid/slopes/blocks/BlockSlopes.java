@@ -2,9 +2,6 @@ package slimevoid.slopes.blocks;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import slimevoid.slopes.core.config.SlopesConfig;
 
 import net.minecraft.block.Block;
