@@ -673,7 +673,7 @@ public class BlockCornersRenderer implements ISimpleBlockRenderingHandler {
 		double d8 = d + block.getBlockBoundsMaxX();
 		double d9 = d1 + block.getBlockBoundsMinY();
 		double d10 = d2 + block.getBlockBoundsMinZ();
-		double d11 = d2 + block.getBlockBoundsMinZ();
+		double d11 = d2 + block.getBlockBoundsMaxZ();
 
 		if (enableAO) {
 			if (iDir / 4 == 0) {
