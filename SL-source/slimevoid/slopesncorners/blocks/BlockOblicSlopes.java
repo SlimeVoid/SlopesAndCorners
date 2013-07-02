@@ -5,7 +5,7 @@ import java.util.List;
 import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCloth;
+import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -163,7 +163,7 @@ public class BlockOblicSlopes extends BlockVannilaBased
     @Override
    	public boolean onBlockActivated(World world, int i, int j, int k,
    			EntityPlayer entityplayer, int l, float a, float b, float c) {
-   		if (this.BaseBlock instanceof BlockCloth) {
+   		if (this.BaseBlock instanceof BlockColored) {
 
    			ItemStack itemstack = entityplayer.inventory.getCurrentItem();
    			if (itemstack != null

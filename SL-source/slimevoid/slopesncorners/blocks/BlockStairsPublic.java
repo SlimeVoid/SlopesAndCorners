@@ -4,7 +4,7 @@ import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCloth;
+import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -46,7 +46,7 @@ public BlockStairsPublic(int i, Block baseBlock){
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k,
 			EntityPlayer entityplayer, int l, float a, float b, float c) {
-		if (this.BaseBlock instanceof BlockCloth) {
+		if (this.BaseBlock instanceof BlockColored) {
 
 			ItemStack itemstack = entityplayer.inventory.getCurrentItem();
 			if (itemstack != null
