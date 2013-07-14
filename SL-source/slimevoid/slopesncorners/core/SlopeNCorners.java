@@ -14,7 +14,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 @Mod(
 		modid="SlimevoidSlopeNCorners",
 		name="Slimevoid Slopes and Corners",
-		version="2.0.2.0")
+		version="2.0.2.0",
+		dependencies="after:*")
 public class SlopeNCorners
 {
 	private static Configuration config;
