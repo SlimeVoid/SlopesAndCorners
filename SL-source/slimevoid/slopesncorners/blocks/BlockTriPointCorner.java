@@ -126,7 +126,7 @@ public class BlockTriPointCorner extends BlockVannilaBased
 		}
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
-    @Override
+    /*@Override
     public boolean onBlockActivated(World world, int i, int j, int k,
     		EntityPlayer entityplayer, int l, float a, float b, float c) {
     	if (this.BaseBlock instanceof BlockCloth) {
@@ -281,5 +281,5 @@ public class BlockTriPointCorner extends BlockVannilaBased
     		}
     	}
     	return false;
-    }
+    }*/
 }

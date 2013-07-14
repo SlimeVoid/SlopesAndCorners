@@ -7,20 +7,23 @@ import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockMycelium;
+import net.minecraft.block.BlockIce;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockVannilaBased extends Block
 {
-	protected final Block BaseBlock;
-	protected final int BaseBlockDmg;
-	protected final int RenderID;
+	protected final Block baseBlock;
+	protected final int baseBlockDmg;
+	protected final int renderID;
+	protected final int states;
+	protected final float[] blockHardnesses;
+	protected final float[] blockResistancees;
 	public BlockVannilaBased(int i,int renderID,Block baseBlock,int baseBlockDmg,CreativeTabs tab) {
 		super(i, baseBlock.blockMaterial);
        
@@ -28,15 +31,20 @@ public class BlockVannilaBased extends Block
         this.setResistance(baseBlock.blockResistance / 3.0F);
         this.setStepSound(baseBlock.stepSound);
         this.setCreativeTab(tab);
-        
-        BaseBlock = baseBlock;
-        BaseBlockDmg = baseBlockDmg;
-        RenderID = renderID;
+        this.slipperiness = baseBlock.slipperiness;
+        this.baseBlock = baseBlock;
+        this.baseBlockDmg = baseBlockDmg;
+        this.renderID = renderID;
+        states = 16;
+        blockHardnesses = new float[1];
+        blockHardnesses[0] = baseBlock.blockHardness;
+        blockResistancees= new float[1];
+        blockResistancees[0] = baseBlock.blockResistance;
 		setLightOpacity(SlopesNCornersConfig.SlopesNCornersOpacity);
 	}
 	@Override
 	public int getRenderType() {
-		return RenderID;
+		return renderID;
 	}
 	@Override
 	public boolean isOpaqueCube() {
@@ -55,7 +63,7 @@ public class BlockVannilaBased extends Block
 	@SideOnly(Side.CLIENT)
     public int getBlockColor()
     {
-	return BaseBlock.getBlockColor();
+	return baseBlock.getBlockColor();
     }
 	@SideOnly(Side.CLIENT)
 
@@ -64,7 +72,7 @@ public class BlockVannilaBased extends Block
      */
     public int getRenderBlockPass()
     {
-        return this.BaseBlock.getRenderBlockPass();
+        return this.baseBlock.getRenderBlockPass();
     }
     @SideOnly(Side.CLIENT)
 
@@ -73,7 +81,7 @@ public class BlockVannilaBased extends Block
      */
     public int getRenderColor(int par1)
     {
-    	return BaseBlock.getRenderColor(par1);
+    	return baseBlock.getRenderColor(par1);
     }
     @SideOnly(Side.CLIENT)
     /**
@@ -82,13 +90,13 @@ public class BlockVannilaBased extends Block
      */
     public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-    	return BaseBlock.colorMultiplier(par1IBlockAccess, par2, par3, par4);
+    	return baseBlock.colorMultiplier(par1IBlockAccess, par2, par3, par4);
     }
     
     @SideOnly(Side.CLIENT)
     public Icon getIcon(int par1, int par2)
     {
-    	return BaseBlock.getIcon(par1, BaseBlockDmg);
+    	return baseBlock.getIcon(par1, baseBlockDmg);
     }
     
     /**
@@ -96,7 +104,7 @@ public class BlockVannilaBased extends Block
      */
     public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        this.BaseBlock.randomDisplayTick(par1World, par2, par3, par4, par5Random);
+        this.baseBlock.randomDisplayTick(par1World, par2, par3, par4, par5Random);
     }
     @SideOnly(Side.CLIENT)
 
@@ -105,7 +113,7 @@ public class BlockVannilaBased extends Block
      */
     public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        return this.BaseBlock.getMixedBrightnessForBlock(par1IBlockAccess, par2, par3, par4);
+        return this.baseBlock.getMixedBrightnessForBlock(par1IBlockAccess, par2, par3, par4);
     }
 
     @SideOnly(Side.CLIENT)
@@ -115,7 +123,34 @@ public class BlockVannilaBased extends Block
      */
     public float getBlockBrightness(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        return this.BaseBlock.getBlockBrightness(par1IBlockAccess, par2, par3, par4);
+        return this.baseBlock.getBlockBrightness(par1IBlockAccess, par2, par3, par4);
+    }
+    public float getBlockHardness(World par1World, int par2, int par3, int par4)
+    {    	
+        return this.blockHardnesses[par1World.getBlockMetadata(par2, par3, par4)/states];
+    }
+    /**
+     * Called when the player destroys a block with an item that can harvest it. (i, j, k) are the coordinates of the
+     * block and l is the block's subtype/damage.
+     */
+    public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6)
+    {
+    	if (baseBlock instanceof BlockIce) baseBlock.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
+    	else super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
+    }
+    /**
+     * Returns the quantity of items to drop on block destruction.
+     */
+    public int quantityDropped(Random par1Random)
+    {
+    	return baseBlock.quantityDropped(par1Random);
+    }
+    /**
+     * Return true if a player with Silk Touch can harvest this block directly, and not its normal drops.
+     */
+    protected boolean canSilkHarvest()
+    {
+    	return true;
     }
     public void registerIcons(IconRegister par1IconRegister)
     {}

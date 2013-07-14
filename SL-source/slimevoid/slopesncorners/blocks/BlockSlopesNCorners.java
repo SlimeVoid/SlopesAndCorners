@@ -285,7 +285,7 @@ public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirecti
 	return result;
 }
 
-@Override
+/*@Override
 public boolean onBlockActivated(World world, int i, int j, int k,
 		EntityPlayer entityplayer, int l, float a, float b, float c) {
 	if (this.BaseBlock instanceof BlockCloth) {
@@ -440,7 +440,7 @@ public boolean onBlockActivated(World world, int i, int j, int k,
 		}
 	}
 	return false;
-}
+}*/
 /**
  * called to see if this block should be treated as an interercorner and returns the iDir of that corner
  */

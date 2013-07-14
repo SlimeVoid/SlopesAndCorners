@@ -18,7 +18,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 public class SlopeNCorners
 {
 	private static Configuration config;
-	private static Configuration portalsConfig;
 	@PreInit
     public void preInit(FMLPreInitializationEvent event) {
             // you will be able to find the config file in .minecraft/config/ and it will be named Dummy.cfg
@@ -26,7 +25,6 @@ public class SlopeNCorners
             config = new Configuration(event.getSuggestedConfigurationFile());
             // loading the configuration from its file
             config.load();
-            portalsConfig = new Configuration(new File(event.getModConfigurationDirectory() , "enhancedportals.cfg"));
             // saving the configuration to its file
             config.save();
     }
@@ -35,8 +33,7 @@ public class SlopeNCorners
 		
          // loading the configuration from its file
          config.load();
-         portalsConfig.load();
-         SlopesNCornersConfig.configuration(config,portalsConfig);
+         SlopesNCornersConfig.configuration(config);
 	}
 	
 	public static void registerRenderInformation(int RenderID, ISimpleBlockRenderingHandler render) {

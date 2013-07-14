@@ -103,7 +103,7 @@ public class BlockSideSlopes extends BlockVannilaBased
     	
     	return result;
     	}
-    @Override
+   /* @Override
 	public boolean onBlockActivated(World world, int i, int j, int k,
 			EntityPlayer entityplayer, int l, float a, float b, float c) {
 		if (this.BaseBlock instanceof BlockCloth) {
@@ -258,5 +258,5 @@ public class BlockSideSlopes extends BlockVannilaBased
 			}
 		}
 		return false;
-	}
+	}*/
 }
