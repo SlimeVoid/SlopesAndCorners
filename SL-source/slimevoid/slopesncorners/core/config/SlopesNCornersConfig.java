@@ -11,6 +11,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.Configuration;
 import slimevoid.slopesncorners.blocks.BlockTriPointCorner;
 import slimevoid.slopesncorners.blocks.BlockOblicSlopes;
@@ -22,6 +25,7 @@ import slimevoid.slopesncorners.client.render.BlockSideSlopeRenderer;
 import slimevoid.slopesncorners.client.render.BlockSlopesNCornersRenderer;
 import slimevoid.slopesncorners.client.render.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.SlopeNCorners;
+import slimevoid.slopesncorners.item.crafting.NBTRecipe;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -81,18 +85,18 @@ public class SlopesNCornersConfig
     		"Blocks that already have a stair defined for them either by other Mods or Vannila " +
     		"\nexample 5:2;135:0 tells us that the Blockid 5 with damage 2 already has a stair block at blockid 135 damage 0" +
     		"\nNote DMG is optional if dmg is 0").getStringList();
-    
-    		//BlockStairs = new Block[baseBlockIdsNDmgs.length - baseBlocksWithStairs.length];
-    		//BlockSlopesNCorners = new Block[baseBlockIdsNDmgs.length];
-    		//BlockSideSlopes = new Block[baseBlockIdsNDmgs.length];
-    		//BlockIntCorners = new Block[baseBlockIdsNDmgs.length];
-    		//BlockOblicCorners = new Block[baseBlockIdsNDmgs.length];    		
-    		
-		initializeSlopesNCorners(baseBlockIdsNDmgs,initializeStairs(baseBlockIdsNDmgs,baseBlocksWithStairs));
+
+    	initializeSlopesNCorners(baseBlockIdsNDmgs,initializeStairs(baseBlockIdsNDmgs,baseBlocksWithStairs));
 		initializeSideSlopes(baseBlockIdsNDmgs);
 		initializeTriCorners(baseBlockIdsNDmgs);
 		initializeOblicSlopes(baseBlockIdsNDmgs);
 			config.save();
+			//Proof of concept recipe
+			/*ItemStack NBTItem = new ItemStack(Item.axeDiamond);
+			NBTItem.setTagCompound(new NBTTagCompound());
+			NBTItem.getTagCompound().setCompoundTag("display", new NBTTagCompound());
+			NBTItem.getTagCompound().getCompoundTag("display").setString("Name", "Test");
+			addNBTShapelessRecipe(new ItemStack(Block.dirt),NBTItem);*/
 	}
 	
 	private static String[] initializeStairs(String[] baseBlockIdsNDmgs, String[] baseBlocksWithStairs){
@@ -121,7 +125,7 @@ public class SlopesNCornersConfig
 				
 				SlopesCurrentBlockID++;
 			}else{
-				result[index] = baseBlocksWithStairs[Arrays.asList(excludedIdsNDmgs).indexOf(blockIdNDmg)].split("-")[1];
+				result[index] = baseBlocksWithStairs[Arrays.asList(excludedIdsNDmgs).indexOf(blockIdNDmg)].substring(baseBlocksWithStairs[Arrays.asList(excludedIdsNDmgs).indexOf(blockIdNDmg)].indexOf('-')+1);
 			}
 			index++;
 		}
@@ -140,14 +144,55 @@ public class SlopesNCornersConfig
 				GameRegistry.registerBlock(BlockSlopesNCorners.get(BlockSlopesNCorners.size()-1),String.format("Block%sSlope",blockBaseName.split("_")[0]));
 				LanguageRegistry.addName(BlockSlopesNCorners.get(BlockSlopesNCorners.size()-1), String.format("%s Slope",blockBaseName.split("_").length==1?blockBaseName.replaceAll("(\\p{Ll})(\\p{Lu})","$1 $2"):blockBaseName.split("_")[1]));
 				
+				String removedNBTTagData = StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("-")[0];
+				ItemStack itemStairBlock = new ItemStack(Block.blocksList[Integer.parseInt(removedNBTTagData.split("_")[0])],1,removedNBTTagData.split("_").length == 1?0:Integer.parseInt(removedNBTTagData.split("_")[1]));
+				if (StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("-").length > 1){
+					for(String NBTDef:StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("-")){
+						if (!NBTDef.equals(removedNBTTagData)){
+							if (itemStairBlock.getTagCompound() == null){
+								itemStairBlock.setTagCompound(new NBTTagCompound());
+							}
+							String fullTagName = NBTDef.split("_")[0];
+							String tagType = NBTDef.split("_")[1].toLowerCase();
+							String tagValue = NBTDef.split("_")[2];
+							NBTTagCompound currentTag = itemStairBlock.getTagCompound();
+							for (String tagName:fullTagName.split("/.")){
+								if (fullTagName.split("/.")[fullTagName.split("/.").length-1].equals(tagName)){
+									setNBTTag(currentTag,tagType,tagName,tagValue);
+								}else{
+									currentTag.setCompoundTag(tagName, new NBTTagCompound());
+									currentTag = currentTag.getCompoundTag(tagName);
+									
+								}
+							}
+						}
+					}
+				}
+				addNBTShapelessRecipe(new ItemStack(BlockSlopesNCorners.get(BlockSlopesNCorners.size()-1)), itemStairBlock);
 				
-				GameRegistry.addShapelessRecipe(new ItemStack(BlockSlopesNCorners.get(BlockSlopesNCorners.size()-1)), new ItemStack(Block.blocksList[Integer.parseInt(StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("_")[0])],1,StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("_").length == 1?0:Integer.parseInt(StairBlockIdsNDmgs[BlockSlopesNCorners.size()-1].split("_")[1])));
 				SlopesCurrentBlockID++;
 			
 		}
 		
 	}	
-	
+	private static void setNBTTag(NBTTagCompound tagCompound ,String tagType,String tagName,String tagValue){
+		
+		if (tagType.equals("short")){
+			tagCompound.setShort(tagName, Short.parseShort(tagValue));
+		}else if(tagType.equals("boolean")){
+			tagCompound.setBoolean(tagName, Boolean.parseBoolean(tagValue));
+		}else if(tagType.equals("double")){
+			tagCompound.setDouble(tagName, Double.parseDouble(tagValue));
+		}else if(tagType.equals("float")){
+			tagCompound.setFloat(tagName, Float.parseFloat(tagValue));
+		}else if(tagType.equals("integer")){
+			tagCompound.setInteger(tagName, Integer.parseInt(tagValue));
+		}else if(tagType.equals("long")){
+			tagCompound.setLong(tagName, Long.parseLong(tagValue));
+		}else if(tagType.equals("string")){
+			tagCompound.setString(tagName, tagValue);
+		}
+	}
 	private static void initializeSideSlopes(String[] baseBlockIdsNDmgs)
 	{
 		for(String info: baseBlockIdsNDmgs){
@@ -207,4 +252,35 @@ public class SlopesNCornersConfig
 		}
 		
 	}
+	
+	public static void addNBTShapelessRecipe(ItemStack par1ItemStack, Object ... par2ArrayOfObj)
+    {
+        ArrayList arraylist = new ArrayList();
+        Object[] aobject = par2ArrayOfObj;
+        int i = par2ArrayOfObj.length;
+
+        for (int j = 0; j < i; ++j)
+        {
+            Object object1 = aobject[j];
+
+            if (object1 instanceof ItemStack)
+            {
+                arraylist.add(((ItemStack)object1).copy());
+            }
+            else if (object1 instanceof Item)
+            {
+                arraylist.add(new ItemStack((Item)object1));
+            }
+            else
+            {
+                if (!(object1 instanceof Block))
+                {
+                    throw new RuntimeException("Invalid shapeless recipy!");
+                }
+
+                arraylist.add(new ItemStack((Block)object1));
+            }
+        }
+        CraftingManager.getInstance().getRecipeList().add(new NBTRecipe(par1ItemStack, arraylist));
+    }
 }

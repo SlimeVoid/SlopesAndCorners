@@ -20,6 +20,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class SlopeNCorners
 {
+	
 	private static Configuration config;
 	@PreInit
     public void preInit(FMLPreInitializationEvent event) {
