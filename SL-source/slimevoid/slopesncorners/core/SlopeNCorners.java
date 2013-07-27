@@ -11,11 +11,13 @@ import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 @Mod(
 		modid="SlimevoidSlopeNCorners",
 		name="Slimevoid Slopes and Corners",
 		version="2.0.2.0",
 		dependencies="after:*")
+@NetworkMod(clientSideRequired=true, serverSideRequired=false)
 public class SlopeNCorners
 {
 	private static Configuration config;
