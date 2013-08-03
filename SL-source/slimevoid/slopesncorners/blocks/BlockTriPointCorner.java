@@ -5,65 +5,22 @@ import java.util.List;
 import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCloth;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockTriPointCorner extends BlockVannilaBased
-{
-	public BlockTriPointCorner(int i, Block baseBlock){
-		this(i,baseBlock,0);
+public class BlockTriPointCorner extends BlockVannilaBased {
+	public BlockTriPointCorner(int i, Block baseBlock) {
+		this(i, baseBlock, 0);
 	}
-	public BlockTriPointCorner(int i, Block baseBlock, int baseBlockDmg)
-	{
-		super(i, SlopesNCornersConfig.TriCornersRenderID, baseBlock, baseBlockDmg,SlopesNCornersConfig.tabCustom);
+
+	public BlockTriPointCorner(int i, Block baseBlock, int baseBlockDmg) {
+		super(i, SlopesNCornersConfig.TriCornersRenderID, baseBlock,
+				baseBlockDmg, SlopesNCornersConfig.tabCustom);
 		// TODO Auto-generated constructor stub
 	}
-	 /**
-     * Called when the block is placed in the world.
-     */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
-    {
-        int l = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int i1 = par1World.getBlockMetadata(par2, par3, par4) & 4;
 
-        if (l == 0)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2 | i1, 2);
-        }
-
-        if (l == 1)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1 | i1, 2);
-        }
-
-        if (l == 2)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3 | i1, 2);
-        }
-
-        if (l == 3)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0 | i1, 2);
-        }
-    }
-    @Override
-    /**
-     * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
-     */
-    public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9)
-    {
-        return par5 != 0 && (par5 == 1 || (double)par7 <= 0.5D) ? par9 : par9 | 4;
-    }	
-    
-    @Override
+	@Override
 	public void addCollisionBoxesToList(World world, int i, int j, int k,
 			AxisAlignedBB axisalignedbb, List arraylist, Entity entity) {
 		int l = world.getBlockMetadata(i, j, k) % 8;
@@ -126,6 +83,7 @@ public class BlockTriPointCorner extends BlockVannilaBased
 		}
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
+
     /*@Override
     public boolean onBlockActivated(World world, int i, int j, int k,
     		EntityPlayer entityplayer, int l, float a, float b, float c) {

@@ -5,104 +5,86 @@ import java.util.List;
 import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCloth;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockSideSlopes extends BlockVannilaBased
-{
-	public BlockSideSlopes(int i, Block baseBlock){
-		this(i,baseBlock,0);
+public class BlockSideSlopes extends BlockVannilaBased {
+	public BlockSideSlopes(int i, Block baseBlock) {
+		this(i, baseBlock, 0);
 	}
-	public BlockSideSlopes(int i, Block baseBlock, int baseBlockDmg)
-	{
-		super(i, SlopesNCornersConfig.SideSlopesRenderID, baseBlock, baseBlockDmg,SlopesNCornersConfig.tabCustom);
+
+	public BlockSideSlopes(int i, Block baseBlock, int baseBlockDmg) {
+		super(i, SlopesNCornersConfig.SideSlopesRenderID, baseBlock,
+				baseBlockDmg, SlopesNCornersConfig.tabCustom);
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public int onBlockPlaced(World world, int x, int y, int z,
+			int side, float hitX, float hitY, float hitZ, int meta) {
+		return meta;
+	}
+
 	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i,
 			int j, int k, int l) {
-	return true;
-	
+		return true;
+
 	}
-	 /**
-     * Called when the block is placed in the world.
-     */
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
-    {
-        int l = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int i1 = par1World.getBlockMetadata(par2, par3, par4) & 4;
 
-        if (l == 0)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2 | i1, 2);
-        }
+	public void addCollisionBoxesToList(World par1World, int par2, int par3,
+			int par4, AxisAlignedBB par5AxisAlignedBB, List par6List,
+			Entity par7Entity) {
+		int iDir = par1World.getBlockMetadata(par2, par3, par4);
+		for (int i = 1; i <= 16; i++) {
+			switch (iDir) {
+			case 0:
+				this.setBlockBounds(1.0F - (.0625F * i), 0.0F, (.0625F * i),
+						1.0F, 1.0f, 1.0F);
+				break;
+			case 1:
+				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F - (.0625F * i),
+						1.0f, (.0625F * i));
+				break;
+			case 2:
+				this.setBlockBounds(0.0F, 0.0F, .0625F * i, .0625F * i, 1.0f,
+						1.0F);
+				break;
+			case 3:
+				this.setBlockBounds((.0625F * i), 0.0F, 0.0F, 1.0F, 1.0f,
+						(.0625F * i));
+				break;
 
-        if (l == 1)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1 | i1, 2);
-        }
+			}
+			super.addCollisionBoxesToList(par1World, par2, par3, par4,
+					par5AxisAlignedBB, par6List, par7Entity);
+		}
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+	}
 
-        if (l == 2)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3 | i1, 2);
-        }
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z,
+			ForgeDirection side) {
+		boolean result = false;
+		switch (world.getBlockMetadata(x, y, z)) {
+		case 0:
+			result = side == side.EAST || side == side.SOUTH;
+			break;
+		case 1:
+			result = side == side.WEST || side == side.NORTH;
+			break;
+		case 2:
+			result = side == side.WEST || side == side.SOUTH;
+			break;
+		case 3:
+			result = side == side.EAST || side == side.NORTH;
+			break;
+		}
 
-        if (l == 3)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0 | i1, 2);
-        }
-    }
-    public void addCollisionBoxesToList(World par1World, int par2, int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity)
-    {
-    	int iDir = par1World.getBlockMetadata(par2, par3, par4);
-    	for (int i =1; i<=16; i++){
-    		switch(iDir){
-    			case 0:
-    				this.setBlockBounds(1.0F-(.0625F * i), 0.0F, (.0625F * i),1.0F, 1.0f, 1.0F);
-    				break;
-    			case 1:
-    				this.setBlockBounds(0.0F, 0.0F, 0.0F,1.0F -(.0625F * i), 1.0f, (.0625F * i));
-    				break;
-    			case 2:
-    				this.setBlockBounds(0.0F, 0.0F, .0625F * i,.0625F * i, 1.0f, 1.0F);
-    				break;
-    			case 3:
-    				this.setBlockBounds((.0625F * i), 0.0F, 0.0F,1.0F, 1.0f, (.0625F * i));
-    				break;
-    				
-    		}
-    		super.addCollisionBoxesToList(par1World, par2, par3, par4, par5AxisAlignedBB, par6List, par7Entity);
-    	}
-    	this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-    }
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side){
-    	boolean result = false;
-    	switch (world.getBlockMetadata(x, y, z)){
-    		case 0:
-    			result = side == side.EAST || side == side.SOUTH; 
-    			break;
-    		case 1:
-    			result = side == side.WEST || side == side.NORTH; 
-    			break;
-    		case 2:
-    			result = side == side.WEST || side == side.SOUTH; 
-    			break;
-    		case 3:
-    			result = side == side.EAST || side == side.NORTH; 
-    			break;
-    	}
-    	
-    	return result;
-    	}
+		return result;
+	}
+
    /* @Override
 	public boolean onBlockActivated(World world, int i, int j, int k,
 			EntityPlayer entityplayer, int l, float a, float b, float c) {
