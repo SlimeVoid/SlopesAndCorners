@@ -2,7 +2,7 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.Random;
 
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -24,7 +24,7 @@ public class BlockStairsPublic extends BlockStairs {
 		this.setLightOpacity(par2Block.lightOpacity[0]);
 		baseBlock = par2Block;
 		this.slipperiness = par2Block.slipperiness;
-		this.setCreativeTab(SlopesNCornersConfig.tabCustom);
+		this.setCreativeTab(ConfigurationLib.tabCustom);
 		// TODO Fix gray grass
 	}
 

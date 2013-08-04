@@ -2,7 +2,7 @@ package slimevoid.slopesncorners.client.render;
 
 import org.lwjgl.opengl.GL11;
 
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -33,13 +33,13 @@ public class BlockTriCornersRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public int getRenderId() {
-		return SlopesNCornersConfig.TriCornersRenderID;
+		return ConfigurationLib.TriCornersRenderID;
 	}
 
 	public void renderInvBlock(RenderBlocks renderblocks, Block block, int i,
 			int j) {
 		Tessellator tessellator = Tessellator.instance;
-		if (j == SlopesNCornersConfig.TriCornersRenderID) {
+		if (j == ConfigurationLib.TriCornersRenderID) {
 			i = i +1;
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
@@ -87,7 +87,7 @@ public class BlockTriCornersRenderer implements ISimpleBlockRenderingHandler {
 
 	public boolean renderWorldBlock(RenderBlocks renderblocks,
 			IBlockAccess iblockaccess, int i, int j, int k, Block block, int l) {
-		if (l == SlopesNCornersConfig.TriCornersRenderID) {
+		if (l == ConfigurationLib.TriCornersRenderID) {
 			return renderBlockCorners(block, i, j, k, renderblocks,
 					iblockaccess);
 		}

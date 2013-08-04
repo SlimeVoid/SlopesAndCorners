@@ -2,8 +2,8 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.Random;
 
-import slimevoid.slopesncorners.core.SlopeNCorners;
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.SlopesNCorners;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -44,7 +44,7 @@ public class BlockVannilaBased extends Block {
 		blockHardnesses[0] = baseBlock.blockHardness;
 		blockResistancees = new float[1];
 		blockResistancees[0] = baseBlock.blockResistance;
-		setLightOpacity(SlopesNCornersConfig.SlopesNCornersOpacity);
+		setLightOpacity(ConfigurationLib.SlopesNCornersOpacity);
 	}
 
 	@Override

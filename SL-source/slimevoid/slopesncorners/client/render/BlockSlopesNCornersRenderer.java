@@ -3,7 +3,7 @@ package slimevoid.slopesncorners.client.render;
 import org.lwjgl.opengl.GL11;
 
 import slimevoid.slopesncorners.blocks.BlockSlopesNCorners;
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -166,13 +166,13 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 
 	@Override
 	public int getRenderId() {
-		return SlopesNCornersConfig.SlopesNCornersRenderID;
+		return ConfigurationLib.SlopesNCornersRenderID;
 	}
 
 	public void renderInvBlock(RenderBlocks renderblocks, Block block, int i,
 			int j) {
 		Tessellator tessellator = Tessellator.instance;
-		if (j == SlopesNCornersConfig.SlopesNCornersRenderID) {
+		if (j == ConfigurationLib.SlopesNCornersRenderID) {
 			i = 3;
 				block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 				renderblocks.setRenderBoundsFromBlock(block);
@@ -223,7 +223,7 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z,
 			Block block, int modelId, RenderBlocks renderer) {
-		if (modelId == SlopesNCornersConfig.SlopesNCornersRenderID) {
+		if (modelId == ConfigurationLib.SlopesNCornersRenderID) {
 			if (((BlockSlopesNCorners)block).GetCorneriDir(world,x,y,z) > -1){
 				return renderBlockCorner(block, x, y, z, renderer,
 						world,((BlockSlopesNCorners)block).GetCorneriDir(world,x,y,z));

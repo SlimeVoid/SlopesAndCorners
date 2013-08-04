@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 
 
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -36,13 +36,13 @@ public class BlockOblicSlopesRenderRenderer implements
 
 	@Override
 	public int getRenderId() {
-		return SlopesNCornersConfig.OblicSlopesRenderID;
+		return ConfigurationLib.OblicSlopesRenderID;
 	}
 
 	public void renderInvBlock(RenderBlocks renderblocks, Block block, int i,
 			int j) {
 		Tessellator tessellator = Tessellator.instance;
-		if (j == SlopesNCornersConfig.OblicSlopesRenderID) {
+		if (j == ConfigurationLib.OblicSlopesRenderID) {
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 			renderblocks.setRenderBoundsFromBlock(block);
 
@@ -92,7 +92,7 @@ public class BlockOblicSlopesRenderRenderer implements
 
 	public boolean renderWorldBlock(RenderBlocks renderblocks,
 			IBlockAccess iblockaccess, int i, int j, int k, Block block, int l) {
-		if (l == SlopesNCornersConfig.OblicSlopesRenderID) {
+		if (l == ConfigurationLib.OblicSlopesRenderID) {
 			return renderBlockIntCorners(block, i, j, k, renderblocks,
 					iblockaccess);
 		}

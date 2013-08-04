@@ -2,7 +2,7 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.List;
 
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -17,8 +17,8 @@ public class BlockOblicSlopes extends BlockVannilaBased {
 	}
 
 	public BlockOblicSlopes(int i, Block baseBlock, int baseBlockDmg) {
-		super(i, SlopesNCornersConfig.OblicSlopesRenderID, baseBlock,
-				baseBlockDmg, SlopesNCornersConfig.tabCustom);
+		super(i, ConfigurationLib.OblicSlopesRenderID, baseBlock,
+				baseBlockDmg, ConfigurationLib.tabCustom);
 		// TODO Auto-generated constructor stub
 	}
 

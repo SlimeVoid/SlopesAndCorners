@@ -2,7 +2,7 @@ package slimevoid.slopesncorners.client.render;
 
 import org.lwjgl.opengl.GL11;
 
-import slimevoid.slopesncorners.core.config.SlopesNCornersConfig;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -154,7 +154,7 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 	public void renderInventoryBlock(Block block, int i, int modelid, RenderBlocks renderblocks)
 	{
 		Tessellator tessellator = Tessellator.instance;
-		if (modelid == SlopesNCornersConfig.SideSlopesRenderID){
+		if (modelid == ConfigurationLib.SideSlopesRenderID){
 		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderblocks.setRenderBoundsFromBlock(block);
 
@@ -205,7 +205,7 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 	@Override
 	public boolean renderWorldBlock(IBlockAccess iblockaccess, int i, int j, int k, Block block, int l, RenderBlocks renderblocks)
 	{
-		if (l == SlopesNCornersConfig.SideSlopesRenderID) {
+		if (l == ConfigurationLib.SideSlopesRenderID) {
 			
 				return renderBlockSlopes(block, i, j, k, renderblocks,
 						iblockaccess);
@@ -223,7 +223,7 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 	@Override
 	public int getRenderId()
 	{
-		return SlopesNCornersConfig.SideSlopesRenderID;
+		return ConfigurationLib.SideSlopesRenderID;
 	}
 	
 	public boolean renderBlockSlopes(Block block, int i, int j, int k,
