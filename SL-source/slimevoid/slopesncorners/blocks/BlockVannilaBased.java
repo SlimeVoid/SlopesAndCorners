@@ -50,7 +50,7 @@ public class BlockVannilaBased extends Block {
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z,
 			EntityLivingBase entityliving, ItemStack itemstack) {
-		int l = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		int l = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F)/** + 0.5D **/) & 3;
 		int i1 = world.getBlockMetadata(x, y, z) & 4;
 
 		if (l == 0) {
