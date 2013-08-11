@@ -27,7 +27,7 @@ public class SlopesNCorners {
 	private static Configuration config;
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void slopesPreInit(FMLPreInitializationEvent event) {
 		/**
 			You will be able to find the config file in .minecraft/config/ and it
 			will be named Dummy.cfg
@@ -41,7 +41,7 @@ public class SlopesNCorners {
 	}
 
 	@EventHandler
-	public void SlopesPostInit(FMLPostInitializationEvent event) {
+	public void slopesPostInit(FMLPostInitializationEvent event) {
 
 		// loading the configuration from its file
 		config.load();
