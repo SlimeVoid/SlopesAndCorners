@@ -6,11 +6,9 @@ import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -30,10 +28,15 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 	 */
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
 			int par2, int par3, int par4) {
-		// TODO: actually set the right block bounds
+		// TODO:: actually set the right block bounds
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
 	}
+	
+    public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
+    	// TODO :: I think we'll need to use collision ray tracing to select the block using the correct bounds
+    	return super.collisionRayTrace(world, x, y, z, startVec, endVec);
+    }
 
 	/**
 	 * Adds all intersecting collision boxes to a list. (Be sure to only add

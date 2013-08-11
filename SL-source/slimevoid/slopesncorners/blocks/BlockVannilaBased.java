@@ -2,13 +2,11 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.Random;
 
-import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
