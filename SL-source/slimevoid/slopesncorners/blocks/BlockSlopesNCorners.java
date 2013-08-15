@@ -14,6 +14,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public class BlockSlopesNCorners extends BlockVannilaBased {
+	private boolean raytracing;
+	private int raytraceheight;
+	private boolean raytraceFirstPhase;
+
 	public BlockSlopesNCorners(int i, Block baseBlock) {
 		this(i, baseBlock, 0);
 	}
@@ -29,13 +33,44 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
 			int par2, int par3, int par4) {
 		// TODO:: actually set the right block bounds
+		if(raytracing){
+			
+			if (GetIntCorneriDir(par1IBlockAccess, par2, par3, par4) > -1) {
+				setIntCornersBounds(raytraceheight, GetIntCorneriDir(par1IBlockAccess, par2, par3, par4),raytraceFirstPhase );
+			} else if (GetCorneriDir(par1IBlockAccess, par2, par3, par4) > -1) {
+				setCornersBounds(raytraceheight, GetCorneriDir(par1IBlockAccess, par2, par3, par4));
+			} else {
+				setSlopesBounds(raytraceheight, par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+			}
+		}else{
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		}
 
 	}
 	
     public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
-    	// TODO :: I think we'll need to use collision ray tracing to select the block using the correct bounds
-    	return super.collisionRayTrace(world, x, y, z, startVec, endVec);
+    	 MovingObjectPosition amovingobjectposition = null;
+    	 raytracing = true;
+    	 for (int i = 1; i <= 16; i++) {
+    		 raytraceheight = i;
+    		 raytraceFirstPhase = true;
+    		 //setBlockBoundsBasedOnState(world,x,y,z);    		 
+    		 MovingObjectPosition tempmovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
+    		 if (tempmovingobjectposition != null)
+    			 if (amovingobjectposition == null || startVec.squareDistanceTo(tempmovingobjectposition.hitVec) < startVec.squareDistanceTo(amovingobjectposition.hitVec))
+    				 amovingobjectposition =tempmovingobjectposition;
+    		 
+    		 if(GetIntCorneriDir(world, x, y, z) > -1){
+    			 raytraceFirstPhase = false;
+    			 tempmovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
+        		 if (tempmovingobjectposition != null)
+        			 if (amovingobjectposition == null || startVec.squareDistanceTo(tempmovingobjectposition.hitVec) < startVec.squareDistanceTo(amovingobjectposition.hitVec))
+        				 amovingobjectposition =tempmovingobjectposition;
+    		 }
+    	 }
+    	 raytracing =false;
+    	 //need to tweak the side hit but other than that this works
+    	return amovingobjectposition;
     }
 
 	/**
@@ -67,41 +102,7 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 			Entity par7Entity) {
 		int iDir = par1World.getBlockMetadata(par2, par3, par4);
 		for (int i = 1; i <= 16; i++) {
-			switch (iDir) {
-			case 0:
-				this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
-						1.0F);
-				break;
-			case 1:
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-						.0625F * i, 1.0F);
-				break;
-			case 2:
-				this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
-						1.0F);
-				break;
-			case 3:
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
-						1.0f - (.0625F * i));
-				break;
-			case 4:
-				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-						1.0F, 1.0f, 1.0F);
-				break;
-			case 5:
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-						1.0F);
-				break;
-			case 6:
-				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-						1.0F, 1.0f, 1.0F);
-				break;
-			case 7:
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
-						(.0625F * i));
-				break;
-			}
-
+			setSlopesBounds(i,iDir);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
@@ -109,124 +110,102 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
+	private void setSlopesBounds(int i, int iDir) {
+		switch (iDir) {
+		case 0:
+			this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
+					1.0F);
+			break;
+		case 1:
+			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+					.0625F * i, 1.0F);
+			break;
+		case 2:
+			this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
+					1.0F);
+			break;
+		case 3:
+			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
+					1.0f - (.0625F * i));
+			break;
+		case 4:
+			this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
+					1.0F, 1.0f, 1.0F);
+			break;
+		case 5:
+			this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+					1.0F);
+			break;
+		case 6:
+			this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+					1.0F, 1.0f, 1.0F);
+			break;
+		case 7:
+			this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
+					(.0625F * i));
+			break;
+		}
+		
+	}
+	
 	public void addCornersCollisionBoxesToList(World par1World, int par2,
 			int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List,
 			Entity par7Entity, int iDir) {
 
 		for (int i = 1; i <= 16; i++) {
-			switch (iDir) {
-			case 0:
-				this.setBlockBounds(.0625F * i, 0.0F, .0625F * i, 1.0f,
-						.0625F * i, 1.0F);
-				break;
-			case 1:
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-						.0625F * i, 1.0f - (.0625F * i));
-				break;
-			case 2:
-				this.setBlockBounds(0.0f, 0.0F, .0625F * i,
-						1.0f - (.0625F * i), .0625F * i, 1.0F);
-				break;
-			case 3:
-				this.setBlockBounds((.0625F * i), 0.0F, 0.0F, 1.0F, .0625F * i,
-						1.0f - (.0625F * i));
-				break;
-			case 4:
-				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i),
-						1.0F - (.0625F * i), 1.0F, 1.0f, 1.0F);
-				break;
-			case 5:
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-						(.0625F * i));
-				break;
-			case 6:
-				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-						(.0625F * i), 1.0f, 1.0F);
-				break;
-			case 7:
-				this.setBlockBounds(1.0F - (.0625F * i), .0625F * i, 0.0F,
-						1.0F, 1.0f, (.0625F * i));
-				break;
-			}
-
+			setCornersBounds(i,iDir);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
-
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
+	private void setCornersBounds(int i, int iDir){
+		switch (iDir) {
+		case 0:
+			this.setBlockBounds(.0625F * i, 0.0F, .0625F * i, 1.0f,
+					.0625F * i, 1.0F);
+			break;
+		case 1:
+			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+					.0625F * i, 1.0f - (.0625F * i));
+			break;
+		case 2:
+			this.setBlockBounds(0.0f, 0.0F, .0625F * i,
+					1.0f - (.0625F * i), .0625F * i, 1.0F);
+			break;
+		case 3:
+			this.setBlockBounds((.0625F * i), 0.0F, 0.0F, 1.0F, .0625F * i,
+					1.0f - (.0625F * i));
+			break;
+		case 4:
+			this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i),
+					1.0F - (.0625F * i), 1.0F, 1.0f, 1.0F);
+			break;
+		case 5:
+			this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+					(.0625F * i));
+			break;
+		case 6:
+			this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+					(.0625F * i), 1.0f, 1.0F);
+			break;
+		case 7:
+			this.setBlockBounds(1.0F - (.0625F * i), .0625F * i, 0.0F,
+					1.0F, 1.0f, (.0625F * i));
+			break;
+		}
+	}
+	
 	public void addIntCornersCollisionBoxesToList(World par1World, int par2,
 			int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List,
 			Entity par7Entity, int iDir) {
 
 		for (int i = 1; i <= 16; i++) {
-			switch (iDir) {
-			case 0:
-				this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
-						1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
-						1.0F);
-				break;
-			case 1:
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-						.0625F * i, 1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
-						1.0f - (.0625F * i));
-				break;
-			case 2:
-				this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
-						1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-						.0625F * i, 1.0F);
-				break;
-			case 3:
-				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
-						1.0f - (.0625F * i));
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
-						1.0F);
-				break;
-			case 4:
-				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-						1.0F, 1.0f, 1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-						1.0F, 1.0f, 1.0F);
-				break;
-			case 5:
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-						1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
-						(.0625F * i));
-				break;
-			case 6:
-				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-						1.0F, 1.0f, 1.0F);
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-						1.0F);
-				break;
-			case 7:
-				this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
-						(.0625F * i));
-				super.addCollisionBoxesToList(par1World, par2, par3, par4,
-						par5AxisAlignedBB, par6List, par7Entity);
-				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-						1.0F, 1.0f, 1.0F);
-				break;
-			}
+			setIntCornersBounds(i,iDir,true);
+			super.addCollisionBoxesToList(par1World, par2, par3, par4,
+					par5AxisAlignedBB, par6List, par7Entity);
+			setIntCornersBounds(i,iDir,false);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
@@ -234,6 +213,57 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
+	private void setIntCornersBounds(int i,int iDir, boolean firstPhase ){
+		switch (iDir) {
+		case 0:
+			if (firstPhase)	this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i, 1.0F);
+			else this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i, 1.0F);
+			break;
+		case 1:
+			if (firstPhase) this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+					.0625F * i, 1.0F);
+			else this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
+					1.0f - (.0625F * i));
+			break;
+		case 2:
+			if (firstPhase) this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
+					1.0F);
+			else this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+					.0625F * i, 1.0F);
+			break;
+		case 3:
+			if (firstPhase) this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
+					1.0f - (.0625F * i));
+			else this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
+					1.0F);
+			break;
+		case 4:
+			if (firstPhase) this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
+					1.0F, 1.0f, 1.0F);
+			else this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+					1.0F, 1.0f, 1.0F);
+			break;
+		case 5:
+			if (firstPhase) this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+					1.0F);
+			else this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
+					(.0625F * i));
+			break;
+		case 6:
+			if (firstPhase) this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+					1.0F, 1.0f, 1.0F);
+			else this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+					1.0F);
+			break;
+		case 7:
+			if (firstPhase) this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
+					(.0625F * i));			
+			else this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
+					1.0F, 1.0f, 1.0F);
+			break;
+		}
+	}
+	
 	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i,
 			int j, int k, int l) {
 		return true;
