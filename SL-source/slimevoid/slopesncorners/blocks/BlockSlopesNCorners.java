@@ -4,7 +4,10 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
@@ -25,7 +28,30 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 		super(i, ConfigurationLib.SlopesNCornersRenderID, baseBlock,
 				baseBlockDmg, ConfigurationLib.tabCustom);
 	}
+	
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z,
+			EntityLiving entityliving, ItemStack itemstack) {
+		int l = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5D ) & 3;
+		int i1 = world.getBlockMetadata(x, y, z) & 4;
 
+		if (l == 0) {
+			world.setBlockMetadataWithNotify(x, y, z, 2 | i1, 2);
+		}
+
+		if (l == 1) {
+			world.setBlockMetadataWithNotify(x, y, z, 1 | i1, 2);
+		}
+
+		if (l == 2) {
+			world.setBlockMetadataWithNotify(x, y, z, 3 | i1, 2);
+		}
+
+		if (l == 3) {
+			world.setBlockMetadataWithNotify(x, y, z, 0 | i1, 2);
+		}
+	}
+	
 	/**
 	 * Updates the blocks bounds based on its current state. Args: world, x, y,
 	 * z
