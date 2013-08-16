@@ -2,8 +2,6 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.List;
 
-import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
@@ -12,6 +10,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 
 public class BlockSlopesNCorners extends BlockVannilaBased {
 	private boolean raytracing;
@@ -28,49 +27,60 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 	}
 
 	/**
-	 * Updates the blocks bounds based on its current state. Args: world, x, y, z
+	 * Updates the blocks bounds based on its current state. Args: world, x, y,
+	 * z
 	 */
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
 			int par2, int par3, int par4) {
 		// TODO:: actually set the right block bounds
-		if(raytracing){
-			
+		if (raytracing) {
+
 			if (GetIntCorneriDir(par1IBlockAccess, par2, par3, par4) > -1) {
-				setIntCornersBounds(raytraceheight, GetIntCorneriDir(par1IBlockAccess, par2, par3, par4),raytraceFirstPhase );
+				setIntCornersBounds(raytraceheight,
+						GetIntCorneriDir(par1IBlockAccess, par2, par3, par4),
+						raytraceFirstPhase);
 			} else if (GetCorneriDir(par1IBlockAccess, par2, par3, par4) > -1) {
-				setCornersBounds(raytraceheight, GetCorneriDir(par1IBlockAccess, par2, par3, par4));
+				setCornersBounds(raytraceheight,
+						GetCorneriDir(par1IBlockAccess, par2, par3, par4));
 			} else {
-				setSlopesBounds(raytraceheight, par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+				setSlopesBounds(raytraceheight,
+						par1IBlockAccess.getBlockMetadata(par2, par3, par4));
 			}
-		}else{
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		} else {
+			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
 
 	}
-	
-    public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
-    	 MovingObjectPosition amovingobjectposition = null;
-    	 raytracing = true;
-    	 for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
-    		 raytraceheight = i;
-    		 raytraceFirstPhase = true;
-    		 //setBlockBoundsBasedOnState(world,x,y,z);    		 
-    		 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);   		 
-    		 
-    		 if(amovingobjectposition != null && GetIntCorneriDir(world, x, y, z) > -1){
-    			 raytraceFirstPhase = false;
-    			 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
-        		 
-    		 }
-    	 }
-    	 raytracing =false;
-    	 //if anything gets hit use the full bounding box to determine intended side
-    	 if (amovingobjectposition != null){
-    		 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
-    	 }
-    	 
-    	return amovingobjectposition;
-    }
+
+	public MovingObjectPosition collisionRayTrace(World world, int x, int y,
+			int z, Vec3 startVec, Vec3 endVec) {
+		MovingObjectPosition amovingobjectposition = null;
+		raytracing = true;
+		for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
+			raytraceheight = i;
+			raytraceFirstPhase = true;
+			// setBlockBoundsBasedOnState(world,x,y,z);
+			amovingobjectposition = super.collisionRayTrace(world, x, y, z,
+					startVec, endVec);
+
+			if (amovingobjectposition != null
+					&& GetIntCorneriDir(world, x, y, z) > -1) {
+				raytraceFirstPhase = false;
+				amovingobjectposition = super.collisionRayTrace(world, x, y, z,
+						startVec, endVec);
+
+			}
+		}
+		raytracing = false;
+		// if anything gets hit use the full bounding box to determine intended
+		// side
+		if (amovingobjectposition != null) {
+			amovingobjectposition = super.collisionRayTrace(world, x, y, z,
+					startVec, endVec);
+		}
+
+		return amovingobjectposition;
+	}
 
 	/**
 	 * Adds all intersecting collision boxes to a list. (Be sure to only add
@@ -101,7 +111,7 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 			Entity par7Entity) {
 		int iDir = par1World.getBlockMetadata(par2, par3, par4);
 		for (int i = 1; i <= 16; i++) {
-			setSlopesBounds(i,iDir);
+			setSlopesBounds(i, iDir);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
@@ -112,66 +122,64 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 	private void setSlopesBounds(int i, int iDir) {
 		switch (iDir) {
 		case 0:
-			this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
-					1.0F);
+			this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i, 1.0F);
 			break;
 		case 1:
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
 					.0625F * i, 1.0F);
 			break;
 		case 2:
-			this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
-					1.0F);
+			this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i, 1.0F);
 			break;
 		case 3:
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
 					1.0f - (.0625F * i));
 			break;
 		case 4:
-			this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-					1.0F, 1.0f, 1.0F);
+			this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F, 1.0F,
+					1.0f, 1.0F);
 			break;
 		case 5:
 			this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
 					1.0F);
 			break;
 		case 6:
-			this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-					1.0F, 1.0f, 1.0F);
+			this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i), 1.0F,
+					1.0f, 1.0F);
 			break;
 		case 7:
 			this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
 					(.0625F * i));
 			break;
 		}
-		
+
 	}
-	
+
 	public void addCornersCollisionBoxesToList(World par1World, int par2,
 			int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List,
 			Entity par7Entity, int iDir) {
 
 		for (int i = 1; i <= 16; i++) {
-			setCornersBounds(i,iDir);
+			setCornersBounds(i, iDir);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
-	private void setCornersBounds(int i, int iDir){
+	private void setCornersBounds(int i, int iDir) {
 		switch (iDir) {
 		case 0:
-			this.setBlockBounds(.0625F * i, 0.0F, .0625F * i, 1.0f,
-					.0625F * i, 1.0F);
+			this.setBlockBounds(.0625F * i, 0.0F, .0625F * i, 1.0f, .0625F * i,
+					1.0F);
 			break;
 		case 1:
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
 					.0625F * i, 1.0f - (.0625F * i));
 			break;
 		case 2:
-			this.setBlockBounds(0.0f, 0.0F, .0625F * i,
-					1.0f - (.0625F * i), .0625F * i, 1.0F);
+			this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f - (.0625F * i),
+					.0625F * i, 1.0F);
 			break;
 		case 3:
 			this.setBlockBounds((.0625F * i), 0.0F, 0.0F, 1.0F, .0625F * i,
@@ -190,21 +198,21 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 					(.0625F * i), 1.0f, 1.0F);
 			break;
 		case 7:
-			this.setBlockBounds(1.0F - (.0625F * i), .0625F * i, 0.0F,
-					1.0F, 1.0f, (.0625F * i));
+			this.setBlockBounds(1.0F - (.0625F * i), .0625F * i, 0.0F, 1.0F,
+					1.0f, (.0625F * i));
 			break;
 		}
 	}
-	
+
 	public void addIntCornersCollisionBoxesToList(World par1World, int par2,
 			int par3, int par4, AxisAlignedBB par5AxisAlignedBB, List par6List,
 			Entity par7Entity, int iDir) {
 
 		for (int i = 1; i <= 16; i++) {
-			setIntCornersBounds(i,iDir,true);
+			setIntCornersBounds(i, iDir, true);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
-			setIntCornersBounds(i,iDir,false);
+			setIntCornersBounds(i, iDir, false);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
@@ -212,57 +220,75 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
-	private void setIntCornersBounds(int i,int iDir, boolean firstPhase ){
+	private void setIntCornersBounds(int i, int iDir, boolean firstPhase) {
 		switch (iDir) {
 		case 0:
-			if (firstPhase)	this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i, 1.0F);
-			else this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i, 1.0F);
+			if (firstPhase)
+				this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
+						1.0F);
+			else
+				this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
+						1.0F);
 			break;
 		case 1:
-			if (firstPhase) this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-					.0625F * i, 1.0F);
-			else this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
-					1.0f - (.0625F * i));
+			if (firstPhase)
+				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+						.0625F * i, 1.0F);
+			else
+				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
+						1.0f - (.0625F * i));
 			break;
 		case 2:
-			if (firstPhase) this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
-					1.0F);
-			else this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
-					.0625F * i, 1.0F);
+			if (firstPhase)
+				this.setBlockBounds(0.0f, 0.0F, .0625F * i, 1.0f, .0625F * i,
+						1.0F);
+			else
+				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0f - (.0625F * i),
+						.0625F * i, 1.0F);
 			break;
 		case 3:
-			if (firstPhase) this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
-					1.0f - (.0625F * i));
-			else this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
-					1.0F);
+			if (firstPhase)
+				this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, .0625F * i,
+						1.0f - (.0625F * i));
+			else
+				this.setBlockBounds(.0625F * i, 0.0F, 0.0F, 1.0f, .0625F * i,
+						1.0F);
 			break;
 		case 4:
-			if (firstPhase) this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-					1.0F, 1.0f, 1.0F);
-			else this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-					1.0F, 1.0f, 1.0F);
+			if (firstPhase)
+				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
+						1.0F, 1.0f, 1.0F);
+			else
+				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+						1.0F, 1.0f, 1.0F);
 			break;
 		case 5:
-			if (firstPhase) this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-					1.0F);
-			else this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
-					(.0625F * i));
+			if (firstPhase)
+				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+						1.0F);
+			else
+				this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
+						(.0625F * i));
 			break;
 		case 6:
-			if (firstPhase) this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
-					1.0F, 1.0f, 1.0F);
-			else this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
-					1.0F);
+			if (firstPhase)
+				this.setBlockBounds(0.0F, (.0625F * i), 1.0F - (.0625F * i),
+						1.0F, 1.0f, 1.0F);
+			else
+				this.setBlockBounds(0.0F, .0625F * i, 0.0F, (.0625F * i), 1.0f,
+						1.0F);
 			break;
 		case 7:
-			if (firstPhase) this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
-					(.0625F * i));			
-			else this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
-					1.0F, 1.0f, 1.0F);
+			if (firstPhase)
+				this.setBlockBounds(0.0F, .0625F * i, 0.0F, 1.0F, 1.0f,
+						(.0625F * i));
+			else
+				this.setBlockBounds(1.0F - (.0625F * i), (.0625F * i), 0.0F,
+						1.0F, 1.0f, 1.0F);
 			break;
 		}
 	}
-	
+
 	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i,
 			int j, int k, int l) {
 		return true;
@@ -321,163 +347,6 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 		}
 		return result;
 	}
-
-/*@Override
-public boolean onBlockActivated(World world, int i, int j, int k,
-		EntityPlayer entityplayer, int l, float a, float b, float c) {
-	if (this.BaseBlock instanceof BlockCloth) {
-
-		ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-		if (itemstack != null
-				&& itemstack.itemID == Item.dyePowder.itemID) {
-			int lOldMeta = world.getBlockMetadata(i, j, k);
-
-			if (itemstack.getItemDamage() == 0
-					&& SlopesNCornersConfig.BlockBlackWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockBlackWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 1
-					&& SlopesNCornersConfig.BlockRedWoolSlopesNCorners != null) {
-				world.setBlock(i, j, k,
-						SlopesNCornersConfig.BlockRedWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 2
-					&& SlopesNCornersConfig.BlockGreenWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockGreenWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 3
-					&& SlopesNCornersConfig.BlockBrownWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockBrownWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 4
-					&& SlopesNCornersConfig.BlockBlueWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockBlueWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 5
-					&& SlopesNCornersConfig.BlockPurpleWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockPurpleWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 6
-					&& SlopesNCornersConfig.BlockCyanWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockCyanWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 7
-					&& SlopesNCornersConfig.BlockSilverWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockSilverWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 8
-					&& SlopesNCornersConfig.BlockGrayWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockGrayWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 9
-					&& SlopesNCornersConfig.BlockPinkWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockPinkWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 10
-					&& SlopesNCornersConfig.BlockLimeWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockLimeWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 11
-					&& SlopesNCornersConfig.BlockYellowWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockYellowWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 12
-					&& SlopesNCornersConfig.BlockLightBlueWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockLightBlueWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 13
-					&& SlopesNCornersConfig.BlockMagentaWoolSlopesNCorners != null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockMagentaWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 14
-					&& SlopesNCornersConfig.BlockOrangeWoolSlopesNCorners!= null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockOrangeWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			} else if (itemstack.getItemDamage() == 15
-					&& SlopesNCornersConfig.BlockWhiteWoolSlopesNCorners!= null) {
-				world.setBlock(
-						i,
-						j,
-						k,
-						SlopesNCornersConfig.BlockWhiteWoolSlopesNCorners.blockID,
-						lOldMeta,3);
-				return true;
-			}
-		}
-	}
-	return false;
-}*/
 
 	/**
 	 * called to see if this block should be treated as an interercorner and
