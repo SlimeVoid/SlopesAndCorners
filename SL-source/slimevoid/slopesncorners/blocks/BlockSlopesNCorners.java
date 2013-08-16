@@ -51,25 +51,24 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
     public MovingObjectPosition collisionRayTrace(World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
     	 MovingObjectPosition amovingobjectposition = null;
     	 raytracing = true;
-    	 for (int i = 1; i <= 16; i++) {
+    	 for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
     		 raytraceheight = i;
     		 raytraceFirstPhase = true;
     		 //setBlockBoundsBasedOnState(world,x,y,z);    		 
-    		 MovingObjectPosition tempmovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
-    		 if (tempmovingobjectposition != null)
-    			 if (amovingobjectposition == null || startVec.squareDistanceTo(tempmovingobjectposition.hitVec) < startVec.squareDistanceTo(amovingobjectposition.hitVec))
-    				 amovingobjectposition =tempmovingobjectposition;
+    		 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);   		 
     		 
-    		 if(GetIntCorneriDir(world, x, y, z) > -1){
+    		 if(amovingobjectposition != null && GetIntCorneriDir(world, x, y, z) > -1){
     			 raytraceFirstPhase = false;
-    			 tempmovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
-        		 if (tempmovingobjectposition != null)
-        			 if (amovingobjectposition == null || startVec.squareDistanceTo(tempmovingobjectposition.hitVec) < startVec.squareDistanceTo(amovingobjectposition.hitVec))
-        				 amovingobjectposition =tempmovingobjectposition;
+    			 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
+        		 
     		 }
     	 }
     	 raytracing =false;
-    	 //need to tweak the side hit but other than that this works
+    	 //if anything gets hit use the full bounding box to determine intended side
+    	 if (amovingobjectposition != null){
+    		 amovingobjectposition = super.collisionRayTrace(world, x, y, z, startVec, endVec);
+    	 }
+    	 
     	return amovingobjectposition;
     }
 
