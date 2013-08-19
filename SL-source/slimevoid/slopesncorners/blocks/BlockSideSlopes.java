@@ -76,7 +76,7 @@ public class BlockSideSlopes extends BlockVannilaBased {
 			Entity par7Entity) {
 		int iDir = par1World.getBlockMetadata(par2, par3, par4);
 		for (int i = 1; i <= 16; i++) {
-			setSideSlopeBounds(iDir, i);
+			setSideSlopeBounds(i, iDir);
 			super.addCollisionBoxesToList(par1World, par2, par3, par4,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
