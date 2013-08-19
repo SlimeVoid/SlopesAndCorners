@@ -2,15 +2,15 @@ package slimevoid.slopesncorners.blocks;
 
 import java.util.Random;
 
-import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStairsPublic extends BlockStairs {
 	private Block baseBlock;
@@ -76,160 +76,4 @@ public class BlockStairsPublic extends BlockStairs {
 		return true;
 	}
 
-	/*@Override
-	public boolean onBlockActivated(World world, int i, int j, int k,
-			EntityPlayer entityplayer, int l, float a, float b, float c) {
-		if (this.BaseBlock instanceof BlockCloth) {
-
-			ItemStack itemstack = entityplayer.inventory.getCurrentItem();
-			if (itemstack != null
-					&& itemstack.itemID == Item.dyePowder.itemID) {
-				int lOldMeta = world.getBlockMetadata(i, j, k);
-
-				if (itemstack.getItemDamage() == 0
-						&& SlopesNCornersConfig.BlockBlackWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockBlackWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 1
-						&& SlopesNCornersConfig.BlockRedWoolStairs != null) {
-					world.setBlock(i, j, k,
-							SlopesNCornersConfig.BlockRedWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 2
-						&& SlopesNCornersConfig.BlockGreenWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockGreenWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 3
-						&& SlopesNCornersConfig.BlockBrownWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockBrownWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 4
-						&& SlopesNCornersConfig.BlockBlueWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockBlueWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 5
-						&& SlopesNCornersConfig.BlockPurpleWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockPurpleWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 6
-						&& SlopesNCornersConfig.BlockCyanWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockCyanWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 7
-						&& SlopesNCornersConfig.BlockSilverWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockSilverWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 8
-						&& SlopesNCornersConfig.BlockGrayWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockGrayWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 9
-						&& SlopesNCornersConfig.BlockPinkWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockPinkWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 10
-						&& SlopesNCornersConfig.BlockLimeWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockLimeWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 11
-						&& SlopesNCornersConfig.BlockYellowWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockYellowWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 12
-						&& SlopesNCornersConfig.BlockLightBlueWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockLightBlueWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 13
-						&& SlopesNCornersConfig.BlockMagentaWoolStairs != null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockMagentaWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 14
-						&& SlopesNCornersConfig.BlockOrangeWoolStairs!= null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockOrangeWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				} else if (itemstack.getItemDamage() == 15
-						&& SlopesNCornersConfig.BlockWhiteWoolStairs!= null) {
-					world.setBlock(
-							i,
-							j,
-							k,
-							SlopesNCornersConfig.BlockWhiteWoolStairs.blockID,
-							lOldMeta,3);
-					return true;
-				}
-			}
-		}
-		return false;
-	}*/
 }
