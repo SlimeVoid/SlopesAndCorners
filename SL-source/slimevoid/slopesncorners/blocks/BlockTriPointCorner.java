@@ -21,7 +21,7 @@ public class BlockTriPointCorner extends BlockVannilaBased {
 
 	public BlockTriPointCorner(int i, Block baseBlock, int baseBlockDmg) {
 		super(i, ConfigurationLib.TriCornersRenderID, baseBlock, baseBlockDmg,
-				ConfigurationLib.tabCustom);
+				ConfigurationLib.slopesTab);
 		// TODO Auto-generated constructor stub
 	}
 

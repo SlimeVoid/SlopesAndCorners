@@ -22,7 +22,7 @@ public class BlockOblicSlopes extends BlockVannilaBased {
 
 	public BlockOblicSlopes(int i, Block baseBlock, int baseBlockDmg) {
 		super(i, ConfigurationLib.OblicSlopesRenderID, baseBlock, baseBlockDmg,
-				ConfigurationLib.tabCustom);
+				ConfigurationLib.slopesTab);
 		// TODO Auto-generated constructor stub
 	}
 

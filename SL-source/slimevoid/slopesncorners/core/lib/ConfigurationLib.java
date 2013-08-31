@@ -36,13 +36,16 @@ public class ConfigurationLib {
 	public static int TriCornersRenderID;
 	public static int OblicSlopesRenderID;
 	public static int SlopesNCornersRenderID;
-	public static CreativeTabs tabCustom;
+	public static CreativeTabs slopesTab;
 
 	public static List<Block> BlockStairs = new ArrayList<Block>();
 	public static List<Block> BlockSlopesNCorners = new ArrayList<Block>();
 	public static List<Block> BlockSideSlopes = new ArrayList<Block>();
 	public static List<Block> BlockTriCorners = new ArrayList<Block>();
 	public static List<Block> BlockOblicCorners = new ArrayList<Block>();
+	public static Block blockSlopes;
+	public static int blockSlopesID;
+	public static int slopesRenderID;
 
 	public static void configuration(Configuration config) {
 		SlopesNCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -65,7 +68,7 @@ public class ConfigurationLib {
 					new BlockTriCornersRenderer());
 		}
 
-		tabCustom = new CreativeTabs("tabCustom") {
+		slopesTab = new CreativeTabs("tabCustom") {
 			public ItemStack getIconItemStack() {
 				return new ItemStack(BlockSlopesNCorners.get(0), 1);
 			}

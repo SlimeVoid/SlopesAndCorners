@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -26,12 +27,12 @@ public class BlockSlopesNCorners extends BlockVannilaBased {
 
 	public BlockSlopesNCorners(int i, Block baseBlock, int baseBlockDmg) {
 		super(i, ConfigurationLib.SlopesNCornersRenderID, baseBlock,
-				baseBlockDmg, ConfigurationLib.tabCustom);
+				baseBlockDmg, ConfigurationLib.slopesTab);
 	}
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z,
-			EntityLiving entityliving, ItemStack itemstack) {
+			EntityLivingBase entityliving, ItemStack itemstack) {
 		int l = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5D ) & 3;
 		int i1 = world.getBlockMetadata(x, y, z) & 4;
 

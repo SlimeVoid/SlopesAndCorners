@@ -24,7 +24,7 @@ public class BlockStairsPublic extends BlockStairs {
 		this.setLightOpacity(par2Block.lightOpacity[0]);
 		baseBlock = par2Block;
 		this.slipperiness = par2Block.slipperiness;
-		this.setCreativeTab(ConfigurationLib.tabCustom);
+		this.setCreativeTab(ConfigurationLib.slopesTab);
 		// TODO Fix gray grass
 	}
 

@@ -22,7 +22,7 @@ public class BlockSideSlopes extends BlockVannilaBased {
 
 	public BlockSideSlopes(int i, Block baseBlock, int baseBlockDmg) {
 		super(i, ConfigurationLib.SideSlopesRenderID, baseBlock, baseBlockDmg,
-				ConfigurationLib.tabCustom);
+				ConfigurationLib.slopesTab);
 		// TODO Auto-generated constructor stub
 	}
 
