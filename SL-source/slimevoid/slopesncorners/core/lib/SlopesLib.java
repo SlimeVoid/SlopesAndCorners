@@ -14,7 +14,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class SlopesLib {
 
 	public static final float selectBoxWidth = 0.25F;
-	public static Block blockCoverPlate = null;
 	private static ItemStack materials[] = new ItemStack[256];
 	private static String names[] = new String[256];
 	private static String descs[] = new String[256];
@@ -22,11 +21,10 @@ public class SlopesLib {
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static boolean transparency[] = new boolean[256];
 	public static Icon slopeIcons[][] = new Icon[256][];
-	public static String coverTextureFiles[] = new String[256];
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> slopeIndex = new HashMap<List<Integer>, Integer>();
 
-	public static void initSlopeMaterials() {
+	public static void initMaterials() {
 		addMaterial(0, 1, Block.cobblestone, "cobble", "Cobblestone");
 		addMaterial(1, 1, Block.stone, "stone", "Stone");
 		addMaterial(2, 0, Block.planks, "planks", "Wooden Plank");
@@ -75,9 +73,11 @@ public class SlopesLib {
 	}
 
 	public static void addMaterialHandler(IMaterialHandler handler) {
-		for (int i = 0; i < 256; i++)
-			if (materials[i] != null)
+		for (int i = 0; i < 256; i++) {
+			if (materials[i] != null) {
 				handler.addMaterial(i);
+			}
+		}
 
 		materialHandlers.add(handler);
 	}
@@ -127,21 +127,31 @@ public class SlopesLib {
 				.addMaterial(n)) {
 			imh = (IMaterialHandler) i$.next();
 		}
-		LanguageRegistry.addName((new StringBuilder()).append("tile.side.")
-				.append(name).append(".name").toString(), (new StringBuilder())
-				.append(desc).append(" Side Slope").toString());
-		LanguageRegistry.addName((new StringBuilder()).append("tile.oblic.")
-				.append(name).append(".name").toString(), (new StringBuilder())
-				.append(desc).append(" Oblic").toString());
-		LanguageRegistry.addName((new StringBuilder()).append("tile.slant.")
-				.append(name).append(".name").toString(), (new StringBuilder())
-				.append(desc).append(" Slanted Corner").toString());
-		LanguageRegistry.addName((new StringBuilder()).append("tile.stairs.")
-				.append(name).append(".name").toString(), (new StringBuilder())
-				.append(desc).append(" Stairs").toString());
-		LanguageRegistry.addName((new StringBuilder()).append("tile.slope.")
-				.append(name).append(".name").toString(), (new StringBuilder())
-				.append(desc).append(" Slope").toString());
+		LanguageRegistry.addName(
+				(new StringBuilder())
+					.append("tile.side.").append(name).append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Side Slope").toString());
+		LanguageRegistry.addName(
+				(new StringBuilder())
+					.append("tile.oblic.").append(name).append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Oblic").toString());
+		LanguageRegistry.addName(
+				(new StringBuilder())
+					.append("tile.slant.").append(name).append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Slanted Corner").toString());
+		LanguageRegistry.addName(
+				(new StringBuilder())
+					.append("tile.stairs.").append(name).append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Stairs").toString());
+		LanguageRegistry.addName(
+				(new StringBuilder())
+					.append("tile.slope.").append(name).append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Slope").toString());
 	}
 
 	private static int damageToCoverData(int dmg) {
