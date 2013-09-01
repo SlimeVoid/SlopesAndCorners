@@ -2,8 +2,11 @@ package slimevoid.slopesncorners.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.world.IBlockAccess;
+import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
 
 public class BlockSlopesBase extends BlockBase {
@@ -26,6 +29,10 @@ public class BlockSlopesBase extends BlockBase {
 	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i,
 			int j, int k, int l) {
 		return true;
-
 	}
+
+	public void registerPlacement(int md, ISlopePlacement isp) {
+		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(md, isp);
+	}
+
 }

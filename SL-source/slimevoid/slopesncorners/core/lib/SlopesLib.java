@@ -155,20 +155,24 @@ public class SlopesLib {
 	}
 
 	private static int damageToCoverData(int dmg) {
-		//4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1
+		//	524288,	262144,	131072,	65536
+		//	32768,	16384,	8192,	4096
+		//	2048,	1024,	512,	256
+		//	128, 	64, 	32, 	16
+		//	8, 		4, 		2, 		1
 		int hd = dmg >> 8; // (Skips the first 8 bits)
 		int cn = dmg & 0xff; // 0xff = 255 (Retrieves the first 8 bits)
 		switch (hd) {
 		case 0: // '\0'
-			cn |= 0x10000; //  1 0000 0000 0000 0010
+			cn |= 0x10000; //  0001 0000 0000 xxxx xxxx
 			break;
 
 		case 16: // '\020'
-			cn |= 0x20100; //  2 0000 0001 0001 0000
+			cn |= 0x20100; //  0010 0000 0001 xxxx xxxx
 			break;
 
 		case 17: // '\021'
-			cn |= 0x40200;
+			cn |= 0x40200; //  0100 0000 0010 xxxx xxxx
 			break;
 
 		case 24: // '\030'
@@ -284,6 +288,10 @@ public class SlopesLib {
 			break;
 		}
 		return cn;
+	}
+	
+	public static Icon getIconForSide(int n, int side) {
+		return slopeIcons[n][side];
 	}
 
 	public static int damageToCoverValue(int dmg) {
