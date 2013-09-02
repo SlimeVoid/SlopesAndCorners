@@ -27,5 +27,9 @@ public class SlopesPlacement implements ISlopePlacement {
 		// TODO :: Auto-generated method stub
 
 	}
+	
+	public static void redisterSlopePlacement() {
+		// TODO :: Register placement of slopes here
+	}
 
 }

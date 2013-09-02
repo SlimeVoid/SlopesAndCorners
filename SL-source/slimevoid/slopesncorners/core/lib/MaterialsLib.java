@@ -24,6 +24,7 @@ public class MaterialsLib {
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 
 	public static void initMaterials() {
+		// TODO :: Retrieve materials from Config
 		addMaterial(0, 1, Block.cobblestone, "cobble", "Cobblestone");
 		addMaterial(1, 1, Block.stone, "stone", "Stone");
 		addMaterial(2, 0, Block.planks, "planks", "Wooden Plank");
@@ -58,11 +59,12 @@ public class MaterialsLib {
 		addMaterial(31, 1, Block.sandStone, 1, "sandstone1", "Sandstone");
 		addMaterial(64, 1, Block.sandStone, 2, "sandstone2", "Sandstone");
 		addMaterial(65, 0, Block.wood, 3, "wood3", "Jungle Wood");
-		for (int i = 0; i < 16; i++)
+		for (int i = 0; i < 16; i++) {
 			addMaterial(32 + i, 0, Block.cloth, i, (new StringBuilder())
 					.append("wool.").append(ItemDye.dyeColors[i]).toString(),
 					(new StringBuilder()).append(ItemDye.dyeColorNames[i])
 							.append(" Wool").toString());
+		}
 
 	}
 
