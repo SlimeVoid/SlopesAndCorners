@@ -127,27 +127,27 @@ public class SlopesLib {
 				.addMaterial(n)) {
 			imh = (IMaterialHandler) i$.next();
 		}
-		LanguageRegistry.addName(
+		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
 					.append("tile.side.").append(name).append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Side Slope").toString());
-		LanguageRegistry.addName(
+		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
 					.append("tile.oblic.").append(name).append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Oblic").toString());
-		LanguageRegistry.addName(
+		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
 					.append("tile.slant.").append(name).append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Slanted Corner").toString());
-		LanguageRegistry.addName(
+		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
 					.append("tile.stairs.").append(name).append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Stairs").toString());
-		LanguageRegistry.addName(
+		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
 					.append("tile.slope.").append(name).append(".name").toString(),
 				(new StringBuilder())
