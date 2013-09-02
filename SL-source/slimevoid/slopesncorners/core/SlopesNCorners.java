@@ -42,10 +42,10 @@ public class SlopesNCorners {
 		config.save();
 	}
 
-	@EventHandler
+	/*@EventHandler
 	public void slopesInit(FMLInitializationEvent event){
 		MaterialsLib.initMaterials();
-	}
+	}*/
 	
 	@EventHandler
 	public void slopesPostInit(FMLPostInitializationEvent event) {

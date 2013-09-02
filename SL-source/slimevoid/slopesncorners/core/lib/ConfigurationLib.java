@@ -167,21 +167,25 @@ public class ConfigurationLib {
 						+ "\nNote DMG is optional if dmg is 0")
 				.getStringList();
 
+		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
+		MaterialsLib.initMaterials(lengthMats);
+		int currentmatindex = MaterialsLib.minimumlength;
+		for(String custommats:baseBlockIdsNDmgs){
+			String blockIdNDmg = custommats.split("-")[0];
+			
+			MaterialsLib.addMaterial(currentmatindex, 
+					blockIdNDmg.split("_").length == 1 ? 0:Integer.parseInt(blockIdNDmg.split("_")[1]), 
+					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])],  
+					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getUnlocalizedName(),
+					custommats.split("-").length == 1? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getLocalizedName():custommats.split("-")[1]);
+			currentmatindex++;
+		}
 		initializeSlopesNCorners(baseBlockIdsNDmgs,
 		initializeStairs(baseBlockIdsNDmgs, baseBlocksWithStairs));
 		initializeSideSlopes(baseBlockIdsNDmgs);
 		initializeTriCorners(baseBlockIdsNDmgs);
 		initializeOblicSlopes(baseBlockIdsNDmgs);
 		config.save();
-		// Proof of concept recipe
-		/*
-		 * ItemStack NBTItem = new ItemStack(Item.axeDiamond);
-		 * NBTItem.setTagCompound(new NBTTagCompound());
-		 * NBTItem.getTagCompound().setCompoundTag("display", new
-		 * NBTTagCompound());
-		 * NBTItem.getTagCompound().getCompoundTag("display").setString("Name",
-		 * "Test"); addNBTShapelessRecipe(new ItemStack(Block.dirt),NBTItem);
-		 */
 	}
 
 	private static String[] initializeStairs(String[] baseBlockIdsNDmgs,

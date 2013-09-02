@@ -12,6 +12,7 @@ import net.minecraft.util.Icon;
 
 public class MaterialsLib {
 
+	public static final int minimumlength = 49;
 	public static final float selectBoxWidth = 0.25F;
 	private static ItemStack materials[] = new ItemStack[256];
 	private static String names[] = new String[256];
@@ -23,8 +24,17 @@ public class MaterialsLib {
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 
-	public static void initMaterials() {
+	public static void initMaterials(int newLength) {
 		// TODO :: Retrieve materials from Config
+		if (newLength > minimumlength){
+			transparency =  new boolean[newLength];
+			materialIcons=  new Icon[newLength][];
+			miningHardness=  new float[newLength];
+			hardness=  new int[newLength];
+			descs=  new String[newLength];
+			names=  new String[newLength];
+			materials=  new ItemStack[newLength];
+		}
 		addMaterial(0, 1, Block.cobblestone, "cobble", "Cobblestone");
 		addMaterial(1, 1, Block.stone, "stone", "Stone");
 		addMaterial(2, 0, Block.planks, "planks", "Wooden Plank");
@@ -57,14 +67,15 @@ public class MaterialsLib {
 		addMaterial(29, 0, Block.planks, 2, "planks2", "Wooden Plank");
 		addMaterial(30, 0, Block.planks, 3, "planks3", "Wooden Plank");
 		addMaterial(31, 1, Block.sandStone, 1, "sandstone1", "Sandstone");
-		addMaterial(64, 1, Block.sandStone, 2, "sandstone2", "Sandstone");
-		addMaterial(65, 0, Block.wood, 3, "wood3", "Jungle Wood");
 		for (int i = 0; i < 16; i++) {
 			addMaterial(32 + i, 0, Block.cloth, i, (new StringBuilder())
 					.append("wool.").append(ItemDye.dyeColors[i]).toString(),
 					(new StringBuilder()).append(ItemDye.dyeColorNames[i])
 							.append(" Wool").toString());
 		}
+		addMaterial(47, 1, Block.sandStone, 2, "sandstone2", "Sandstone");
+		addMaterial(48, 0, Block.wood, 3, "wood3", "Jungle Wood");
+		
 
 	}
 
@@ -109,7 +120,9 @@ public class MaterialsLib {
 		for (int i = 0; i < 6; i++) {
 			materialIcons[materialID][i] = bl.getIcon(i, md);
 		}
-
+		if (name.endsWith(".name")){
+			name=name.substring(0, name.length()-6);
+		}
 		miningHardness[materialID] = bl.getBlockHardness(null, 0, 0, 0);
 		materials[materialID] = ist;
 		names[materialID] = name;
