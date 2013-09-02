@@ -9,9 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class SlopesLib {
+public class MaterialsLib {
 
 	public static final float selectBoxWidth = 0.25F;
 	private static ItemStack materials[] = new ItemStack[256];
@@ -20,9 +19,9 @@ public class SlopesLib {
 	private static int hardness[] = new int[256];
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static boolean transparency[] = new boolean[256];
-	public static Icon slopeIcons[][] = new Icon[256][];
+	public static Icon materialIcons[][] = new Icon[256][];
 	private static float miningHardness[] = new float[256];
-	private static HashMap<List<Integer>, Integer> slopeIndex = new HashMap<List<Integer>, Integer>();
+	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 
 	public static void initMaterials() {
 		addMaterial(0, 1, Block.cobblestone, "cobble", "Cobblestone");
@@ -69,13 +68,13 @@ public class SlopesLib {
 
 	public static interface IMaterialHandler {
 
-		public abstract void addMaterial(int i);
+		public abstract void addMaterialReference(int i);
 	}
 
 	public static void addMaterialHandler(IMaterialHandler handler) {
 		for (int i = 0; i < 256; i++) {
 			if (materials[i] != null) {
-				handler.addMaterial(i);
+				handler.addMaterialReference(i);
 			}
 		}
 
@@ -83,7 +82,7 @@ public class SlopesLib {
 	}
 
 	public static Integer getMaterial(ItemStack ist) {
-		return (Integer) slopeIndex.get(
+		return (Integer) materialIndex.get(
 				Arrays.asList(new Integer[] {
 					Integer.valueOf(ist.itemID),
 					Integer.valueOf(ist.getItemDamage())
@@ -102,56 +101,31 @@ public class SlopesLib {
 		addMaterial(n, hard, tpar, bl, 0, name, desc);
 	}
 
-	public static void addMaterial(int n, int hard, boolean tpar, Block bl, int md, String name, String desc) {
+	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
-		slopeIcons[n] = new Icon[6];
+		materialIcons[materialID] = new Icon[6];
 		for (int i = 0; i < 6; i++) {
-			slopeIcons[n][i] = bl.getIcon(i, md);
+			materialIcons[materialID][i] = bl.getIcon(i, md);
 		}
 
-		miningHardness[n] = bl.getBlockHardness(null, 0, 0, 0);
-		materials[n] = ist;
-		names[n] = name;
-		descs[n] = desc;
-		hardness[n] = hard;
-		transparency[n] = tpar;
-		slopeIndex.put(
+		miningHardness[materialID] = bl.getBlockHardness(null, 0, 0, 0);
+		materials[materialID] = ist;
+		names[materialID] = name;
+		descs[materialID] = desc;
+		hardness[materialID] = hard;
+		transparency[materialID] = tpar;
+		materialIndex.put(
 				Arrays.asList(
 						new Integer[] {
 							Integer.valueOf(bl.blockID),
 							Integer.valueOf(md)
 						}),
-					Integer.valueOf(n));
+					Integer.valueOf(materialID));
 		IMaterialHandler imh;
-		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext(); imh
-				.addMaterial(n)) {
+		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext();
+			imh.addMaterialReference(materialID)) {
 			imh = (IMaterialHandler) i$.next();
 		}
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
-					.append("tile.side.").append(name).append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Side Slope").toString());
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
-					.append("tile.oblic.").append(name).append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Oblic").toString());
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
-					.append("tile.slant.").append(name).append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Slanted Corner").toString());
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
-					.append("tile.stairs.").append(name).append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Stairs").toString());
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
-					.append("tile.slope.").append(name).append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Slope").toString());
 	}
 
 	private static int damageToCoverData(int dmg) {
@@ -291,7 +265,7 @@ public class SlopesLib {
 	}
 	
 	public static Icon getIconForSide(int n, int side) {
-		return slopeIcons[n][side];
+		return materialIcons[n][side];
 	}
 
 	public static int damageToCoverValue(int dmg) {

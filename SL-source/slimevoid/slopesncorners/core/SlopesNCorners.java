@@ -3,7 +3,7 @@ package slimevoid.slopesncorners.core;
 import net.minecraftforge.common.Configuration;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
-import slimevoid.slopesncorners.core.lib.SlopesLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
@@ -44,7 +44,7 @@ public class SlopesNCorners {
 
 	@EventHandler
 	public void slopesInit(FMLInitializationEvent event){
-		SlopesLib.initMaterials();
+		MaterialsLib.initMaterials();
 	}
 	
 	@EventHandler

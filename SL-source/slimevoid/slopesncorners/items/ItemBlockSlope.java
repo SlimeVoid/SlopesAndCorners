@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import slimevoid.slopesncorners.api.ISlope;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.SlopesLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,11 +36,11 @@ public class ItemBlockSlope extends ItemBlock {
 			return false;
 		}
 		ISlope icv = (ISlope) te;
-		if (icv.tryAddSlope(SlopesLib.damageToCoverValue(ist.getItemDamage()))) {
+		if (icv.tryAddSlope(MaterialsLib.damageToCoverValue(ist.getItemDamage()))) {
 			ist.stackSize--;
 			BlockHelper.playBlockPlaceNoise(
 					world, i, j, k,
-					SlopesLib.getBlock(ist.getItemDamage() & 0xff).blockID);
+					MaterialsLib.getBlock(ist.getItemDamage() & 0xff).blockID);
 			BlockHelper.updateIndirectNeighbors(
 					world, i, j, k,
 					ConfigurationLib.blockSlopes.blockID);
@@ -107,7 +107,7 @@ public class ItemBlockSlope extends ItemBlock {
 		String stub = getSlopeName(hb);
 		String name;
 		if (stub != null) {
-			name = SlopesLib.getName(lb);
+			name = MaterialsLib.getName(lb);
 			if (name == null) {
 				throw new IndexOutOfBoundsException();
 			} else {

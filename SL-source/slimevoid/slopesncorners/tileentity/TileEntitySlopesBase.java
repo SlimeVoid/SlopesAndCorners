@@ -9,7 +9,7 @@ import net.minecraft.util.Icon;
 import slimevoid.slopesncorners.api.ISlope;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.NBTLib;
-import slimevoid.slopesncorners.core.lib.SlopesLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoidlib.tileentity.TileEntityBase;
 
 public class TileEntitySlopesBase extends TileEntityBase implements ISlope {
@@ -56,13 +56,13 @@ public class TileEntitySlopesBase extends TileEntityBase implements ISlope {
 
 	@Override
 	public StepSound getStepSound() {
-		Block block = SlopesLib.getBlock(SlopesLib.damageToCoverValue(this.getSlopeIndex()));
+		Block block = MaterialsLib.getBlock(MaterialsLib.damageToCoverValue(this.getSlopeIndex()));
 		return block != null ? block.stepSound : null;
 	}
 
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
-		return SlopesLib.getIconForSide(SlopesLib.damageToCoverValue(this.getSlopeIndex()), side);
+		return MaterialsLib.getIconForSide(MaterialsLib.damageToCoverValue(this.getSlopeIndex()), side);
 	}
 	
 	@Override
