@@ -8,7 +8,7 @@ import slimevoid.slopesncorners.api.ISlope;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.SlopesLib;
-import slimevoidlib.core.lib.BlockHelper;
+import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
