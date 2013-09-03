@@ -24,7 +24,8 @@ public class SlopesPlacement implements ISlopePlacement {
 				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xff).blockID);
 		TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntitySlopes.class);
 		if (tileentity != null) {
-			tileentity.onBlockPlaced(itemstack, side, entityplayer);
+			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
+			System.out.println(tileentity.getSlopeIndex());
 		}
 		BlockHelper.updateIndirectNeighbors(
 				world, x, y, z,
