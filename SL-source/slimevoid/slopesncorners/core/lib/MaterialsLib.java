@@ -120,7 +120,7 @@ public class MaterialsLib {
 
 	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
-		System.out.println("Name: " + name);
+		//System.out.println("Name: " + name);
 		materialIcons[materialID] = new Icon[6];
 		for (int i = 0; i < 6; i++) {
 			materialIcons[materialID][i] = bl.getIcon(i, md);

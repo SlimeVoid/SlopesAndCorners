@@ -2,8 +2,6 @@ package slimevoid.slopesncorners.items;
 
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
@@ -19,31 +17,32 @@ public class ItemBlockSlope extends ItemBlock {
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[MaterialsLib.getSize()];
+		placers = new ISlopePlacement[1];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
 
-	@Override
+/*	@Override
 	public boolean onItemUseFirst(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l, float xp, float yp, float zp) {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT
 				&& world.isRemote) {
 			return false;
 		}
 		return itemUseShared(ist, player, world, i, j, k, l);
-	}
+	}*/
 	
 	@Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-		//int hb = stack.getItemDamage();
+		super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+		int hb = stack.getItemDamage();
 		//int lb = hb & 0xff;
-		//hb >>= 8;
-		//if (placers[hb] == null) {
-			//System.out.println("No Placer Registered!!!");
+		hb >>= 8;
+		if (placers[hb] == null) {
+			System.out.println("No Placer Registered!!!");
 			return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
-		//} else {
-			//return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
-		//}
+		} else {
+			return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+		}
 	}
 	
 
@@ -106,6 +105,12 @@ public class ItemBlockSlope extends ItemBlock {
 			return name;
 		}
 	}
+	
+	@Override
+    public int getMetadata(int damage)
+    {
+        return damage >> 8;
+    }
 
 	public void registerPlacement(int md, ISlopePlacement isp) {
 		this.placers[md] = isp;

@@ -5,13 +5,11 @@ import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
-import slimevoidlib.tileentity.TileEntityBase;
 import slimevoidlib.util.helpers.BlockHelper;
 
 public class SlopesPlacement implements ISlopePlacement {
@@ -25,7 +23,7 @@ public class SlopesPlacement implements ISlopePlacement {
 		TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntitySlopes.class);
 		if (tileentity != null) {
 			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
-			System.out.println(tileentity.getSlopeIndex());
+			//System.out.println(tileentity.getSlopeIndex());
 		}
 		BlockHelper.updateIndirectNeighbors(
 				world, x, y, z,
@@ -35,10 +33,36 @@ public class SlopesPlacement implements ISlopePlacement {
 	}
 
 	@Override
-	public boolean placeSlopeAt(ItemStack stack, EntityPlayer player,
+	public boolean placeSlopeAt(ItemStack itemstack, EntityPlayer entityplayer,
 			World world, int x, int y, int z, int side, float hitX, float hitY,
 			float hitZ, int metadata) {
-		return false;
+		TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, ConfigurationLib.blockSlopes.getTileMapData(metadata));
+		if (tileentity == null) {
+			return false;
+		}
+		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
+		//System.out.println("Rotation: " + this.rotation);
+		int state = metadata & 4;
+		//System.out.println("State: " + state);
+		if (tileentity.getRotation() == 0) {
+			tileentity.setRotation(2 | state);
+		}
+
+		if (tileentity.getRotation() == 1) {
+			tileentity.setRotation(1 | state);
+		}
+
+		if (tileentity.getRotation() == 2) {
+			tileentity.setRotation(3 | state);
+		}
+
+		if (tileentity.getRotation() == 3) {
+			tileentity.setRotation(0 | state);
+		}
+		//System.out.println("Rotation: " + this.rotation);
+		tileentity.onInventoryChanged();
+		//tileentity.onBlockPlacedBy(itemstack, entityplayer);
+		return true;
 	}
 
 	@Override
@@ -49,33 +73,11 @@ public class SlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public void addCreativeItems(int i, CreativeTabs tab, List itemList, int matIndex) {
-		System.out.println("Adding Tabs To " + tab + "[" + i + "]["+ matIndex +"]");
+		//System.out.println("Adding Tabs To " + tab + "[" + i + "]["+ matIndex +"]");
 		if (tab != ConfigurationLib.slopesTab) {
 			return;
 		}
 		int defaultDamage = (4095 * i) + matIndex;
-		switch (i) {
-		case 0:
-			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
-			//defaultDamage+=4095;
-			break;
-		case 1:
-			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
-			//defaultDamage+=4095;
-			break;
-		case 2:
-			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
-			//defaultDamage+=4095;
-			break;
-		case 3:
-			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
-			//defaultDamage+=4095;
-			break;
-		case 4:
-			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
-			//defaultDamage+=4095;
-			break;
-		}
-
+		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
 	}
 }

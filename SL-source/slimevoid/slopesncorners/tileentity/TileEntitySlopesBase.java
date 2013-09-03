@@ -2,8 +2,6 @@ package slimevoid.slopesncorners.tileentity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
@@ -14,14 +12,10 @@ import slimevoidlib.tileentity.TileEntityBase;
 public class TileEntitySlopesBase extends TileEntityBase {
 	
 	private short slopeIndex;
+	protected int state;
 	
 	public TileEntitySlopesBase() {
 		super();
-	}
-	
-	@Override
-	public void onBlockPlaced(ItemStack itemstack, int side, EntityLivingBase entity) {
-		super.onBlockPlaced(itemstack, side, entity);
 	}
 	
 	public void setSlopeIndex(short slopeIndex) {
