@@ -4,16 +4,13 @@ import java.util.List;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
-import slimevoid.slopesncorners.api.ISlope;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
-import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class ItemBlockSlope extends ItemBlock {
@@ -27,47 +24,33 @@ public class ItemBlockSlope extends ItemBlock {
 		this.setHasSubtypes(true);
 	}
 
-	private boolean useSlope(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
-		if (world.canPlaceEntityOnSide(ist.itemID, i, j, k, false, l, player, ist)) {
-			world.setBlock(i, j, k, ConfigurationLib.blockSlopes.blockID, 0, 0);
-		}
-		TileEntity te = world.getBlockTileEntity(i, j, k);
-		if (te == null || !(te instanceof ISlope)) {
-			return false;
-		}
-		ISlope slope = (ISlope) te;
-		if (slope.tryAddSlope(MaterialsLib.damageToMaterialValue(ist.getItemDamage()))) {
-			ist.stackSize--;
-			BlockHelper.playBlockPlaceNoise(
-					world, i, j, k,
-					MaterialsLib.getBlock(ist.getItemDamage() & 0xff).blockID);
-			BlockHelper.updateIndirectNeighbors(
-					world, i, j, k,
-					ConfigurationLib.blockSlopes.blockID);
-			world.markBlockForUpdate(i, j, k);
-			return true;
-		} else {
-			return false;
-		}
-    }
-
 	@Override
 	public boolean onItemUseFirst(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l, float xp, float yp, float zp) {
-		System.out.println("Using ItemBlock");
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT
 				&& world.isRemote) {
 			return false;
 		}
 		return itemUseShared(ist, player, world, i, j, k, l);
 	}
+	
+	@Override
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+		//int hb = stack.getItemDamage();
+		//int lb = hb & 0xff;
+		//hb >>= 8;
+		//if (placers[hb] == null) {
+		//	System.out.println("No Placer Registered!!!");
+			return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+		//} else {
+		//	return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+		//}
+	}
+	
 
 	private boolean itemUseShared(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
 		int hb = ist.getItemDamage();
 		int lb = hb & 0xff;
 		hb >>= 8;
-		//if (hb == 0 || hb >= 16 && hb <= 45) {
-		//	return useSlope(ist, player, world, i, j, k, l);
-		//}
 		if (placers[hb] == null) {
 			System.out.println("No Placer Registered!!!");
 			return false;

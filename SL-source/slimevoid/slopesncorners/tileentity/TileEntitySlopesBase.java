@@ -6,24 +6,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
-import slimevoid.slopesncorners.api.ISlope;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoidlib.tileentity.TileEntityBase;
 
-public class TileEntitySlopesBase extends TileEntityBase implements ISlope {
+public class TileEntitySlopesBase extends TileEntityBase {
 	
 	private short slopeIndex;
 	
 	public TileEntitySlopesBase() {
 		super();
-	}
-
-	@Override
-	public boolean tryAddSlope(int slopeIndex) {
-		this.setSlopeIndex((short) slopeIndex);
-		return true;
 	}
 	
 	@Override
