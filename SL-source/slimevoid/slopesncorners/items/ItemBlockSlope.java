@@ -39,10 +39,10 @@ public class ItemBlockSlope extends ItemBlock {
 		//int lb = hb & 0xff;
 		//hb >>= 8;
 		//if (placers[hb] == null) {
-		//	System.out.println("No Placer Registered!!!");
+			//System.out.println("No Placer Registered!!!");
 			return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
 		//} else {
-		//	return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+			//return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
 		//}
 	}
 	
@@ -114,10 +114,13 @@ public class ItemBlockSlope extends ItemBlock {
 	@Override
 	public void getSubItems(int id, CreativeTabs tab, List list) {
 		if (tab == ConfigurationLib.slopesTab) {
-			for (int i = 0; i < MaterialsLib.getSize(); i++) {
-				if (placers[i] != null) {
-					placers[i].addCreativeItems(i, tab, list);
-				}
+			int placerindex = 0;
+			for(ISlopePlacement placer:placers){
+				if (placer == null) continue;				
+				for (int i = 0; i < MaterialsLib.getSize(); i++) {						
+						placer.addCreativeItems(placerindex, tab, list, i);
+					}
+				placerindex++;
 			}
 		}
 		/*else if (tab == tabs) {

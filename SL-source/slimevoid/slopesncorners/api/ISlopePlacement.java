@@ -13,7 +13,7 @@ public interface ISlopePlacement {
 
 	public abstract String getSlopeName(int i, int j);
 
-	public abstract void addCreativeItems(int i, CreativeTabs tabs, List tabslist);
+	public abstract void addCreativeItems(int i, CreativeTabs tabs, List tabslist, int matIndex);
 
 	public abstract boolean placeSlopeAt(ItemStack stack, EntityPlayer player,
 			World world, int x, int y, int z, int side, float hitX, float hitY,
