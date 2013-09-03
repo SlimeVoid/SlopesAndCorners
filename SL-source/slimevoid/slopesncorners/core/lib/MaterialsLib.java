@@ -23,17 +23,21 @@ public class MaterialsLib {
 	public static Icon materialIcons[][] = new Icon[256][];
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
+	
+	public static int getSize() {
+		return materials.length;
+	}
 
 	public static void initMaterials(int newLength) {
 		// TODO :: Retrieve materials from Config
-		if (newLength > minimumlength){
-			transparency =  new boolean[newLength];
-			materialIcons=  new Icon[newLength][];
-			miningHardness=  new float[newLength];
-			hardness=  new int[newLength];
-			descs=  new String[newLength];
-			names=  new String[newLength];
-			materials=  new ItemStack[newLength];
+		if (newLength > minimumlength) {
+			transparency = new boolean[newLength];
+			materialIcons = new Icon[newLength][];
+			miningHardness = new float[newLength];
+			hardness = new int[newLength];
+			descs = new String[newLength];
+			names = new String[newLength];
+			materials = new ItemStack[newLength];
 		}
 		addMaterial(0, 1, Block.cobblestone, "cobble", "Cobblestone");
 		addMaterial(1, 1, Block.stone, "stone", "Stone");
@@ -85,7 +89,7 @@ public class MaterialsLib {
 	}
 
 	public static void addMaterialHandler(IMaterialHandler handler) {
-		for (int i = 0; i < 256; i++) {
+		for (int i = 0; i < materials.length; i++) {
 			if (materials[i] != null) {
 				handler.addMaterialReference(i);
 			}
@@ -116,6 +120,7 @@ public class MaterialsLib {
 
 	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
+		System.out.println("Name: " + name);
 		materialIcons[materialID] = new Icon[6];
 		for (int i = 0; i < 6; i++) {
 			materialIcons[materialID][i] = bl.getIcon(i, md);
@@ -283,7 +288,7 @@ public class MaterialsLib {
 		return materialIcons[n][side];
 	}
 
-	public static int damageToCoverValue(int dmg) {
+	public static int damageToMaterialValue(int dmg) {
 		return damageToCoverData(dmg) & 0xffff; // = 65535
 	}
 

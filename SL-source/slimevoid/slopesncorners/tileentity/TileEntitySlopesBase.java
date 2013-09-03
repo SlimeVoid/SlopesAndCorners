@@ -56,13 +56,13 @@ public class TileEntitySlopesBase extends TileEntityBase implements ISlope {
 
 	@Override
 	public StepSound getStepSound() {
-		Block block = MaterialsLib.getBlock(MaterialsLib.damageToCoverValue(this.getSlopeIndex()));
+		Block block = MaterialsLib.getBlock(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()));
 		return block != null ? block.stepSound : null;
 	}
 
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
-		return MaterialsLib.getIconForSide(MaterialsLib.damageToCoverValue(this.getSlopeIndex()), side);
+		return MaterialsLib.getIconForSide(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()), side);
 	}
 	
 	@Override

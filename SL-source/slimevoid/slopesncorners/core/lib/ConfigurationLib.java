@@ -5,23 +5,29 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.Configuration;
+import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.blocks.BlockTriPointCorner;
 import slimevoid.slopesncorners.blocks.BlockOblicSlopes;
 import slimevoid.slopesncorners.blocks.BlockSideSlopes;
 import slimevoid.slopesncorners.blocks.BlockSlopesNCorners;
 import slimevoid.slopesncorners.blocks.BlockStairsPublic;
+import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
+import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
 import slimevoid.slopesncorners.client.render.BlockOblicSlopesRenderRenderer;
 import slimevoid.slopesncorners.client.render.BlockSideSlopeRenderer;
 import slimevoid.slopesncorners.client.render.BlockSlopesNCornersRenderer;
 import slimevoid.slopesncorners.client.render.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.SlopesNCorners;
+import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.items.crafting.NBTRecipe;
+import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -43,7 +49,7 @@ public class ConfigurationLib {
 	public static List<Block> BlockSideSlopes = new ArrayList<Block>();
 	public static List<Block> BlockTriCorners = new ArrayList<Block>();
 	public static List<Block> BlockOblicCorners = new ArrayList<Block>();
-	public static Block blockSlopes;
+	public static BlockSlopesBase blockSlopes;
 	public static int blockSlopesID;
 	public static int slopesRenderID;
 
@@ -70,7 +76,7 @@ public class ConfigurationLib {
 
 		slopesTab = new CreativeTabs("tabCustom") {
 			public ItemStack getIconItemStack() {
-				return new ItemStack(BlockSlopesNCorners.get(0), 1);
+				return new ItemStack(Block.stone, 1);
 			}
 
 		};
@@ -166,7 +172,7 @@ public class ConfigurationLib {
 						+ "\nexample 5:2;135:0 tells us that the Blockid 5 with damage 2 already has a stair block at blockid 135 damage 0"
 						+ "\nNote DMG is optional if dmg is 0")
 				.getStringList();
-
+		blockSlopesID = 1000; 
 		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
 		MaterialsLib.initMaterials(lengthMats);
 		int currentmatindex = MaterialsLib.minimumlength;
@@ -177,15 +183,26 @@ public class ConfigurationLib {
 					blockIdNDmg.split("_").length == 1 ? 0:Integer.parseInt(blockIdNDmg.split("_")[1]), 
 					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])],  
 					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getUnlocalizedName(),
-					custommats.split("-").length == 1? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getLocalizedName():custommats.split("-")[1]);
+					custommats.split("-").length == 1 ? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getLocalizedName() : custommats.split("-")[1]);
 			currentmatindex++;
 		}
-		initializeSlopesNCorners(baseBlockIdsNDmgs,
-		initializeStairs(baseBlockIdsNDmgs, baseBlocksWithStairs));
-		initializeSideSlopes(baseBlockIdsNDmgs);
-		initializeTriCorners(baseBlockIdsNDmgs);
-		initializeOblicSlopes(baseBlockIdsNDmgs);
+		//initializeSlopesNCorners(baseBlockIdsNDmgs,
+		//initializeStairs(baseBlockIdsNDmgs, baseBlocksWithStairs));
+		//initializeSideSlopes(baseBlockIdsNDmgs);
+		//initializeTriCorners(baseBlockIdsNDmgs);
+		//initializeOblicSlopes(baseBlockIdsNDmgs);
 		config.save();
+		initializeSlopes();
+	}
+
+	private static void initializeSlopes() {
+		MaterialsLib.addMaterialHandler(new SlopeMaterialHandler());
+		GameRegistry.registerTileEntity(TileEntitySlopes.class, "slopes");
+		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
+		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
+		blockSlopes.addTileEntityMapping(0, TileEntitySlopes.class);
+		blockSlopes.registerPlacement(0, new SlopesPlacement());
+		
 	}
 
 	private static String[] initializeStairs(String[] baseBlockIdsNDmgs,

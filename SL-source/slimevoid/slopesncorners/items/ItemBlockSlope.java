@@ -22,7 +22,7 @@ public class ItemBlockSlope extends ItemBlock {
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[256];
+		placers = new ISlopePlacement[MaterialsLib.getSize()];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
@@ -35,8 +35,8 @@ public class ItemBlockSlope extends ItemBlock {
 		if (te == null || !(te instanceof ISlope)) {
 			return false;
 		}
-		ISlope icv = (ISlope) te;
-		if (icv.tryAddSlope(MaterialsLib.damageToCoverValue(ist.getItemDamage()))) {
+		ISlope slope = (ISlope) te;
+		if (slope.tryAddSlope(MaterialsLib.damageToMaterialValue(ist.getItemDamage()))) {
 			ist.stackSize--;
 			BlockHelper.playBlockPlaceNoise(
 					world, i, j, k,
@@ -53,25 +53,23 @@ public class ItemBlockSlope extends ItemBlock {
 
 	@Override
 	public boolean onItemUseFirst(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l, float xp, float yp, float zp) {
+		System.out.println("Using ItemBlock");
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT
 				&& world.isRemote) {
 			return false;
 		}
-		if (!player.isUsingItem()) {
-			return false;
-		} else {
-			return itemUseShared(ist, player, world, i, j, k, l);
-		}
+		return itemUseShared(ist, player, world, i, j, k, l);
 	}
 
 	private boolean itemUseShared(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
 		int hb = ist.getItemDamage();
 		int lb = hb & 0xff;
 		hb >>= 8;
-		if (hb == 0 || hb >= 16 && hb <= 45) {
-			return useSlope(ist, player, world, i, j, k, l);
-		}
+		//if (hb == 0 || hb >= 16 && hb <= 45) {
+		//	return useSlope(ist, player, world, i, j, k, l);
+		//}
 		if (placers[hb] == null) {
+			System.out.println("No Placer Registered!!!");
 			return false;
 		} else {
 			return placers[hb].onPlaceSlope(ist, player, world, i, j, k, l);
@@ -130,9 +128,10 @@ public class ItemBlockSlope extends ItemBlock {
 		this.placers[md] = isp;
 	}
 
-	public void a(int id, CreativeTabs tab, List list) {
+	@Override
+	public void getSubItems(int id, CreativeTabs tab, List list) {
 		if (tab == ConfigurationLib.slopesTab) {
-			for (int i = 0; i < 255; i++) {
+			for (int i = 0; i < MaterialsLib.getSize(); i++) {
 				if (placers[i] != null) {
 					placers[i].addCreativeItems(i, tab, list);
 				}

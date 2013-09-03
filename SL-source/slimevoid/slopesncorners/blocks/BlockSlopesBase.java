@@ -11,7 +11,7 @@ import slimevoidlib.blocks.BlockBase;
 
 public class BlockSlopesBase extends BlockBase {
 
-	protected BlockSlopesBase(int blockID, Material material, int maxTiles) {
+	public BlockSlopesBase(int blockID, Material material, int maxTiles) {
 		super(blockID, material, maxTiles);
 	}
 
