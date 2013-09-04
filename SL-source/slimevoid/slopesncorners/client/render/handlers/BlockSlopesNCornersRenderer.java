@@ -159,8 +159,6 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 		renderInvBlock(renderer, block, metadata, modelID);
 	}
 
-	
-
 	@Override
 	public boolean shouldRender3DInInventory() {
 		return true;
