@@ -120,7 +120,7 @@ public class ItemBlockSlope extends ItemBlock {
 	public void getSubItems(int id, CreativeTabs tab, List list) {
 		if (tab == ConfigurationLib.slopesTab) {
 			int placerindex = 0;
-			for(ISlopePlacement placer:placers){
+			for(ISlopePlacement placer : placers){
 				if (placer == null) continue;				
 				for (int i = 0; i < MaterialsLib.getSize(); i++) {						
 						placer.addCreativeItems(placerindex, tab, list, i);
