@@ -14,14 +14,13 @@ import net.minecraft.util.Icon;
 public class MaterialsLib {
 
 	public static final int minimumlength = 49;
-	public static final float selectBoxWidth = 0.25F;
 	private static ItemStack materials[] = new ItemStack[256];
 	private static String names[] = new String[256];
 	private static String descs[] = new String[256];
 	private static int hardness[] = new int[256];
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static boolean transparency[] = new boolean[256];
-	public static Icon materialIcons[][] = new Icon[256][];
+	private static Icon materialIcons[][] = new Icon[256][];
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 	
@@ -302,7 +301,7 @@ public class MaterialsLib {
 	
 	public static Icon getIconForSide(int n, int side) {
 		
-		return materialIcons[n][side%6];
+		return materialIcons[n][side];
 	}
 
 	public static int damageToMaterialValue(int dmg) {

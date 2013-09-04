@@ -33,7 +33,112 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public int getRotatedSide(int side) {
-		return 0;
+		
+		switch (rotation) {
+		case 0:
+			switch (side){
+			case 2: //north
+				return 4; // to west
+			case 3: //south
+				return 5; // to east
+			case 4: //west
+				return 3; // to south
+			case 5: //east
+				return 2; // to north
+			default:
+				return side;
+			}
+		case 1:
+			switch (side){
+			case 2://north
+				return 5; //to east
+			case 3://south
+				return 4; //to west
+			case 4://west
+				return 2; //to north
+			case 5: //east
+				return 3; //to south
+			default:
+				return side;
+			}
+		case 2:
+			switch (side){
+			case 2://north
+				return 3; //to south
+			case 3://south
+				return 2; //to north
+			case 4://west
+				return 5; //to east
+			case 5: //east
+				return 4; //to west
+			default:
+				return side;
+			}
+		case 3:
+			return side;
+		case 4:
+			switch (side){
+			case 0:
+				return 1;
+			case 1:
+				return 0;
+			case 2: //north
+				return 4; // to west
+			case 3: //south
+				return 5; // to east
+			case 4: //west
+				return 3; // to south
+			case 5: //east
+				return 2; // to north
+			default:
+				return side;
+			}
+		case 5:
+			switch (side){
+			case 0:
+				return 1;
+			case 1:
+				return 0;
+			case 2://north
+				return 5; //to east
+			case 3://south
+				return 4; //to west
+			case 4://west
+				return 2; //to north
+			case 5: //east
+				return 3; //to south
+			default:
+				return side;
+			}
+		case 6:
+			switch (side){
+			case 0:
+				return 1;
+			case 1:
+				return 0;
+			case 2://north
+				return 3; //to south
+			case 3://south
+				return 2; //to north
+			case 4://west
+				return 5; //to east
+			case 5: //east
+				return 4; //to west
+			default:
+				return side;
+			}
+		case 7:
+			switch (side){
+			case 0:
+				return 1;
+			case 1:
+				return 0;
+			default:
+				return side;
+			}
+		default:
+			return 0;
+		}
 	}
 
 	@Override
