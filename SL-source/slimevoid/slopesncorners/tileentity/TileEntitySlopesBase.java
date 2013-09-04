@@ -48,7 +48,7 @@ public class TileEntitySlopesBase extends TileEntityBase {
 			new ItemStack(
 				this.getBlockID(),
 				1, 
-				this.getSlopeIndex()));
+				this.getdropDamage()));
 	}
 	
 	@Override
