@@ -258,70 +258,79 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 		int x = this.xCoord,
 			y = this.yCoord,
 			z = this.zCoord;
-		int iDir = this.getBlockMetadata();
+		int iDir = this.rotation;
 		int result = -1;
+		TileEntity tileentity;
 		switch (iDir) {
 		case 0:
-			if (iblockaccess.getBlockTileEntity(x + 1, y, z) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x + 1, y, z) == 3)
+			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 3)
 					result = 3;
-				if (iblockaccess.getBlockMetadata(x + 1, y, z) == 2)
+				if (((TileEntitySlopes) tileentity).rotation == 2)
 					result = 0;
 			}
 			break;
 		case 1:
-			if (iblockaccess.getBlockTileEntity(x - 1, y, z) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x - 1, y, z) == 3)
+			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 3)
 					result = 1;
-				if (iblockaccess.getBlockMetadata(x - 1, y, z) == 2)
+				if (((TileEntitySlopes) tileentity).rotation == 2)
 					result = 2;
 			}
 			break;
 		case 2:
-			if (iblockaccess.getBlockTileEntity(x, y, z + 1) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x, y, z + 1) == 1)
+			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 1)
 					result = 2;
-				if (iblockaccess.getBlockMetadata(x, y, z + 1) == 0)
+				if (((TileEntitySlopes) tileentity).rotation == 0)
 					result = 0;
 			}
 			break;
 		case 3:
-			if (iblockaccess.getBlockTileEntity(x, y, z - 1) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x, y, z - 1) == 1)
+			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 1)
 					result = 1;
-				if (iblockaccess.getBlockMetadata(x, y, z - 1) == 0)
+				if (((TileEntitySlopes) tileentity).rotation == 0)
 					result = 3;
 			}
 			break;
 		case 4:
-			if (iblockaccess.getBlockTileEntity(x + 1, y, z) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x + 1, y, z) == 7)
+			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 7)
 					result = 7;
-				if (iblockaccess.getBlockMetadata(x + 1, y, z) == 6)
+				if (((TileEntitySlopes) tileentity).rotation == 6)
 					result = 4;
 			}
 			break;
 		case 5:
-			if (iblockaccess.getBlockTileEntity(x - 1, y, z) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x - 1, y, z) == 7)
+			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 7)
 					result = 5;
-				if (iblockaccess.getBlockMetadata(x - 1, y, z) == 6)
+				if (((TileEntitySlopes) tileentity).rotation == 6)
 					result = 6;
 			}
 			break;
 		case 6:
-			if (iblockaccess.getBlockTileEntity(x, y, z + 1) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x, y, z + 1) == 5)
+			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 5)
 					result = 6;
-				if (iblockaccess.getBlockMetadata(x, y, z + 1) == 4)
+				if (((TileEntitySlopes) tileentity).rotation == 4)
 					result = 4;
 			}
 			break;
 		case 7:
-			if (iblockaccess.getBlockTileEntity(x, y, z - 1) instanceof TileEntitySlopes) {
-				if (iblockaccess.getBlockMetadata(x, y, z - 1) == 5)
+			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			if (tileentity instanceof TileEntitySlopes) {
+				if (((TileEntitySlopes) tileentity).rotation == 5)
 					result = 5;
-				if (iblockaccess.getBlockMetadata(x, y, z - 1) == 4)
+				if (((TileEntitySlopes) tileentity).rotation == 4)
 					result = 7;
 			}
 			break;

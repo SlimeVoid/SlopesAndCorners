@@ -136,8 +136,10 @@ public class ConfigurationLib {
 					1, //placholder will be axed once we get everything else working
 					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])],
 					blockIdNDmg.split("_").length == 1 ? 0:Integer.parseInt(blockIdNDmg.split("_")[1]),
-					Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getUnlocalizedName(),
-					custommats.split("-").length == 1 ? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getLocalizedName() : custommats.split("-")[1]);
+					custommats.split("-").length == 1 ? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getUnlocalizedName() : custommats.split("-")[1].split("_")[0],
+					custommats.split("-").length == 1 ? Block.blocksList[Integer.parseInt(blockIdNDmg.split("_")[0])].getLocalizedName() : custommats.split("-")[1].split("_").length == 1?custommats.split("-")[1].replaceAll(
+							"(\\p{Ll})(\\p{Lu})",
+							"$1 $2") :custommats.split("-")[1].split("_")[1]);
 			currentmatindex++;
 		}
 		//initializeSlopesNCorners(baseBlockIdsNDmgs,

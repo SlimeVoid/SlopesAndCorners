@@ -61,7 +61,7 @@ public class ItemBlockSlope extends ItemBlock {
 	private String getSlopeName(int hb) {
 		switch (hb) {
 		case 0: // '\0'
-			return "side";
+			return "slope";
 
 		case 16: // '\020'
 			return "oblic";
@@ -73,7 +73,7 @@ public class ItemBlockSlope extends ItemBlock {
 			return "stairs";
 
 		case 19: // '\023'
-			return "slope";
+			return "side";
 		default:
 			return null;
 		}
@@ -91,8 +91,8 @@ public class ItemBlockSlope extends ItemBlock {
 			if (name == null) {
 				throw new IndexOutOfBoundsException();
 			} else {
-				return (new StringBuilder()).append("tile.").append(stub)
-						.append(".").append(name).toString();
+				return (new StringBuilder()).append(name).append(".").append(stub)
+						.toString();
 			}
 		}
 		if (placers[hb] == null) {
