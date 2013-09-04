@@ -32,12 +32,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 		raytracing = true;
 
 		raytraceFirstPhase = true;
-		amovingobjectposition = blockBase.collisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+		amovingobjectposition = blockBase.superCollisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 				startVec, endVec);
 
 		if (amovingobjectposition == null) {
 			raytraceFirstPhase = false;
-			amovingobjectposition = blockBase.collisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+			amovingobjectposition = blockBase.superCollisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					startVec, endVec);
 
 		}
@@ -46,7 +46,7 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockBase.collisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+			amovingobjectposition = blockBase.superCollisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					startVec, endVec);
 		}
 		return amovingobjectposition;
@@ -57,10 +57,10 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 			Entity par7Entity) {
 		int iDir = this.rotation;
 		setOblicBounds(blockBase, iDir, true);
-		blockBase.addCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord, par5AxisAlignedBB, par6List,
+		blockBase.superAddCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord, par5AxisAlignedBB, par6List,
 				par7Entity);
 		setOblicBounds(blockBase, iDir, false);
-		blockBase.addCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord, par5AxisAlignedBB, par6List,
+		blockBase.superAddCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord, par5AxisAlignedBB, par6List,
 				par7Entity);
 		blockBase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}

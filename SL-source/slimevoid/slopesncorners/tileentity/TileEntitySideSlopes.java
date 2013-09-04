@@ -33,14 +33,14 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 		raytracing = true;
 		for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
 			raytraceheight = i;
-			amovingobjectposition = blockBase.collisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+			amovingobjectposition = blockBase.superCollisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					startVec, endVec);
 		}
 		raytracing = false;
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockBase.collisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+			amovingobjectposition = blockBase.superCollisionRayTrace(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					startVec, endVec);
 		}
 		return amovingobjectposition;
@@ -52,7 +52,7 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 		int iDir = this.getRotation();
 		for (int i = 1; i <= 16; i++) {
 			setSideSlopeBounds(blockBase, iDir, i);
-			blockBase.addCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
+			blockBase.superAddCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
 		blockBase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);

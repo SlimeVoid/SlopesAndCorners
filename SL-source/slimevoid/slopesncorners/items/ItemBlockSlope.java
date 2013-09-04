@@ -48,7 +48,7 @@ public class ItemBlockSlope extends ItemBlock {
 
 	private boolean itemUseShared(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
 		int hb = ist.getItemDamage();
-		int lb = hb & 0xff;
+		int lb = hb & 0xfff;
 		hb >>= 12;
 		if (placers[hb] == null) {
 			System.out.println("No Placer Registered!!!");
@@ -65,7 +65,7 @@ public class ItemBlockSlope extends ItemBlock {
 	@Override
 	public String getUnlocalizedName(ItemStack ist) {
 		int hb = ist.getItemDamage();
-		int lb = hb & 0xff;
+		int lb = hb & 0xfff;
 		hb >>= 12;
 		String stub = getSlopeName(hb);
 		String name;

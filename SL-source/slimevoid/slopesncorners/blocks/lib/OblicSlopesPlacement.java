@@ -20,10 +20,10 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 		// TODO :: Auto-generated method stub
 		BlockHelper.playBlockPlaceNoise(
 				world, x, y, z,
-				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xff).blockID);
+				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
 		TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntityOblicSlopes.class);
 		if (tileentity != null) {
-			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
+			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
 			tileentity.setDropDamage(itemstack.getItemDamage());
 			//System.out.println(tileentity.getSlopeIndex());
 		}
@@ -43,7 +43,7 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 			return false;
 		}
 		//do all rotation calculations here
-		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
+		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
 		tileentity.setDropDamage(itemstack.getItemDamage());
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);

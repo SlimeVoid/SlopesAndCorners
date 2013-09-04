@@ -29,6 +29,8 @@ import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRender
 import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.items.crafting.NBTRecipe;
+import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
+import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -161,10 +163,14 @@ public class ConfigurationLib {
 
 	private static void initializeSlopes() {
 		MaterialsLib.addMaterialHandler(new SlopeMaterialHandler());
-		GameRegistry.registerTileEntity(TileEntitySlopes.class, "slopes");
+		GameRegistry.registerTileEntity(TileEntitySlopes.class, "slope");
+		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
+		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
 		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		blockSlopes.addTileEntityMapping(0, TileEntitySlopes.class);
+		blockSlopes.addTileEntityMapping(1, TileEntitySideSlopes.class);
+		blockSlopes.addTileEntityMapping(2, TileEntityOblicSlopes.class);
 		blockSlopes.registerPlacement(0, new SlopesPlacement());
 		blockSlopes.registerPlacement(1, new SideSlopesPlacement());
 		blockSlopes.registerPlacement(2, new OblicSlopesPlacement());

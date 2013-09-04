@@ -6,6 +6,7 @@ import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
+import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
 import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -50,7 +51,7 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 		if (modelId == ConfigurationLib.slopesRenderID) {
 			if (block instanceof BlockSlopesBase) {
 				int metadata = world.getBlockMetadata(x, y, z);
-				TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, ((BlockSlopesBase) block).getTileMapData(metadata));
+				TileEntitySlopesBase tileentity = (TileEntitySlopesBase) BlockHelper.getTileEntity(world, x, y, z, ((BlockSlopesBase) block).getTileMapData(metadata));
 				if (tileentity != null) {
 					ISimpleBlockRenderingHandler handler = getSlopeRenderer(metadata);
 					if (handler != null) {
