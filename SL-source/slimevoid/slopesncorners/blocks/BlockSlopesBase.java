@@ -46,18 +46,6 @@ public class BlockSlopesBase extends BlockBase {
 	}
 	
 	@Override
-	public boolean addBlockDestroyEffects(World world, int x, int y, int z,
-			int meta, EffectRenderer effectRenderer) {
-		return SlopesEntityDiggingFX.doBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this);
-	}
-
-	@Override
-	public boolean addBlockHitEffects(World world, MovingObjectPosition target,
-			EffectRenderer effectRenderer) {
-		return SlopesEntityDiggingFX.doBlockHitEffects(world, target, effectRenderer, this);
-	}
-	
-	@Override
 	public boolean canHarvestBlock(EntityPlayer player, int meta)
     {        
         return true;

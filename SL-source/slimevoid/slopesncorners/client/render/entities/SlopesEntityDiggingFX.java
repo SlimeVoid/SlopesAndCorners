@@ -5,9 +5,6 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import slimevoid.littleblocks.blocks.BlockLittleChunk;
-import slimevoid.littleblocks.core.LittleBlocks;
-import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
 
@@ -18,7 +15,7 @@ public class SlopesEntityDiggingFX extends EntityDiggingFX{
       
 	}
 
-	public static boolean doBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, BlockSlopesBase block) {
+	public static boolean doBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, Block block) {
 		TileEntitySlopesBase tile = (TileEntitySlopesBase) world.getBlockTileEntity(x, y, z);
 		Block baseblock = MaterialsLib.getBlock(tile.getSlopeIndex());		
 			byte b0 = 4;

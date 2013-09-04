@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
+import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoidlib.blocks.BlockBase;
 import slimevoidlib.tileentity.TileEntityBase;
 
 public class TileEntitySlopesBase extends TileEntityBase {
@@ -176,6 +180,16 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
 		return MaterialsLib.getIconForSide(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()), this.getRotatedSide(side));
+	}
+	
+	@Override
+	public boolean addBlockDestroyEffects(BlockBase blockBase, int meta, EffectRenderer effectRenderer) {
+		return SlopesEntityDiggingFX.doBlockDestroyEffects(this.worldObj, this.xCoord, this.yCoord, this.zCoord, meta, effectRenderer, blockBase);
+	}
+
+	@Override
+	public boolean addBlockHitEffects(BlockBase blockBase, MovingObjectPosition target, EffectRenderer effectRenderer) {
+		return SlopesEntityDiggingFX.doBlockHitEffects(this.worldObj, target, effectRenderer, blockBase);
 	}
 	
 	@Override
