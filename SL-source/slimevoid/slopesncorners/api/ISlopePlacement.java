@@ -19,4 +19,6 @@ public interface ISlopePlacement {
 			World world, int x, int y, int z, int side, float hitX, float hitY,
 			float hitZ, int metadata);
 
+	public abstract String getName();
+
 }

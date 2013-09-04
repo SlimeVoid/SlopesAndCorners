@@ -59,24 +59,7 @@ public class ItemBlockSlope extends ItemBlock {
 	}
 
 	private String getSlopeName(int hb) {
-		switch (hb) {
-		case 0: // '\0'
-			return "slope";
-
-		case 2: // '\020'
-			return "oblic";
-
-		case 17: // '\021'
-			return "slant";
-
-		case 18: // '\022'
-			return "stairs";
-
-		case 1: // '\023'
-			return "side";
-		default:
-			return "renameme";
-		}
+		return placers[hb].getName();
 	}
 
 	@Override

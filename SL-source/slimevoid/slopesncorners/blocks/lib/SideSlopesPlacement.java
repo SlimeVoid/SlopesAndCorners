@@ -80,5 +80,11 @@ public class SideSlopesPlacement implements ISlopePlacement {
 		
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "side";
+	}
+
 
 }

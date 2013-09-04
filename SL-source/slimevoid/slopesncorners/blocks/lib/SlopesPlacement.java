@@ -78,4 +78,10 @@ public class SlopesPlacement implements ISlopePlacement {
 		}
 		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, baseDMG + matIndex));
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "slope";
+	}
 }
