@@ -31,7 +31,7 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID,
 			RenderBlocks renderer) {
-		System.out.println("Held data: " + metadata);
+		//System.out.println("Held data: " + metadata);
 	}
 
 	@Override

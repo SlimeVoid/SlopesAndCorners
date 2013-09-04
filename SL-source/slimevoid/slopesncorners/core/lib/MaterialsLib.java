@@ -155,7 +155,9 @@ public class MaterialsLib {
 		//	128, 	64, 	32, 	16
 		//	8, 		4, 		2, 		1
 		int hd = dmg >> 8; // (Skips the first 8 bits)
+		System.out.println("Damage to hd: " + hd);
 		int cn = dmg & 0xff; // 0xff = 255 (Retrieves the first 8 bits)
+		System.out.println("Damage to cn: " + cn);
 		switch (hd) {
 		case 0: // '\0'
 			cn |= 0x10000; //  0001 0000 0000 xxxx xxxx
