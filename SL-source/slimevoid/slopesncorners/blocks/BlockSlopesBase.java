@@ -1,10 +1,14 @@
 package slimevoid.slopesncorners.blocks;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import slimevoid.slopesncorners.api.ISlopePlacement;
+import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
@@ -33,6 +37,18 @@ public class BlockSlopesBase extends BlockBase {
 	
 	public void registerPlacement(int md, ISlopePlacement isp) {
 		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(md, isp);
+	}
+	
+	@Override
+	public boolean addBlockDestroyEffects(World world, int x, int y, int z,
+			int meta, EffectRenderer effectRenderer) {
+		return SlopesEntityDiggingFX.doBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this);
+	}
+
+	@Override
+	public boolean addBlockHitEffects(World world, MovingObjectPosition target,
+			EffectRenderer effectRenderer) {
+		return SlopesEntityDiggingFX.doBlockHitEffects(world, target, effectRenderer, this);
 	}
 
 }

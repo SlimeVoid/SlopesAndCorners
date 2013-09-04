@@ -317,6 +317,12 @@ public class MaterialsLib {
         ItemStack ist = materials[n];
         return Block.blocksList[ist.itemID];
     }
+    
+    public static int getBlockDmg(int n)
+    {
+        ItemStack ist = materials[n];
+        return ist.getItemDamage();
+    }
 
     public static String getName(int n)
     {
