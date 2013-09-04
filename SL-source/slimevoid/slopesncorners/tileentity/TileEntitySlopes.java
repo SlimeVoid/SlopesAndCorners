@@ -20,9 +20,9 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 	@Override
 	public boolean isBlockSolidOnSide(BlockBase blockBase, ForgeDirection side) {
 		boolean result = false;
-		if (side == side.UP && this.getBlockMetadata() / 4 == 1)
+		if (side == side.UP && this.getRotation() / 4 == 1)
 			return true;
-		if (side == side.DOWN && this.getBlockMetadata() / 4 == 0)
+		if (side == side.DOWN && this.getRotation() / 4 == 0)
 			return true;
 		if (GetCorneriDir() > -1)
 			return false;
@@ -48,7 +48,7 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 			}
 			return result;
 		}
-		switch (this.getBlockMetadata()) {
+		switch (this.getRotation()) {
 		case 0:
 		case 4:
 			result = side == side.EAST;

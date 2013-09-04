@@ -1,7 +1,10 @@
 package slimevoid.slopesncorners.tileentity;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
@@ -12,6 +15,7 @@ import slimevoidlib.tileentity.TileEntityBase;
 public class TileEntitySlopesBase extends TileEntityBase {
 	
 	private short slopeIndex;
+	private int dropDamage;
 	protected int state;
 	
 	public TileEntitySlopesBase() {
@@ -24,6 +28,23 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	
 	public short getSlopeIndex() {
 		return this.slopeIndex;
+	}
+	
+	public void setDropDamage(int val) {
+		this.dropDamage = val;
+	}
+	
+	public int getdropDamage() {
+		return this.dropDamage;
+	}
+	
+	@Override
+	public void addHarvestContents(ArrayList<ItemStack> harvestList) {
+		harvestList.add(
+			new ItemStack(
+				this.getBlockID(),
+				1, 
+				this.getSlopeIndex()));
 	}
 	
 	@Override

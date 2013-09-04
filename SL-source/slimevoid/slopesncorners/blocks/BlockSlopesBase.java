@@ -1,9 +1,15 @@
 package slimevoid.slopesncorners.blocks;
 
+import java.util.Arrays;
+import java.util.List;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -50,5 +56,11 @@ public class BlockSlopesBase extends BlockBase {
 			EffectRenderer effectRenderer) {
 		return SlopesEntityDiggingFX.doBlockHitEffects(world, target, effectRenderer, this);
 	}
+	
+	@Override
+	public boolean canHarvestBlock(EntityPlayer player, int meta)
+    {        
+        return true;
+    }
 
 }
