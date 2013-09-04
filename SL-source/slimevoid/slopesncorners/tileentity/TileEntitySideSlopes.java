@@ -2,16 +2,14 @@ package slimevoid.slopesncorners.tileentity;
 
 import java.util.List;
 
-import slimevoidlib.blocks.BlockBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import slimevoidlib.blocks.BlockBase;
 
-public class TileEnitySideSlopes extends TileEntitySlopesBase {
+public class TileEntitySideSlopes extends TileEntitySlopesBase {
 	private boolean raytracing;
 	private int raytraceheight;
 	private boolean raytraceFirstPhase;

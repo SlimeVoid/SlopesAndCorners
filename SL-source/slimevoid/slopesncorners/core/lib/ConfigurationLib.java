@@ -12,19 +12,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.Configuration;
-import slimevoid.slopesncorners.blocks.BlockSlopesBase;
-import slimevoid.slopesncorners.blocks.BlockTriPointCorner;
 import slimevoid.slopesncorners.blocks.BlockOblicSlopes;
 import slimevoid.slopesncorners.blocks.BlockSideSlopes;
+import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.blocks.BlockSlopesNCorners;
 import slimevoid.slopesncorners.blocks.BlockStairsPublic;
+import slimevoid.slopesncorners.blocks.BlockTriPointCorner;
+import slimevoid.slopesncorners.blocks.lib.OblicSlopesPlacement;
+import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
 import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSideSlopeRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.items.crafting.NBTRecipe;
@@ -64,6 +65,8 @@ public class ConfigurationLib {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			BlockSlopesRenderer renderHandler = new BlockSlopesRenderer();
 			renderHandler.registerSlopeRenderer(0, new BlockSlopesNCornersRenderer());
+			renderHandler.registerSlopeRenderer(1, new BlockSideSlopeRenderer());
+			renderHandler.registerSlopeRenderer(2, new BlockOblicSlopesRenderer());
 			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
 /*			SlopesNCorners.registerRenderInformation(
 					SlopesNCornersRenderID,
@@ -163,6 +166,8 @@ public class ConfigurationLib {
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		blockSlopes.addTileEntityMapping(0, TileEntitySlopes.class);
 		blockSlopes.registerPlacement(0, new SlopesPlacement());
+		blockSlopes.registerPlacement(1, new SideSlopesPlacement());
+		blockSlopes.registerPlacement(2, new OblicSlopesPlacement());
 		
 	}
 

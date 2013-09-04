@@ -163,37 +163,37 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, -1F, 0.0F);
 			renderSlopesBottomFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 0), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 0), 1, renderblocks,
 				240);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
 		renderSlopesTopFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 1), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 1),1, renderblocks,
 				240);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, -1F);
 		renderSlopesEastFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 2), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 2), 1, renderblocks,
 				240);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, 1.0F);
 		renderSlopesWestFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 3), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 3), 1, renderblocks,
 				240);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1F, 0.0F, 0.0F);
 		renderSlopesNorthFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 4), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 4), 1, renderblocks,
 				240);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
 		renderSlopesSouthFace(block, 0.0D, 0.0D, 0.0D,
-				MaterialsLib.getIconForSide(i, 5), 2, renderblocks,
+				MaterialsLib.getIconForSide(i, 5), 1, renderblocks,
 				240);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
@@ -206,7 +206,7 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 	@Override
 	public boolean renderWorldBlock(IBlockAccess iblockaccess, int i, int j, int k, Block block, int l, RenderBlocks renderblocks)
 	{
-		if (l == ConfigurationLib.SideSlopesRenderID) {
+		if (l == ConfigurationLib.slopesRenderID) {
 			
 				return renderBlockSlopes(block, i, j, k, renderblocks,
 						iblockaccess);

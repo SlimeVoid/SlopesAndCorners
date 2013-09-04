@@ -17,7 +17,7 @@ public class ItemBlockSlope extends ItemBlock {
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[1];
+		placers = new ISlopePlacement[3];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
@@ -36,7 +36,7 @@ public class ItemBlockSlope extends ItemBlock {
 		super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
 		int hb = stack.getItemDamage();
 		//int lb = hb & 0xff;
-		hb >>= 8;
+		hb >>= 12;
 		if (placers[hb] == null) {
 			System.out.println("No Placer Registered!!!");
 			return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
@@ -49,7 +49,7 @@ public class ItemBlockSlope extends ItemBlock {
 	private boolean itemUseShared(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
 		int hb = ist.getItemDamage();
 		int lb = hb & 0xff;
-		hb >>= 8;
+		hb >>= 12;
 		if (placers[hb] == null) {
 			System.out.println("No Placer Registered!!!");
 			return false;
@@ -63,7 +63,7 @@ public class ItemBlockSlope extends ItemBlock {
 		case 0: // '\0'
 			return "slope";
 
-		case 16: // '\020'
+		case 2: // '\020'
 			return "oblic";
 
 		case 17: // '\021'
@@ -72,10 +72,10 @@ public class ItemBlockSlope extends ItemBlock {
 		case 18: // '\022'
 			return "stairs";
 
-		case 19: // '\023'
+		case 1: // '\023'
 			return "side";
 		default:
-			return null;
+			return "renameme";
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ItemBlockSlope extends ItemBlock {
 	public String getUnlocalizedName(ItemStack ist) {
 		int hb = ist.getItemDamage();
 		int lb = hb & 0xff;
-		hb >>= 8;
+		hb >>= 12;
 		String stub = getSlopeName(hb);
 		String name;
 		if (stub != null) {
@@ -95,7 +95,7 @@ public class ItemBlockSlope extends ItemBlock {
 						.toString();
 			}
 		}
-		if (placers[hb] == null) {
+		if (placers[gethbindex(hb)] == null) {
 			throw new IndexOutOfBoundsException();
 		}
 		name = placers[hb].getSlopeName(hb, lb);
@@ -106,10 +106,32 @@ public class ItemBlockSlope extends ItemBlock {
 		}
 	}
 	
+	private int gethbindex(int hb) {
+		// TODO Auto-generated method stub
+		switch (hb) {
+		case 0: // '\0'
+			return 0;
+
+		case 16: // '\020'
+			return 1;
+
+		case 17: // '\021'
+			return 2;
+
+		case 18: // '\022'
+			return 3;
+
+		case 19: // '\023'
+			return 4;
+		default:
+			return -1;
+		}
+	}
+
 	@Override
     public int getMetadata(int damage)
     {
-        return damage >> 8;
+        return damage >> 12;
     }
 
 	public void registerPlacement(int md, ISlopePlacement isp) {
@@ -123,7 +145,7 @@ public class ItemBlockSlope extends ItemBlock {
 			for(ISlopePlacement placer : placers){
 				if (placer == null) continue;				
 				for (int i = 0; i < MaterialsLib.getSize(); i++) {						
-						placer.addCreativeItems(placerindex, tab, list, i);
+						placer.addCreativeItems(placerindex * 4096, tab, list, i);
 					}
 				placerindex++;
 			}

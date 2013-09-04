@@ -71,12 +71,11 @@ public class SlopesPlacement implements ISlopePlacement {
 	}
 
 	@Override
-	public void addCreativeItems(int i, CreativeTabs tab, List itemList, int matIndex) {
+	public void addCreativeItems(int baseDMG, CreativeTabs tab, List itemList, int matIndex) {
 		//System.out.println("Adding Tabs To " + tab + "[" + i + "]["+ matIndex +"]");
 		if (tab != ConfigurationLib.slopesTab) {
 			return;
 		}
-		int defaultDamage = (4095 * i) + matIndex;
-		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, defaultDamage));
+		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, baseDMG + matIndex));
 	}
 }

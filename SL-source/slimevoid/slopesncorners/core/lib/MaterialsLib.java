@@ -167,7 +167,7 @@ public class MaterialsLib {
 		//	2048,	1024,	512,	256
 		//	128, 	64, 	32, 	16
 		//	8, 		4, 		2, 		1
-		int hd = dmg >> 8; // (Skips the first 8 bits)
+		int hd = dmg >> 12; // (Skips the first 8 bits)
 		//System.out.println("Damage to hd: " + hd);
 		int cn = dmg & 0xff; // 0xff = 255 (Retrieves the first 8 bits)
 		//System.out.println("Damage to cn: " + cn);
@@ -300,7 +300,7 @@ public class MaterialsLib {
 	}
 	
 	public static Icon getIconForSide(int n, int side) {
-		
+		if (n > materialIcons.length-1) n =0;
 		return materialIcons[n][side];
 	}
 

@@ -35,7 +35,7 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 		if (modelID == ConfigurationLib.slopesRenderID) {
 			if (block instanceof BlockSlopesBase) {
 				int matIndex = MaterialsLib.damageToMaterialValue(metadata);
-				int renderIndex = metadata >> 8;				
+				int renderIndex = metadata >> 12;				
 					ISimpleBlockRenderingHandler handler = getSlopeRenderer(renderIndex);
 					if (handler != null) {
 						handler.renderInventoryBlock(block, metadata, modelID, renderer);
