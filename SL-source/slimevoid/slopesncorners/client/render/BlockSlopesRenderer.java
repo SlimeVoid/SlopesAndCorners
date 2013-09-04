@@ -55,7 +55,7 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 				if (tileentity != null) {
 					ISimpleBlockRenderingHandler handler = getSlopeRenderer(metadata);
 					if (handler != null) {
-						handler.renderWorldBlock(world, x, y, z, block, metadata, renderer);
+						handler.renderWorldBlock(world, x, y, z, block, modelId, renderer);
 					}
 				}
 			}

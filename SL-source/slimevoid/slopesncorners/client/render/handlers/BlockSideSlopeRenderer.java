@@ -1,9 +1,5 @@
 package slimevoid.slopesncorners.client.render.handlers;
 
-import org.lwjgl.opengl.GL11;
-
-import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -11,6 +7,12 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+
+import org.lwjgl.opengl.GL11;
+
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
@@ -229,7 +231,8 @@ public class BlockSideSlopeRenderer implements ISimpleBlockRenderingHandler
 	
 	public boolean renderBlockSlopes(Block block, int i, int j, int k,
 			RenderBlocks renderblocks, IBlockAccess iblockaccess) {
-		int iDir = iblockaccess.getBlockMetadata(i, j, k);
+		TileEntitySideSlopes tile = (TileEntitySideSlopes)iblockaccess.getBlockTileEntity(i, j, k);
+		int iDir = tile.getRotation();
 		int l = block.colorMultiplier(iblockaccess, i, j, k);
 		float f = (l >> 16 & 0xff) / 255F;
 		float f1 = (l >> 8 & 0xff) / 255F;
