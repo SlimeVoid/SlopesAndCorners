@@ -49,7 +49,7 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
-		return MaterialsLib.getIconForSide(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()), side);
+		return MaterialsLib.getIconForSide(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()), this.getRotatedSide(side));
 	}
 	
 	@Override
