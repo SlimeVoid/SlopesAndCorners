@@ -3,6 +3,7 @@ package slimevoid.slopesncorners.client.render.handlers;
 import org.lwjgl.opengl.GL11;
 
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -39,45 +40,45 @@ public class BlockTriCornersRenderer implements ISimpleBlockRenderingHandler {
 	public void renderInvBlock(RenderBlocks renderblocks, Block block, int i,
 			int j) {
 		Tessellator tessellator = Tessellator.instance;
-		if (j == ConfigurationLib.TriCornersRenderID) {
-			i = i +1;
+		if (j == ConfigurationLib.slopesRenderID) {
+			i = MaterialsLib.damageToMaterialValue(i);
 			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, -1F, 0.0F);
 			renderCornersBottomFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(0, i), i ,
+					MaterialsLib.getIconForSide(i, 0), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, 1.0F, 0.0F);
 			renderCornersTopFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(1, i), i ,
+					MaterialsLib.getIconForSide(i, 1), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, 0.0F, -1F);
 			renderCornersEastFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(2, i), i ,
+					block.getIcon(2, i), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, 0.0F, 1.0F);
 			renderCornersWestFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(3, i), i ,
+					MaterialsLib.getIconForSide(i, 3), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(-1F, 0.0F, 0.0F);
 			renderCornersNorthFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(4, i), i ,
+					MaterialsLib.getIconForSide(i, 4), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(1.0F, 0.0F, 0.0F);
 			renderCornersSouthFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(5, i), i ,
+					MaterialsLib.getIconForSide(i, 5), 2 ,
 					renderblocks, 240);
 			tessellator.draw();
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
