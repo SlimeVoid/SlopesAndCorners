@@ -22,16 +22,19 @@ import slimevoid.slopesncorners.blocks.lib.OblicSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
+import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
 import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSideSlopeRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.items.crafting.NBTRecipe;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
+import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -69,6 +72,8 @@ public class ConfigurationLib {
 			renderHandler.registerSlopeRenderer(0, new BlockSlopesNCornersRenderer());
 			renderHandler.registerSlopeRenderer(1, new BlockSideSlopeRenderer());
 			renderHandler.registerSlopeRenderer(2, new BlockOblicSlopesRenderer());
+			renderHandler.registerSlopeRenderer(3, new BlockTriCornersRenderer());
+			//renderHandler.registerSlopeRenderer(4, new BlockOblicSlopesRenderer());
 			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
 /*			SlopesNCorners.registerRenderInformation(
 					SlopesNCornersRenderID,
@@ -166,14 +171,19 @@ public class ConfigurationLib {
 		GameRegistry.registerTileEntity(TileEntitySlopes.class, "slope");
 		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
 		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
+		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class, "tri");
 		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		blockSlopes.addTileEntityMapping(0, TileEntitySlopes.class);
 		blockSlopes.addTileEntityMapping(1, TileEntitySideSlopes.class);
 		blockSlopes.addTileEntityMapping(2, TileEntityOblicSlopes.class);
+		blockSlopes.addTileEntityMapping(3, TileEntityTriPointCorner.class);
+		//blockSlopes.addTileEntityMapping(4, TileEntityStairs.class);
 		blockSlopes.registerPlacement(0, new SlopesPlacement());
 		blockSlopes.registerPlacement(1, new SideSlopesPlacement());
 		blockSlopes.registerPlacement(2, new OblicSlopesPlacement());
+		blockSlopes.registerPlacement(3, new TriPointCornerPlacement());
+		//blockSlopes.registerPlacement(4, new StairsPlacement());
 		
 	}
 

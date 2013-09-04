@@ -17,7 +17,7 @@ public class ItemBlockSlope extends ItemBlock {
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[3];
+		placers = new ISlopePlacement[5];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
