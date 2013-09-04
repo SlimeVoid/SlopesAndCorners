@@ -1,9 +1,11 @@
-package slimevoid.slopesncorners.client.render;
+package slimevoid.slopesncorners.client.render.handlers;
 
 import org.lwjgl.opengl.GL11;
 
-import slimevoid.slopesncorners.blocks.BlockSlopesNCorners;
+import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
+import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -223,8 +225,20 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z,
 			Block block, int modelId, RenderBlocks renderer) {
-		if (modelId == ConfigurationLib.SlopesNCornersRenderID) {
-			if (((BlockSlopesNCorners)block).GetCorneriDir(world,x,y,z) > -1){
+		
+			TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, ((BlockSlopesBase) block).getTileMapData(modelId));
+			if (tileentity != null) {
+				if (tileentity.GetCorneriDir() > -1) {
+					return renderBlockCorner(block, x, y, z, renderer,
+							world, tileentity.GetCorneriDir());
+				} else if (tileentity.GetIntCorneriDir() > -1) {
+					return renderBlockIntCorner(block, x, y, z, renderer,
+							world, tileentity.GetIntCorneriDir());
+				} else {
+					return renderBlockSlopes(block, x, y, z, renderer,
+							world);
+				}
+/*			if (((BlockSlopesNCorners)block).GetCorneriDir(world,x,y,z) > -1){
 				return renderBlockCorner(block, x, y, z, renderer,
 						world,((BlockSlopesNCorners)block).GetCorneriDir(world,x,y,z));
 			}else if (((BlockSlopesNCorners)block).GetIntCorneriDir(world,x,y,z) > -1){
@@ -233,7 +247,7 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 			}else{
 				return renderBlockSlopes(block, x, y, z, renderer,
 						world);
-			}
+			}*/
 				
 		}
 
@@ -273,19 +287,24 @@ public class BlockSlopesNCornersRenderer implements ISimpleBlockRenderingHandler
 
 	public boolean renderBlockSlopes(Block block, int i, int j, int k,
 			RenderBlocks renderblocks, IBlockAccess iblockaccess) {
-		int iDir = iblockaccess.getBlockMetadata(i, j, k);
-		int l = block.colorMultiplier(iblockaccess, i, j, k);
-		float f = (l >> 16 & 0xff) / 255F;
-		float f1 = (l >> 8 & 0xff) / 255F;
-		float f2 = (l & 0xff) / 255F;
-
-		if (Minecraft.isAmbientOcclusionEnabled()) {
-			return renderSlopesBlockWithAmbientOcclusion(block, i, j, k, f, f1,
-					f2, iDir, renderblocks, iblockaccess);
-		} else {
-			return renderSlopesBlockWithColorMultiplier(block, i, j, k, f, f1,
-					f2, iDir, renderblocks, iblockaccess);
+		int metadata = iblockaccess.getBlockMetadata(i, j, k);
+		TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(iblockaccess, i, j, k, ((BlockSlopesBase) block).getTileMapData(metadata));
+		if (tileentity != null) {
+			int iDir = tileentity.getRotation();
+			int l = block.colorMultiplier(iblockaccess, i, j, k);
+			float f = (l >> 16 & 0xff) / 255F;
+			float f1 = (l >> 8 & 0xff) / 255F;
+			float f2 = (l & 0xff) / 255F;
+	
+			if (Minecraft.isAmbientOcclusionEnabled()) {
+				return renderSlopesBlockWithAmbientOcclusion(block, i, j, k, f, f1,
+						f2, iDir, renderblocks, iblockaccess);
+			} else {
+				return renderSlopesBlockWithColorMultiplier(block, i, j, k, f, f1,
+						f2, iDir, renderblocks, iblockaccess);
+			}
 		}
+		return false;
 	}
 
 	public boolean renderSlopesBlockWithAmbientOcclusion(Block block, int i,

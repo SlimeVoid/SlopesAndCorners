@@ -20,10 +20,11 @@ import slimevoid.slopesncorners.blocks.BlockSlopesNCorners;
 import slimevoid.slopesncorners.blocks.BlockStairsPublic;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
-import slimevoid.slopesncorners.client.render.BlockOblicSlopesRenderRenderer;
-import slimevoid.slopesncorners.client.render.BlockSideSlopeRenderer;
-import slimevoid.slopesncorners.client.render.BlockSlopesNCornersRenderer;
-import slimevoid.slopesncorners.client.render.BlockTriCornersRenderer;
+import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockSideSlopeRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.items.crafting.NBTRecipe;
@@ -54,13 +55,17 @@ public class ConfigurationLib {
 	public static int slopesRenderID;
 
 	public static void configuration(Configuration config) {
-		SlopesNCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
+		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
+/*		SlopesNCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
 		SideSlopesRenderID = RenderingRegistry.getNextAvailableRenderId();
 		TriCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
-		OblicSlopesRenderID = RenderingRegistry.getNextAvailableRenderId();
+		OblicSlopesRenderID = RenderingRegistry.getNextAvailableRenderId();*/
 
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			SlopesNCorners.registerRenderInformation(
+			BlockSlopesRenderer renderHandler = new BlockSlopesRenderer();
+			renderHandler.registerSlopeRenderer(0, new BlockSlopesNCornersRenderer());
+			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
+/*			SlopesNCorners.registerRenderInformation(
 					SlopesNCornersRenderID,
 					new BlockSlopesNCornersRenderer());
 			SlopesNCorners.registerRenderInformation(
@@ -71,7 +76,7 @@ public class ConfigurationLib {
 					new BlockOblicSlopesRenderRenderer());
 			SlopesNCorners.registerRenderInformation(
 					TriCornersRenderID,
-					new BlockTriCornersRenderer());
+					new BlockTriCornersRenderer());*/
 		}
 
 		slopesTab = new CreativeTabs("tabCustom") {

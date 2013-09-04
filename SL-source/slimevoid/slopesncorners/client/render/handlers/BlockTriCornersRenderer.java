@@ -1,4 +1,4 @@
-package slimevoid.slopesncorners.client.render;
+package slimevoid.slopesncorners.client.render.handlers;
 
 import org.lwjgl.opengl.GL11;
 
