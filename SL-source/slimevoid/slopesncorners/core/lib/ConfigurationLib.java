@@ -81,7 +81,7 @@ public class ConfigurationLib {
 
 		slopesTab = new CreativeTabs("tabCustom") {
 			public ItemStack getIconItemStack() {
-				return new ItemStack(Block.stone, 1);
+				return new ItemStack(blockSlopes, 1, 0);
 			}
 
 		};
