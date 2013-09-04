@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
@@ -40,23 +41,19 @@ public class SlopesPlacement implements ISlopePlacement {
 		if (tileentity == null) {
 			return false;
 		}
+		//do all rotation calculations here
 		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xff));
 		//System.out.println("Rotation: " + this.rotation);
-		int state = metadata & 4;
-		//System.out.println("State: " + state);
+		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F) + 0.5D ) & 3);
+		int state = side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4 ;
+		
 		if (tileentity.getRotation() == 0) {
 			tileentity.setRotation(2 | state);
-		}
-
-		if (tileentity.getRotation() == 1) {
+		}else if (tileentity.getRotation() == 1) {
 			tileentity.setRotation(1 | state);
-		}
-
-		if (tileentity.getRotation() == 2) {
+		}else if (tileentity.getRotation() == 2) {
 			tileentity.setRotation(3 | state);
-		}
-
-		if (tileentity.getRotation() == 3) {
+		}else if (tileentity.getRotation() == 3) {
 			tileentity.setRotation(0 | state);
 		}
 		//System.out.println("Rotation: " + this.rotation);

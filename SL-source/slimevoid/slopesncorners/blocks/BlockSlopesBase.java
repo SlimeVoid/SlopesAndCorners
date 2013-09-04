@@ -26,17 +26,17 @@ public class BlockSlopesBase extends BlockBase {
 		return ConfigurationLib.slopesRenderID;
 	}
 	
-	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int damage) {
-		return side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4;
-	}
+	//@Override
+	//public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int damage) {
+	//	return side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4;
+	//}
 	
 	@Override
 	public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i,
 			int j, int k, int l) {
 		return true;
-	}
-
+	}	
+	
 	public void registerPlacement(int md, ISlopePlacement isp) {
 		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(md, isp);
 	}
