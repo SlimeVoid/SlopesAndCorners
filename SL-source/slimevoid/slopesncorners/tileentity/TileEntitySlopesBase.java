@@ -196,13 +196,14 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 		this.slopeIndex = nbttagcompound.getShort(NBTLib.TILE_SLOPE_BLOCKID);
-		
+		this.dropDamage = nbttagcompound.getInteger(NBTLib.TILE_SLOPE_DROPDAMAGE);
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID, this.slopeIndex);
+		nbttagcompound.setInteger(NBTLib.TILE_SLOPE_DROPDAMAGE, this.dropDamage);
 	}
 
 }

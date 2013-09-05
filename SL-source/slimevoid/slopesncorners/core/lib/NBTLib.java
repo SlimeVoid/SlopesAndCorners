@@ -4,5 +4,6 @@ public class NBTLib {
 
 	public static final String TILE_SLOPE_BLOCKID = "baseBlockID";
 	public static final String TILE_SLOPE_DAMAGE = "baseBlockDmg";
+	public static final String TILE_SLOPE_DROPDAMAGE = "dropDamage";
 
 }
