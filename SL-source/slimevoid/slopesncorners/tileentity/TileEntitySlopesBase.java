@@ -1,15 +1,13 @@
 package slimevoid.slopesncorners.tileentity;
 
-import java.util.ArrayList;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
 import net.minecraft.client.particle.EffectRenderer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
+import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
@@ -19,8 +17,6 @@ import slimevoidlib.tileentity.TileEntityBase;
 public class TileEntitySlopesBase extends TileEntityBase {
 	
 	private short slopeIndex;
-	private int dropDamage;
-	protected int state;
 	
 	public TileEntitySlopesBase() {
 		super();
@@ -30,30 +26,23 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		this.slopeIndex = slopeIndex;
 	}
 	
+	public int getMaterial() {
+		return MaterialsLib.damageToMaterialValue(this.getSlopeIndex());
+	}
+	
 	public short getSlopeIndex() {
 		return this.slopeIndex;
 	}
 	
-	public void setDropDamage(int val) {
-		this.dropDamage = val;
-	}
-	
-	public int getdropDamage() {
-		return this.dropDamage;
-	}
-	
 	@Override
-	public void addHarvestContents(ArrayList<ItemStack> harvestList) {
-		harvestList.add(
-			new ItemStack(
-				this.getBlockID(),
-				1, 
-				this.getdropDamage()));
+	public int getExtendedBlockID() {
+		return BlockLib.getBlockDamage(this.blockMetadata, this.getSlopeIndex());
 	}
 	
 	@Override
 	public int getLightValue() {
-		return 0;
+		Block block = MaterialsLib.getBlock(this.getMaterial());
+		return block != null? Block.lightValue[block.blockID] : 0;
 	}
 
 	@Override
@@ -173,7 +162,7 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public StepSound getStepSound() {
-		Block block = MaterialsLib.getBlock(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()));
+		Block block = MaterialsLib.getBlock(this.getMaterial());
 		return block != null ? block.stepSound : null;
 	}
 
@@ -196,14 +185,12 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 		this.slopeIndex = nbttagcompound.getShort(NBTLib.TILE_SLOPE_BLOCKID);
-		this.dropDamage = nbttagcompound.getInteger(NBTLib.TILE_SLOPE_DROPDAMAGE);
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID, this.slopeIndex);
-		nbttagcompound.setInteger(NBTLib.TILE_SLOPE_DROPDAMAGE, this.dropDamage);
 	}
 
 }

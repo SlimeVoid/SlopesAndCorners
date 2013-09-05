@@ -23,7 +23,7 @@ public class MaterialsLib {
 	private static Icon materialIcons[][] = new Icon[256][];
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
-	
+
 	public static int getSize() {
 		return materials.length;
 	}
@@ -60,7 +60,7 @@ public class MaterialsLib {
 		addMaterial(18, 1, Block.blockGold, "Gold");
 		addMaterial(19, 2, Block.blockDiamond, "Diamond");
 		addMaterial(20, 1, Block.blockLapis, "Lapis Lazuli");
-		addMaterial(21, 0, Block.blockSnow,"Snow");
+		addMaterial(21, 0, Block.blockSnow, "Snow");
 		addMaterial(22, 0, Block.pumpkin, "Pumpkin");
 		addMaterial(23, 1, Block.stoneBrick, 0, "stonebrick", "Stone Brick");
 		addMaterial(24, 1, Block.stoneBrick, 1, "stonebrick1", "Stone Brick");
@@ -79,10 +79,8 @@ public class MaterialsLib {
 		}
 		addMaterial(47, 1, Block.sandStone, 2, "sandstone2", "Sandstone");
 		addMaterial(48, 0, Block.wood, 3, "wood3", "Jungle Wood");
-		
 
 	}
-
 
 	public static interface IMaterialHandler {
 
@@ -100,21 +98,19 @@ public class MaterialsLib {
 	}
 
 	public static Integer getMaterial(ItemStack ist) {
-		return (Integer) materialIndex.get(
-				Arrays.asList(new Integer[] {
-					Integer.valueOf(ist.itemID),
-					Integer.valueOf(ist.getItemDamage())
-				}));
+		return (Integer) materialIndex.get(Arrays.asList(new Integer[] {
+				Integer.valueOf(ist.itemID),
+				Integer.valueOf(ist.getItemDamage()) }));
 	}
 
-	
-	private static void addMaterial(int n, int hard, Block bl,	String desc) {
-		addMaterial(n,hard,bl,bl.getUnlocalizedName(),desc);
+	private static void addMaterial(int n, int hard, Block bl, String desc) {
+		addMaterial(n, hard, bl, bl.getUnlocalizedName(), desc);
 	}
 
-	private static void addMaterial(int n, int hard, Block bl,int md, String desc) {
-		addMaterial(n,hard,bl,md,bl.getUnlocalizedName(),desc);
+	private static void addMaterial(int n, int hard, Block bl, int md, String desc) {
+		addMaterial(n, hard, bl, md, bl.getUnlocalizedName(), desc);
 	}
+
 	public static void addMaterial(int n, int hard, Block bl, String name, String desc) {
 		addMaterial(n, hard, false, bl, 0, name, desc);
 	}
@@ -129,16 +125,16 @@ public class MaterialsLib {
 
 	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
-		//System.out.println("Name: " + name);
+		// System.out.println("Name: " + name);
 		materialIcons[materialID] = new Icon[6];
 		for (int i = 0; i < 6; i++) {
 			materialIcons[materialID][i] = bl.getIcon(i, md);
 		}
-		if (name.endsWith(".name")){
-			name=name.substring(0, name.length()-6);
+		if (name.endsWith(".name")) {
+			name = name.substring(0, name.length() - 6);
 		}
-		if (md >0){
-			//add damage to name for better localization
+		if (md > 0) {
+			// add damage to name for better localization
 			name += "." + md;
 		}
 		miningHardness[materialID] = bl.getBlockHardness(null, 0, 0, 0);
@@ -148,40 +144,36 @@ public class MaterialsLib {
 		hardness[materialID] = hard;
 		transparency[materialID] = tpar;
 		materialIndex.put(
-				Arrays.asList(
-						new Integer[] {
-							Integer.valueOf(bl.blockID),
-							Integer.valueOf(md)
-						}),
-					Integer.valueOf(materialID));
+				Arrays.asList(new Integer[] { Integer.valueOf(bl.blockID),
+						Integer.valueOf(md) }), Integer.valueOf(materialID));
 		IMaterialHandler imh;
-		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext();
-			imh.addMaterialReference(materialID)) {
+		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext(); imh
+				.addMaterialReference(materialID)) {
 			imh = (IMaterialHandler) i$.next();
 		}
 	}
 
 	private static int damageToCoverData(int dmg) {
-		//	524288,	262144,	131072,	65536
-		//	32768,	16384,	8192,	4096
-		//	2048,	1024,	512,	256
-		//	128, 	64, 	32, 	16
-		//	8, 		4, 		2, 		1
+		// 524288, 262144, 131072, 65536
+		// 32768, 16384, 8192, 4096
+		// 2048, 1024, 512, 256
+		// 128, 64, 32, 16
+		// 8, 4, 2, 1
 		int hd = dmg >> 12; // (Skips the first 8 bits)
-		//System.out.println("Damage to hd: " + hd);
-		int cn = dmg & 0xff; // 0xff = 255 (Retrieves the first 8 bits)
-		//System.out.println("Damage to cn: " + cn);
+		// System.out.println("Damage to hd: " + hd);
+		int cn = dmg & 0xfff; // 0xfff = 4095 (Retrieves the first 12 bits)
+		// System.out.println("Damage to cn: " + cn);
 		switch (hd) {
 		case 0: // '\0'
-			cn |= 0x10000; //  0001 0000 0000 xxxx xxxx
+			cn |= 0x10000; // 0001 0000 0000 xxxx xxxx
 			break;
 
 		case 16: // '\020'
-			cn |= 0x20100; //  0010 0000 0001 xxxx xxxx
+			cn |= 0x20100; // 0010 0000 0001 xxxx xxxx
 			break;
 
 		case 17: // '\021'
-			cn |= 0x40200; //  0100 0000 0010 xxxx xxxx
+			cn |= 0x40200; // 0100 0000 0010 xxxx xxxx
 			break;
 
 		case 24: // '\030'
@@ -298,9 +290,10 @@ public class MaterialsLib {
 		}
 		return cn;
 	}
-	
+
 	public static Icon getIconForSide(int n, int side) {
-		if (n > materialIcons.length-1) n =0;
+		if (n > materialIcons.length - 1)
+			n = 0;
 		return materialIcons[n][side];
 	}
 
@@ -309,46 +302,65 @@ public class MaterialsLib {
 	}
 
 	public static ItemStack getItemStack(int n) {
-		return materials[n];
+		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+			return materials[n];
+		}
+		return null;
 	}
 
-    public static Block getBlock(int n)
-    {
-        ItemStack ist = materials[n];
-        return Block.blocksList[ist.itemID];
-    }
-    
-    public static int getBlockDmg(int n)
-    {
-        ItemStack ist = materials[n];
-        return ist.getItemDamage();
-    }
+	public static Block getBlock(int n) {
+		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+			ItemStack ist = materials[n];
+			return Block.blocksList[ist.itemID];
+		}
+		return null;
+	}
 
-    public static String getName(int n)
-    {
-        return names[n];
-    }
+	public static int getBlockDmg(int n) {
+		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+			ItemStack ist = materials[n];
+			return ist.getItemDamage();
+		}
+		return 0;
+	}
 
-    public static String getDesc(int n)
-    {
-        return descs[n];
-    }
+	public static String getName(int n) {
+		if (isValidIndex(n, names != null ? names.length : 0)) {
+			return names[n];
+		}
+		return "";
+	}
 
-    public static int getHardness(int n)
-    {
-        return hardness[n];
-    }
+	public static String getDesc(int n) {
+		if (isValidIndex(n, descs != null ? descs.length : 0)) {
+			return descs[n];
+		}
+		return "";
+	}
 
-    public static float getMiningHardness(int n)
-    {
-        return miningHardness[n];
-    }
+	public static int getHardness(int n) {
+		if (isValidIndex(n, hardness != null ? hardness.length : 0)) {
+			return hardness[n];
+		}
+		return 0;
+	}
 
-    public static boolean isTransparent(int n)
-    {
-        return transparency[n];
-    }
+	public static float getMiningHardness(int n) {
+		if (isValidIndex(n, miningHardness != null ? miningHardness.length : 0)) {
+			return miningHardness[n];
+		}
+		return 0.0F;
+	}
 
+	public static boolean isTransparent(int n) {
+		if (isValidIndex(n, transparency != null ? transparency.length : 0)) {
+			return transparency[n];
+		}
+		return false;
+	}
 
+	private static boolean isValidIndex(int n, int size) {
+		return n < size;
+	}
 
 }

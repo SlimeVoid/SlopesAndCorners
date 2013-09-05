@@ -5,16 +5,11 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import slimevoid.slopesncorners.api.ISlopePlacement;
-import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
@@ -44,11 +39,10 @@ public class BlockSlopesBase extends BlockBase {
 	public void registerPlacement(int md, ISlopePlacement isp) {
 		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(md, isp);
 	}
-	
+
 	@Override
-	public boolean canHarvestBlock(EntityPlayer player, int meta)
-    {        
-        return true;
-    }
+	public boolean canHarvestBlock(EntityPlayer player, int meta) {
+		return true;
+	}
 
 }

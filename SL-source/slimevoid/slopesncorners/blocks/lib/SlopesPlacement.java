@@ -21,12 +21,12 @@ public class SlopesPlacement implements ISlopePlacement {
 		BlockHelper.playBlockPlaceNoise(
 				world, x, y, z,
 				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
-		TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntitySlopes.class);
-		if (tileentity != null) {
-			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-			tileentity.setDropDamage(itemstack.getItemDamage());
+		//TileEntitySlopes tileentity = (TileEntitySlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntitySlopes.class);
+		//if (tileentity != null) {
+		//	tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
+			//tileentity.setDropDamage(itemstack.getItemDamage());
 			//System.out.println(tileentity.getSlopeIndex());
-		}
+		//}
 		BlockHelper.updateIndirectNeighbors(
 				world, x, y, z,
 				ConfigurationLib.blockSlopes.blockID);
@@ -43,8 +43,8 @@ public class SlopesPlacement implements ISlopePlacement {
 			return false;
 		}
 		//do all rotation calculations here
-		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-		tileentity.setDropDamage(itemstack.getItemDamage());
+		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage()));
+		//tileentity.setDropDamage(itemstack.getItemDamage());
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F) + 0.5D ) & 3);
 		int state = side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4 ;

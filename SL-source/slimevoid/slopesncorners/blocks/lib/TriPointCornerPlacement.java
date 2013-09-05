@@ -24,7 +24,7 @@ public class TriPointCornerPlacement implements ISlopePlacement {
 		TileEntityTriPointCorner tileentity = (TileEntityTriPointCorner) BlockHelper.getTileEntity(world, x, y, z, TileEntityTriPointCorner.class);
 		if (tileentity != null) {
 			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-			tileentity.setDropDamage(itemstack.getItemDamage());
+			//tileentity.setDropDamage(itemstack.getItemDamage());
 			//System.out.println(tileentity.getSlopeIndex());
 		}
 		BlockHelper.updateIndirectNeighbors(
@@ -44,7 +44,7 @@ public class TriPointCornerPlacement implements ISlopePlacement {
 		}
 		//do all rotation calculations here
 		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-		tileentity.setDropDamage(itemstack.getItemDamage());
+		//tileentity.setDropDamage(itemstack.getItemDamage());
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
 		int state = side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4 ;

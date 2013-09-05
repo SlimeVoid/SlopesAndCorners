@@ -23,7 +23,7 @@ public class SideSlopesPlacement implements ISlopePlacement {
 		TileEntitySideSlopes tileentity = (TileEntitySideSlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntitySideSlopes.class);
 		if (tileentity != null) {
 			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-			tileentity.setDropDamage(itemstack.getItemDamage());
+			//tileentity.setDropDamage(itemstack.getItemDamage());
 			//System.out.println(tileentity.getSlopeIndex());
 		}
 		BlockHelper.updateIndirectNeighbors(
@@ -43,7 +43,7 @@ public class SideSlopesPlacement implements ISlopePlacement {
 		}
 		//do all rotation calculations here
 		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xffff));
-		tileentity.setDropDamage(itemstack.getItemDamage());
+		//tileentity.setDropDamage(itemstack.getItemDamage());
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
 		
