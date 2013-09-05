@@ -46,16 +46,15 @@ public class SideSlopesPlacement implements ISlopePlacement {
 		tileentity.setDropDamage(itemstack.getItemDamage());
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
-		int state = side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4 ;
 		
 		if (tileentity.getRotation() == 0) {
-			tileentity.setRotation(2 | state);
+			tileentity.setRotation(2);
 		}else if (tileentity.getRotation() == 1) {
-			tileentity.setRotation(1 | state);
+			tileentity.setRotation(1);
 		}else if (tileentity.getRotation() == 2) {
-			tileentity.setRotation(3 | state);
+			tileentity.setRotation(3);
 		}else if (tileentity.getRotation() == 3) {
-			tileentity.setRotation(0 | state);
+			tileentity.setRotation(0);
 		}
 		//System.out.println("Rotation: " + this.rotation);
 		tileentity.onInventoryChanged();

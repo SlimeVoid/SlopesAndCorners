@@ -51,7 +51,7 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 			Entity par7Entity) {
 		int iDir = this.getRotation();
 		for (int i = 1; i <= 16; i++) {
-			setSideSlopeBounds(blockBase, iDir, i);
+			setSideSlopeBounds(blockBase, i, iDir);
 			blockBase.superAddCollisionBoxesToList(this.worldObj, this.xCoord, this.yCoord, this.zCoord,
 					par5AxisAlignedBB, par6List, par7Entity);
 		}
