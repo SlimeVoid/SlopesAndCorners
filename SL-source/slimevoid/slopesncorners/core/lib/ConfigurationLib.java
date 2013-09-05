@@ -32,30 +32,15 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 public class ConfigurationLib {
-	private static int SlopesCurrentBlockID;
 	public static int SlopesNCornersOpacity;
-
-	public static int SideSlopesRenderID;
-	public static int TriCornersRenderID;
-	public static int OblicSlopesRenderID;
-	public static int SlopesNCornersRenderID;
+	
 	public static CreativeTabs slopesTab;
-
-	public static List<Block> BlockStairs = new ArrayList<Block>();
-	public static List<Block> BlockSlopesNCorners = new ArrayList<Block>();
-	public static List<Block> BlockSideSlopes = new ArrayList<Block>();
-	public static List<Block> BlockTriCorners = new ArrayList<Block>();
-	public static List<Block> BlockOblicCorners = new ArrayList<Block>();
 	public static BlockSlopesBase blockSlopes;
 	public static int blockSlopesID;
 	public static int slopesRenderID;
 
 	public static void configuration(Configuration config) {
 		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
-/*		SlopesNCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
-		SideSlopesRenderID = RenderingRegistry.getNextAvailableRenderId();
-		TriCornersRenderID = RenderingRegistry.getNextAvailableRenderId();
-		OblicSlopesRenderID = RenderingRegistry.getNextAvailableRenderId();*/
 
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			BlockSlopesRenderer renderHandler = new BlockSlopesRenderer();
@@ -65,39 +50,29 @@ public class ConfigurationLib {
 			renderHandler.registerSlopeRenderer(3, new BlockTriCornersRenderer());
 			//renderHandler.registerSlopeRenderer(4, new BlockOblicSlopesRenderer());
 			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
-/*			SlopesNCorners.registerRenderInformation(
-					SlopesNCornersRenderID,
-					new BlockSlopesNCornersRenderer());
-			SlopesNCorners.registerRenderInformation(
-					SideSlopesRenderID,
-					new BlockSideSlopeRenderer());
-			SlopesNCorners.registerRenderInformation(
-					OblicSlopesRenderID,
-					new BlockOblicSlopesRenderRenderer());
-			SlopesNCorners.registerRenderInformation(
-					TriCornersRenderID,
-					new BlockTriCornersRenderer());*/
 		}
 
-		slopesTab = new CreativeTabs("tabCustom") {
+		slopesTab = new CreativeTabs("slopes") {
 			public ItemStack getIconItemStack() {
 				return new ItemStack(blockSlopes, 1, 0);
 			}
 
 		};
 		LanguageRegistry.instance().addStringLocalization(
-				"itemGroup.tabCustom", "en_US", "Slopes N' Corners");
+				"itemGroup.slopes", "en_US", "Slopes N' Corners");
+		
 		SlopesNCornersOpacity = config
 				.get(Configuration.CATEGORY_GENERAL, "Slopes_Opacity", 0,
 						"The Opacity of none Stair Blocks effects lighting 0 = clear 255 = solid")
 				.getInt();
-		SlopesCurrentBlockID = config
+		
+		blockSlopesID = config
 				.get(Configuration.CATEGORY_GENERAL,
-						"SlopesStartBlockID",
-						2000,
-						"The Blocks will be generated starting at this block ID. Will skip over any used block slots so don't "
-								+ "\nneed a massive chunk of free IDs as long as there is enough empty spaces for all the blocks defined")
+						"SlopesBlockID",
+						1000,
+						"One BlockID for all the slopes")
 				.getInt();
+		
 		String[] baseBlockIdsNDmgs = config
 				.get(Configuration.CATEGORY_GENERAL,
 						"BaseBlockList",
@@ -112,6 +87,7 @@ public class ConfigurationLib {
 						+ "\nif no Friendly version is given then the unfriendly Prefix will be used with spaces added in front"
 						+ "\nof each capital. DMG and Friendly names are optional")
 				.getStringList();
+		
 		String[] baseBlocksWithStairs = config
 				.get(Configuration.CATEGORY_GENERAL,
 						"baseBlocksWithStairsList",
@@ -129,8 +105,9 @@ public class ConfigurationLib {
 						"Blocks that already have a stair defined for them either by other Mods or Vannila "
 						+ "\nexample 5:2;135:0 tells us that the Blockid 5 with damage 2 already has a stair block at blockid 135 damage 0"
 						+ "\nNote DMG is optional if dmg is 0")
-				.getStringList();
-		blockSlopesID = 1000; 
+				.getStringList();		
+		config.save();
+		
 		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
 		MaterialsLib.initMaterials(lengthMats);
 		int currentmatindex = MaterialsLib.minimumlength;
@@ -147,12 +124,7 @@ public class ConfigurationLib {
 							"$1 $2") :custommats.split("-")[1].split("_")[1]);
 			currentmatindex++;
 		}
-		//initializeSlopesNCorners(baseBlockIdsNDmgs,
-		//initializeStairs(baseBlockIdsNDmgs, baseBlocksWithStairs));
-		//initializeSideSlopes(baseBlockIdsNDmgs);
-		//initializeTriCorners(baseBlockIdsNDmgs);
-		//initializeOblicSlopes(baseBlockIdsNDmgs);
-		config.save();
+		
 		initializeSlopes();
 	}
 
