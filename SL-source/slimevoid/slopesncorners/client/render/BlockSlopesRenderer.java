@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
-import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
 import slimevoidlib.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
@@ -35,7 +33,6 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 			RenderBlocks renderer) {
 		if (modelID == ConfigurationLib.slopesRenderID) {
 			if (block instanceof BlockSlopesBase) {
-				int matIndex = MaterialsLib.damageToMaterialValue(metadata);
 				int renderIndex = metadata >> 12;				
 					ISimpleBlockRenderingHandler handler = getSlopeRenderer(renderIndex);
 					if (handler != null) {

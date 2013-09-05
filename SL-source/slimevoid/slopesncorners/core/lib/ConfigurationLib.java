@@ -107,7 +107,8 @@ public class ConfigurationLib {
 						+ "\nNote DMG is optional if dmg is 0")
 				.getStringList();		
 		config.save();
-		
+		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
+		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
 		MaterialsLib.initMaterials(lengthMats);
 		int currentmatindex = MaterialsLib.minimumlength;
@@ -134,17 +135,16 @@ public class ConfigurationLib {
 		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
 		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
 		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class, "tri");
-		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
-		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
-		blockSlopes.addTileEntityMapping(0, TileEntitySlopes.class);
-		blockSlopes.addTileEntityMapping(1, TileEntitySideSlopes.class);
-		blockSlopes.addTileEntityMapping(2, TileEntityOblicSlopes.class);
-		blockSlopes.addTileEntityMapping(3, TileEntityTriPointCorner.class);
+		//GameRegistry.registerTileEntity(TileEntityStairs.class, "stair");
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SLOPES_ID, TileEntitySlopes.class);
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SIDES_ID, TileEntitySideSlopes.class);
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_OBLICS_ID, TileEntityOblicSlopes.class);
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_TRIPOINT_ID, TileEntityTriPointCorner.class);
 		//blockSlopes.addTileEntityMapping(4, TileEntityStairs.class);
-		blockSlopes.registerPlacement(0, new SlopesPlacement());
-		blockSlopes.registerPlacement(1, new SideSlopesPlacement());
-		blockSlopes.registerPlacement(2, new OblicSlopesPlacement());
-		blockSlopes.registerPlacement(3, new TriPointCornerPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_SLOPES_ID, new SlopesPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_SIDES_ID, new SideSlopesPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_OBLICS_ID, new OblicSlopesPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_TRIPOINT_ID, new TriPointCornerPlacement());
 		//blockSlopes.registerPlacement(4, new StairsPlacement());
 		
 	}	
