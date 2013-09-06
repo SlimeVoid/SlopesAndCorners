@@ -1,13 +1,11 @@
 package slimevoid.slopesncorners.blocks;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
@@ -43,6 +41,12 @@ public class BlockSlopesBase extends BlockBase {
 	@Override
 	public boolean canHarvestBlock(EntityPlayer player, int meta) {
 		return true;
+	}
+	
+	@Override
+	public Icon getIcon(int side, int meta){
+		return Block.glass.getIcon(0, 0);
+		
 	}
 
 }
