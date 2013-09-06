@@ -138,7 +138,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase  {
 		aoLightValueXNegYNegZNeg = block.getAmbientOcclusionLightValue(
 				iblockaccess, i - 1, j - 1, k - 1);
 
-		if (block.getBlockTexture(iblockaccess, i, j, k, iDir) == Block.dirt.getBlockTextureFromSide(0)) {
+		if (block.getBlockTexture(iblockaccess, i, j, k, 0) == Block.dirt.getBlockTextureFromSide(0)) {
 			flag1 = flag3 = flag4 = flag5 = flag6 = false;
 		}
 

@@ -1,8 +1,13 @@
 package slimevoid.slopesncorners.blocks.lib;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import slimevoid.slopesncorners.core.lib.BlockLib;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib.IMaterialHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class SlopeMaterialHandler implements IMaterialHandler {
 
@@ -27,20 +32,60 @@ public class SlopeMaterialHandler implements IMaterialHandler {
 					.append(desc).append(" Slanted Corner").toString());
 		LanguageRegistry.instance().addStringLocalization(
 				(new StringBuilder())
-					.append(name).append(".stairs").append(".name").toString(),
-				(new StringBuilder())
-					.append(desc).append(" Stairs").toString());
-		LanguageRegistry.instance().addStringLocalization(
-				(new StringBuilder())
 					.append(name).append(".slope").append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Slope").toString());
 		
 		// TODO :: Slope Recipes
+		ItemStack baseItem = MaterialsLib.getItemStack(i);
+		System.out.println(baseItem);
+		if (baseItem != null) {
+			ItemStack slopeStack = new ItemStack(ConfigurationLib.blockSlopes, 3, (BlockLib.BLOCK_SLOPES_ID << 12) + i);
+			//use copy since we are going to change the stack size later
+			GameRegistry.addShapedRecipe(
+					slopeStack.copy(),
+					new Object [] {
+						"  B",
+						" BB",
+						"B B",
+						Character.valueOf('B'),
+						baseItem
+					});
+			slopeStack.stackSize = 1;
+			ItemStack stack = new ItemStack(ConfigurationLib.blockSlopes, 1, (BlockLib.BLOCK_SIDES_ID << 12) + i);
+			GameRegistry.addShapelessRecipe(
+					stack,					
+					slopeStack
+					);
+			GameRegistry.addShapelessRecipe(
+					slopeStack,					
+					stack
+					);
+			stack = new ItemStack(ConfigurationLib.blockSlopes, 3, (BlockLib.BLOCK_OBLICS_ID << 12) + i);
+			GameRegistry.addShapedRecipe(
+					stack,
+					new Object [] {
+						"  B",
+						"BBB",
+						"B  ",
+						Character.valueOf('B'),
+						baseItem
+					});
+			stack = new ItemStack(ConfigurationLib.blockSlopes, 6, (BlockLib.BLOCK_TRIPOINT_ID << 12) + i);
+			GameRegistry.addShapedRecipe(
+					stack,
+					new Object [] {
+						" B ",
+						" B ",
+						"BBB",
+						Character.valueOf('B'),
+						baseItem
+					});
+		}
+		
+		//GameRegistry.addShapedRecipe(new ItemStack(ConfigurationLib.blockSlopesID, 3, (BlockLib.BLOCK_SLOPES_ID << 12) + i ), "  B","BBB","B B", 'B', baseItem);
+		
 	}
 	
-	public static void registerSlopes() {
-		// TODO :: Slope registration here
-	}
 
 }

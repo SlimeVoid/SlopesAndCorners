@@ -38,7 +38,7 @@ public class BlockTriCornersRenderer extends BlockSlopesRendererBase {
 			tessellator.startDrawingQuads();
 			tessellator.setNormal(0.0F, 0.0F, -1F);
 			renderCornersEastFace(block, 0.0D, 0.0D, 0.0D,
-					block.getIcon(2, i), 1 ,
+					MaterialsLib.getIconForSide(i, 2), 1 ,
 					renderblocks, 240);
 			tessellator.draw();
 			tessellator.startDrawingQuads();
