@@ -7,7 +7,8 @@ import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -28,7 +29,7 @@ public class SlopesNCorners {
 
 	private static Configuration config;
 
-	@EventHandler
+	@PreInit
 	public void slopesPreInit(FMLPreInitializationEvent event) {
 		/**
 			You will be able to find the config file in .minecraft/config/ and it
@@ -47,7 +48,7 @@ public class SlopesNCorners {
 		MaterialsLib.initMaterials();
 	}*/
 	
-	@EventHandler
+	@PostInit
 	public void slopesPostInit(FMLPostInitializationEvent event) {
 
 		// loading the configuration from its file

@@ -1,6 +1,7 @@
 package slimevoid.slopesncorners.client.render.entities;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.util.MovingObjectPosition;
@@ -11,7 +12,7 @@ import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
 public class SlopesEntityDiggingFX extends EntityDiggingFX {
 	
 	public SlopesEntityDiggingFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12, Block par14Block, int par15) {
-		super(par1World, par2, par4, par6, par8, par10, par12, par14Block, par15, par1World.rand.nextInt(6));
+		super(par1World, par2, par4, par6, par8, par10, par12, par14Block, par15, par1World.rand.nextInt(6), Minecraft.getMinecraft().renderEngine);
 	}
 
 	public static boolean doBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, Block block) {
@@ -31,7 +32,7 @@ public class SlopesEntityDiggingFX extends EntityDiggingFX {
 								d1 - (double) y - 0.5D,
 								d2 - (double) z - 0.5D, baseblock,
 								MaterialsLib.getBlockDmg(tile.getSlopeIndex()));
-						effectRenderer.addEffect(particle.applyColourMultiplier(x, y, z));
+						effectRenderer.addEffect(particle.func_70596_a(x, y, z));
 					}
 				}
 	
@@ -66,7 +67,7 @@ public class SlopesEntityDiggingFX extends EntityDiggingFX {
 					d1, d2, 0.0D, 0.0D, 0.0D, baseblock,
 					MaterialsLib.getBlockDmg(tile.getSlopeIndex()));
 			effectRenderer.addEffect(particle
-					.applyColourMultiplier(target.blockX, target.blockY,
+					.func_70596_a(target.blockX, target.blockY,
 							target.blockZ).multiplyVelocity(0.2F)
 					.multipleParticleScaleBy(0.6F));
 	
