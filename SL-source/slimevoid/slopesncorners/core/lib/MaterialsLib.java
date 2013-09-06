@@ -20,7 +20,6 @@ public class MaterialsLib {
 	private static int hardness[] = new int[256];
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static boolean transparency[] = new boolean[256];
-	private static Icon materialIcons[][] = new Icon[256][];
 	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 
@@ -32,7 +31,6 @@ public class MaterialsLib {
 		// TODO :: Retrieve materials from Config
 		if (newLength > minimumlength) {
 			transparency = new boolean[newLength];
-			materialIcons = new Icon[newLength][];
 			miningHardness = new float[newLength];
 			hardness = new int[newLength];
 			descs = new String[newLength];
@@ -126,10 +124,6 @@ public class MaterialsLib {
 	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
 		// System.out.println("Name: " + name);
-		materialIcons[materialID] = new Icon[6];
-		for (int i = 0; i < 6; i++) {
-			materialIcons[materialID][i] = bl.getIcon(i, md);
-		}
 		if (name.endsWith(".name")) {
 			name = name.substring(0, name.length() - 6);
 		}
@@ -292,9 +286,11 @@ public class MaterialsLib {
 	}
 
 	public static Icon getIconForSide(int n, int side) {
-		if (n > materialIcons.length - 1)
-			n = 0;
-		return materialIcons[n][side];
+		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+			ItemStack ist = getItemStack(n);
+			return Block.blocksList[ist.itemID].getIcon(side, ist.getItemDamage());
+		}
+		return null;
 	}
 
 	public static int damageToMaterialValue(int dmg) {
