@@ -99,6 +99,12 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	public int getBlockID() {
 		return ConfigurationLib.blockSlopes.blockID;
 	}
+	
+	@Override
+	public float getBlockHardness(BlockBase blockBase) {
+		Block block = MaterialsLib.getBlock(this.getMaterial());
+		return block.getBlockHardness(worldObj, xCoord, yCoord, zCoord);
+	}
 
 	@Override
 	public StepSound getStepSound() {
