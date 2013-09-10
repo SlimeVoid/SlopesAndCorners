@@ -73,9 +73,7 @@ public class TriPointCornerPlacement implements ISlopePlacement {
 	@Override
 	public void addCreativeItems(int baseDMG, CreativeTabs tab, List itemList,
 			int matIndex) {
-		if (tab != ConfigurationLib.slopesTab || matIndex < 0 || matIndex > MaterialsLib.getSize() - 1) {
-			return;
-		}
+		
 		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, baseDMG + matIndex));
 		
 	}

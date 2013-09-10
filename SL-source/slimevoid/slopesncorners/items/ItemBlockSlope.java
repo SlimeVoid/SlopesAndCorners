@@ -123,7 +123,7 @@ public class ItemBlockSlope extends ItemBlock {
 
 	@Override
 	public void getSubItems(int id, CreativeTabs tab, List list) {
-		if (tab == ConfigurationLib.slopesTab) {
+		if (tab == ConfigurationLib.slopesTab || tab == null) {
 			int placerindex = 0;
 			for(ISlopePlacement placer : placers){
 				if (placer == null) continue;				
