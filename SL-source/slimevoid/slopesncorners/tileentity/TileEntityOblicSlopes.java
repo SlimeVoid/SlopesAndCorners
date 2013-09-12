@@ -16,7 +16,6 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
-		// TODO:: actually set the right block bounds
 		if (raytracing) {
 			this.setOblicBounds(blockbase,
 					this.rotation,

@@ -17,7 +17,6 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 	
 	@Override
 	public boolean onPlaceSlope(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int i) {
-		// TODO :: Auto-generated method stub
 		BlockHelper.playBlockPlaceNoise(
 				world, x, y, z,
 				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
@@ -66,7 +65,6 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public String getSlopeName(int i, int j) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -80,14 +78,12 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "oblic";
 	}
 
 	@Override
 	public String getTabDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Oblic Slopes";
 	}
 
 

@@ -16,7 +16,6 @@ public class TileEntityTriPointCorner extends TileEntitySlopesBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
-		// TODO:: actually set the right block bounds
 		if (raytracing) {
 			this.setTriCornerBounds(blockbase,
 					this.rotation,

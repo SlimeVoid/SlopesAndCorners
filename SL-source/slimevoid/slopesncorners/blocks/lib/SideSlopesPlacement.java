@@ -64,7 +64,6 @@ public class SideSlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public String getSlopeName(int i, int j) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -78,14 +77,12 @@ public class SideSlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "side";
 	}
 
 	@Override
 	public String getTabDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Side Slopes";
 	}
 
 

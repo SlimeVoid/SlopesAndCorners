@@ -16,7 +16,6 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 	
 	@Override
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
-		// TODO:: actually set the right block bounds
 		if (raytracing) {
 
 			setSideSlopeBounds(blockbase, raytraceheight,this.getRotation());

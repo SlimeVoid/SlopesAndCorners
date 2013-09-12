@@ -33,8 +33,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 public class ConfigurationLib {
-	
-	public static CreativeTabs slopesTab;
 	public static BlockSlopesBase blockSlopes;
 	public static int blockSlopesID;
 	public static int slopesRenderID;
@@ -51,12 +49,6 @@ public class ConfigurationLib {
 			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
 		}
 
-		slopesTab = new CreativeTabs("slopes") {
-			public ItemStack getIconItemStack() {
-				return new ItemStack(blockSlopes, 1, 0);
-			}
-
-		};
 		LanguageRegistry.instance().addStringLocalization(
 				"itemGroup.slopes", "en_US", "Slopes N' Corners");
 		

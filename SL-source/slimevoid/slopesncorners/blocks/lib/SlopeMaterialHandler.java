@@ -36,7 +36,6 @@ public class SlopeMaterialHandler implements IMaterialHandler {
 				(new StringBuilder())
 					.append(desc).append(" Slope").toString());
 		
-		// TODO :: Slope Recipes
 		ItemStack baseItem = MaterialsLib.getItemStack(i);
 		System.out.println(baseItem);
 		if (baseItem != null) {

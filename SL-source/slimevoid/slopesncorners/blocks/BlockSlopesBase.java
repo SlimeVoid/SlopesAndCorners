@@ -20,7 +20,17 @@ public class BlockSlopesBase extends BlockBase {
 
 	@Override
 	public CreativeTabs getCreativeTab() {
-		return ConfigurationLib.slopesTab;
+		return null;
+	}
+	
+	@Override
+	public CreativeTabs getCreativeTabToDisplayOn()
+	    {
+	    if (Item.itemsList[this.blockID] != null){
+	      return ((ItemBlockSlope) Item.itemsList[this.blockID]).getCreativeTabs()[0];
+	    }else{
+	      return null;
+	    }
 	}
 
 	@Override

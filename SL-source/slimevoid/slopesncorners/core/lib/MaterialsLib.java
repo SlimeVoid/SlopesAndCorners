@@ -13,20 +13,20 @@ import net.minecraft.util.Icon;
 
 public class MaterialsLib {
 
-	public static final int minimumlength = 49;
+	public static final int minimumlength = 50;
 	private static ItemStack materials[] = new ItemStack[0];
 	private static String names[] = new String[0];
 	private static String descs[] = new String[0];
 	private static int hardness[] = new int[0];
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
+	public static int brickIndex = 5;
 
 	public static int getSize() {
 		return materials.length;
 	}
 
 	public static void initMaterials(int newLength) {
-		// TODO :: Retrieve materials from Config
 		if (newLength < minimumlength) {
 			newLength = minimumlength;
 		}
@@ -68,12 +68,12 @@ public class MaterialsLib {
 		addMaterial(31, 1, Block.sandStone, 1, "Chisled Sandstone");
 		for (int i = 0; i < 16; i++) {
 			addMaterial(32 + i, 0, Block.cloth, i, (new StringBuilder())
-					.append("wool.").append(ItemDye.dyeColors[i]).toString(),
-					(new StringBuilder()).append(ItemDye.dyeColorNames[i])
+					.append("wool.").append(ItemDye.dyeColors[15-i]).toString(),
+					(new StringBuilder()).append(ItemDye.dyeColorNames[15-i])
 							.append(" Wool").toString());
 		}
-		addMaterial(47, 1, Block.sandStone, 2, "sandstone2", "Smooth Sandstone");
-		addMaterial(48, 0, Block.wood, 3, "wood3", "Jungle Wood");
+		addMaterial(48, 1, Block.sandStone, 2, "sandstone2", "Smooth Sandstone");
+		addMaterial(49, 0, Block.wood, 3, "wood3", "Jungle Wood");
 
 	}
 

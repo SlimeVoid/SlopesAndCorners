@@ -2,6 +2,7 @@ package slimevoid.slopesncorners.items;
 
 import java.util.List;
 
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
@@ -14,10 +15,12 @@ import net.minecraft.world.World;
 public class ItemBlockSlope extends ItemBlock {
 	
 	private ISlopePlacement placers[];
+	private CreativeTabs[] tabs;
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[5];
+		placers = new ISlopePlacement[4];
+		tabs = new CreativeTabs[4];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
@@ -90,7 +93,6 @@ public class ItemBlockSlope extends ItemBlock {
 	}
 	
 	private int gethbindex(int hb) {
-		// TODO Auto-generated method stub
 		switch (hb) {
 		case 0: // '\0'
 			return 0;
@@ -117,57 +119,30 @@ public class ItemBlockSlope extends ItemBlock {
         return damage >> 12;
     }
 
-	public void registerPlacement(int md, ISlopePlacement isp) {
+	public void registerPlacement(final int md, ISlopePlacement isp) {
 		this.placers[md] = isp;
+		this.tabs[md] = new CreativeTabs(isp.getName()) {
+			      public ItemStack getIconItemStack() {
+			        return new ItemStack(ConfigurationLib.blockSlopes, 1, (md * 4096) + MaterialsLib.brickIndex);
+			      }
+			    };
+			    LanguageRegistry.instance().addStringLocalization(
+			        "itemGroup." + isp.getName(), "en_US", isp.getTabDisplayName());
+			    
 	}
 
 	@Override
 	public void getSubItems(int id, CreativeTabs tab, List list) {
-		if (tab == ConfigurationLib.slopesTab || tab == null) {
-			int placerindex = 0;
-			for(ISlopePlacement placer : placers){
-				if (placer == null) continue;				
-				for (int i = 0; i < MaterialsLib.getSize(); i++) {						
-						placer.addCreativeItems(placerindex * 4096, tab, list, i);
-					}
-				placerindex++;
-			}
-		}
-		/*else if (tab == tabs) {
-			for (int i = 0; i < 255; i++) {
-				String stub = SlopesLib.getName(i);
-				if (stub != null)
-					list.add(new ur(block, 1, i));
-			}
-
-			for (int i = 1; i < 255; i++) {
-				String stub = getSlopeName(i);
-				if (stub != null)
-					list.add(new ur(block, 1, i << 8));
-			}
-
-			for (int i = 1; i < 255; i++) {
-				String stub = getSlopeName(i);
-				if (stub != null)
-					list.add(new ur(block, 1, i << 8 | 2));
-			}
-
-			for (int i = 1; i < 255; i++) {
-				String stub = getSlopeName(i);
-				if (stub != null)
-					list.add(new ur(block, 1, i << 8 | 0x17));
-			}
-
-			for (int i = 1; i < 255; i++) {
-				String stub = getSlopeName(i);
-				if (stub != null)
-					list.add(new ur(block, 1, i << 8 | 0x1a));
-			}
-		}*/
+		 for(int i = 0; i < placers.length; i++){
+			 if (placers[i] == null || (tab != null && !tabs[i].equals(tab))) continue;        
+			 for (int mi = 0; mi < MaterialsLib.getSize(); mi++) {            
+				 placers[i].addCreativeItems(i * 4096, tab, list, mi);
+			 }
+		 }
 	}
 
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
-		return new CreativeTabs[] {ConfigurationLib.slopesTab};
+		return tabs;
 	}
 }
