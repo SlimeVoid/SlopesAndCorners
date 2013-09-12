@@ -40,6 +40,27 @@ public class ConfigurationLib {
 		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
 	}
 	
+	public static String[] getBaseBlockList(boolean getLatest) {
+		if (getLatest){
+			configuration.load();
+			
+			baseBlockIdsNDmgs = configuration
+					.get(Configuration.CATEGORY_GENERAL,
+							"BaseBlockList",
+							new String[] {}
+							)
+					.getStringList();		
+			
+			configuration.save();
+		}
+		return baseBlockIdsNDmgs;
+	}
+
+	public static void setBaseBlockList(String[] materialList) {
+		baseBlockIdsNDmgs = materialList;
+		reInitSlopeMats();
+	}
+	
 	public static void CommonConfig(File configFile) {
 		configuration = new Configuration(configFile);
 		
@@ -99,16 +120,7 @@ public class ConfigurationLib {
 	}
 	
 	public static void reInitSlopeMats(){
-		configuration.load();
-		
-		baseBlockIdsNDmgs = configuration
-				.get(Configuration.CATEGORY_GENERAL,
-						"BaseBlockList",
-						new String[] {}
-						)
-				.getStringList();		
-		
-		configuration.save();
+		getBaseBlockList(true);
 		initSlopeMats();
 		try{
 			Minecraft.getMinecraft().refreshResources();

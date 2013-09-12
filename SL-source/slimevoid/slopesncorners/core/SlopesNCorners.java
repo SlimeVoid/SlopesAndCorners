@@ -1,8 +1,10 @@
 package slimevoid.slopesncorners.core;
 
+import slimevoid.slopesncorners.client.network.ClientPacketHandler;
 import slimevoid.slopesncorners.command.ReInitMatsCommand;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
+import slimevoid.slopesncorners.network.CommonPacketHandler;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -11,6 +13,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
 @Mod(
 		modid = CoreLib.MOD_ID,
@@ -20,7 +23,13 @@ import cpw.mods.fml.common.network.NetworkMod;
 	)
 @NetworkMod(
 		clientSideRequired = true,
-		serverSideRequired = false
+		serverSideRequired = false,
+		clientPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = ClientPacketHandler.class),
+		serverPacketHandlerSpec = @SidedPacketHandler(
+				channels = { CoreLib.MOD_CHANNEL },
+				packetHandler = CommonPacketHandler.class)
 	)
 
 public class SlopesNCorners {
@@ -44,8 +53,9 @@ public class SlopesNCorners {
 	}
 	
 	@EventHandler
-	public void GetServerMatLib(FMLServerStartingEvent event)
+	public void registerCommand(FMLServerStartingEvent event)
 	{
 		event.registerServerCommand(new ReInitMatsCommand());
 	}
+	
 }
