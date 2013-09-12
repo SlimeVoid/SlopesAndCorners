@@ -5,6 +5,7 @@ import slimevoid.slopesncorners.command.ReInitMatsCommand;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.network.CommonPacketHandler;
+import slimevoid.slopesncorners.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -29,7 +30,8 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 				packetHandler = ClientPacketHandler.class),
 		serverPacketHandlerSpec = @SidedPacketHandler(
 				channels = { CoreLib.MOD_CHANNEL },
-				packetHandler = CommonPacketHandler.class)
+				packetHandler = CommonPacketHandler.class),
+		connectionHandler = CommonProxy.class
 	)
 
 public class SlopesNCorners {

@@ -2,6 +2,6 @@ package slimevoid.slopesncorners.core.lib;
 
 public class CommandLib {
 
-	public static final String UPDATE_SETTINGS = "UpdateMats";
+	public static final String SEND_MATERIALS = "MATERIALS";
 
 }

@@ -15,6 +15,7 @@ public class PacketMaterialList extends PacketUpdate {
 	
 	public PacketMaterialList(String[] materialList) {
 		super(PacketIds.LOGIN, new PacketPayload(0, 0, materialList.length, 0));
+		this.setChannel(CoreLib.MOD_CHANNEL);
 		this.setMaterialList(materialList);
 	}
 
