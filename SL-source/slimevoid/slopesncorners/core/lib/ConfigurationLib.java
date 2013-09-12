@@ -1,11 +1,9 @@
 package slimevoid.slopesncorners.core.lib;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -15,51 +13,47 @@ import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
-import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockSideSlopeRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRenderer;
-import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
-import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ConfigurationLib {
+	private static Configuration configuration;
 	public static BlockSlopesBase blockSlopes;
 	public static int blockSlopesID;
+	private static String[] baseBlockIdsNDmgs;
+	@SideOnly(Side.CLIENT)
 	public static int slopesRenderID;
-
-	public static void configuration(Configuration config) {
+	
+	@SideOnly(Side.CLIENT)
+	public static void ClientConfig(File configFile) {
+		CommonConfig(configFile);
 		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
-
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			BlockSlopesRenderer renderHandler = new BlockSlopesRenderer();
-			renderHandler.registerSlopeRenderer(0, new BlockSlopesNCornersRenderer());
-			renderHandler.registerSlopeRenderer(1, new BlockSideSlopeRenderer());
-			renderHandler.registerSlopeRenderer(2, new BlockOblicSlopesRenderer());
-			renderHandler.registerSlopeRenderer(3, new BlockTriCornersRenderer());
-			SlopesNCorners.registerRenderInformation(slopesRenderID, renderHandler);
-		}
+	}
+	
+	public static void CommonConfig(File configFile) {
+		configuration = new Configuration(configFile);
+		
+		configuration.load();
 
 		LanguageRegistry.instance().addStringLocalization(
 				"itemGroup.slopes", "en_US", "Slopes N' Corners");
 		
-		blockSlopesID = config
+		blockSlopesID = configuration
 				.get(Configuration.CATEGORY_GENERAL,
 						"SlopesBlockID",
 						1000,
 						"One BlockID for all the slopes")
 				.getInt();
 		
-		String[] baseBlockIdsNDmgs = config
+		baseBlockIdsNDmgs = configuration
 				.get(Configuration.CATEGORY_GENERAL,
 						"BaseBlockList",
 						new String[] {
@@ -74,7 +68,10 @@ public class ConfigurationLib {
 								+ "\nwill be assigned based on the firendly name of the base block")
 				.getStringList();		
 		
-		config.save();
+		configuration.save();
+	}
+	
+	public static void registerBlocks() {
 		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
@@ -84,7 +81,7 @@ public class ConfigurationLib {
 			Integer blockId= Integer.parseInt(custommats.split("-")[0].split("_")[0]);
 			Integer blockDMG= custommats.split("-")[0].split("_").length == 1 ? 0:Integer.parseInt(custommats.split("-")[0].split("_")[1]);
 			MaterialsLib.addMaterial(currentmatindex, 
-					1, //placholder will be axed once we get everything else working
+					1, //placeholder will be axed once we get everything else working
 					Block.blocksList[blockId],
 					blockDMG,
 					custommats.split("-").length == 1 ? 
@@ -95,6 +92,7 @@ public class ConfigurationLib {
 		
 		initializeSlopes();
 	}
+		
 
 	private static void initializeSlopes() {
 		MaterialsLib.addMaterialHandler(new SlopeMaterialHandler());
