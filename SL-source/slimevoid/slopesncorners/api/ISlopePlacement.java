@@ -20,5 +20,7 @@ public interface ISlopePlacement {
 			float hitZ, int metadata);
 
 	public abstract String getName();
+	
+	public abstract String getTabDisplayName();
 
 }

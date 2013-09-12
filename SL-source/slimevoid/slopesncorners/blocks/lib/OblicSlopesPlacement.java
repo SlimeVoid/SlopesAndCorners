@@ -86,5 +86,11 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 		return "oblic";
 	}
 
+	@Override
+	public String getTabDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

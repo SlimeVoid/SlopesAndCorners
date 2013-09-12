@@ -86,5 +86,11 @@ public class TriPointCornerPlacement implements ISlopePlacement {
 		return "slant";
 	}
 
+	@Override
+	public String getTabDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

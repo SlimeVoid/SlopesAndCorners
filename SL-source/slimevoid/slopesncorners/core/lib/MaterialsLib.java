@@ -14,13 +14,11 @@ import net.minecraft.util.Icon;
 public class MaterialsLib {
 
 	public static final int minimumlength = 49;
-	private static ItemStack materials[] = new ItemStack[256];
-	private static String names[] = new String[256];
-	private static String descs[] = new String[256];
-	private static int hardness[] = new int[256];
+	private static ItemStack materials[] = new ItemStack[0];
+	private static String names[] = new String[0];
+	private static String descs[] = new String[0];
+	private static int hardness[] = new int[0];
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
-	private static boolean transparency[] = new boolean[256];
-	private static float miningHardness[] = new float[256];
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 
 	public static int getSize() {
@@ -29,17 +27,16 @@ public class MaterialsLib {
 
 	public static void initMaterials(int newLength) {
 		// TODO :: Retrieve materials from Config
-		if (newLength > minimumlength) {
-			transparency = new boolean[newLength];
-			miningHardness = new float[newLength];
-			hardness = new int[newLength];
-			descs = new String[newLength];
-			names = new String[newLength];
-			materials = new ItemStack[newLength];
+		if (newLength < minimumlength) {
+			newLength = minimumlength;
 		}
+		hardness = new int[newLength];
+		descs = new String[newLength];
+		names = new String[newLength];
+		materials = new ItemStack[newLength];
 		addMaterial(0, 1, Block.cobblestone, "Cobblestone");
 		addMaterial(1, 1, Block.stone, "Stone");
-		addMaterial(2, 0, Block.planks, "Wooden Plank");
+		addMaterial(2, 0, Block.planks, "Oak Plank");
 		addMaterial(3, 1, Block.sandStone, "Sandstone");
 		addMaterial(4, 1, Block.cobblestoneMossy, "Moss Stone");
 		addMaterial(5, 1, Block.brick, "Brick");
@@ -61,13 +58,13 @@ public class MaterialsLib {
 		addMaterial(21, 0, Block.blockSnow, "Snow");
 		addMaterial(22, 0, Block.pumpkin, "Pumpkin");
 		addMaterial(23, 1, Block.stoneBrick, 0, "stonebrick", "Stone Brick");
-		addMaterial(24, 1, Block.stoneBrick, 1, "stonebrick1", "Stone Brick");
-		addMaterial(25, 1, Block.stoneBrick, 2, "stonebrick2", "Stone Brick");
+		addMaterial(24, 1, Block.stoneBrick, 1, "stonebrick1", "Mossy Stone Brick");
+		addMaterial(25, 1, Block.stoneBrick, 2, "stonebrick2", "Cracked Stone Brick");
 		addMaterial(26, 1, Block.netherBrick, "Nether Brick");
-		addMaterial(27, 1, Block.stoneBrick, 3, "Stone Brick");
-		addMaterial(28, 0, Block.planks, 1, "Wooden Plank");
-		addMaterial(29, 0, Block.planks, 2, "Wooden Plank");
-		addMaterial(30, 0, Block.planks, 3, "Wooden Plank");
+		addMaterial(27, 1, Block.stoneBrick, 3, "Chisled Stone Brick");
+		addMaterial(28, 0, Block.planks, 1, "Spruce Plank");
+		addMaterial(29, 0, Block.planks, 2, "Birch Plank");
+		addMaterial(30, 0, Block.planks, 3, "Jungle Plank");
 		addMaterial(31, 1, Block.sandStone, 1, "Chisled Sandstone");
 		for (int i = 0; i < 16; i++) {
 			addMaterial(32 + i, 0, Block.cloth, i, (new StringBuilder())
@@ -75,7 +72,7 @@ public class MaterialsLib {
 					(new StringBuilder()).append(ItemDye.dyeColorNames[i])
 							.append(" Wool").toString());
 		}
-		addMaterial(47, 1, Block.sandStone, 2, "sandstone2", "Sandstone");
+		addMaterial(47, 1, Block.sandStone, 2, "sandstone2", "Smooth Sandstone");
 		addMaterial(48, 0, Block.wood, 3, "wood3", "Jungle Wood");
 
 	}
@@ -105,7 +102,7 @@ public class MaterialsLib {
 		addMaterial(n, hard, bl, bl.getUnlocalizedName(), desc);
 	}
 
-	private static void addMaterial(int n, int hard, Block bl, int md, String desc) {
+	static void addMaterial(int n, int hard, Block bl, int md, String desc) {
 		addMaterial(n, hard, bl, md, bl.getUnlocalizedName(), desc);
 	}
 
@@ -131,12 +128,10 @@ public class MaterialsLib {
 			// add damage to name for better localization
 			name += "." + md;
 		}
-		miningHardness[materialID] = bl.getBlockHardness(null, 0, 0, 0);
 		materials[materialID] = ist;
 		names[materialID] = name;
 		descs[materialID] = desc;
 		hardness[materialID] = hard;
-		transparency[materialID] = tpar;
 		materialIndex.put(
 				Arrays.asList(new Integer[] { Integer.valueOf(bl.blockID),
 						Integer.valueOf(md) }), Integer.valueOf(materialID));
@@ -339,20 +334,6 @@ public class MaterialsLib {
 			return hardness[n];
 		}
 		return 0;
-	}
-
-	public static float getMiningHardness(int n) {
-		if (isValidIndex(n, miningHardness != null ? miningHardness.length : 0)) {
-			return miningHardness[n];
-		}
-		return 0.0F;
-	}
-
-	public static boolean isTransparent(int n) {
-		if (isValidIndex(n, transparency != null ? transparency.length : 0)) {
-			return transparency[n];
-		}
-		return false;
 	}
 
 	private static boolean isValidIndex(int n, int size) {

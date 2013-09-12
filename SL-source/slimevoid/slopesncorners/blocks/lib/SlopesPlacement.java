@@ -84,4 +84,10 @@ public class SlopesPlacement implements ISlopePlacement {
 		// TODO Auto-generated method stub
 		return "slope";
 	}
+
+	@Override
+	public String getTabDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

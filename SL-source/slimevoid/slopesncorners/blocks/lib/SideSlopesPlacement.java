@@ -84,5 +84,11 @@ public class SideSlopesPlacement implements ISlopePlacement {
 		return "side";
 	}
 
+	@Override
+	public String getTabDisplayName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
