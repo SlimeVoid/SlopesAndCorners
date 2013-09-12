@@ -281,11 +281,13 @@ public class MaterialsLib {
 	}
 
 	public static Icon getIconForSide(int n, int side) {
-		if (isValidIndex(n, materials != null ? materials.length : 0)) {
-			ItemStack ist = getItemStack(n);
-			return Block.blocksList[ist.itemID].getIcon(side, ist.getItemDamage());
+		n = n % materials.length;		
+		ItemStack ist = getItemStack(n);
+		if (ist ==null){
+			return Block.stone.getIcon(side,0);
 		}
-		return null;
+		return Block.blocksList[ist.itemID].getIcon(side, ist.getItemDamage());		
+		
 	}
 
 	public static int damageToMaterialValue(int dmg) {
@@ -293,51 +295,36 @@ public class MaterialsLib {
 	}
 
 	public static ItemStack getItemStack(int n) {
-		if (isValidIndex(n, materials != null ? materials.length : 0)) {
-			return materials[n];
-		}
-		return null;
+		n = n % materials.length;	
+			return materials[n];		
 	}
 
 	public static Block getBlock(int n) {
-		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+		n = n % materials.length;	
 			ItemStack ist = materials[n];
-			return Block.blocksList[ist.itemID];
-		}
-		return null;
+			return Block.blocksList[ist.itemID];		
 	}
 
 	public static int getBlockDmg(int n) {
-		if (isValidIndex(n, materials != null ? materials.length : 0)) {
+		n = n % materials.length;	
 			ItemStack ist = materials[n];
-			return ist.getItemDamage();
-		}
-		return 0;
+			return ist.getItemDamage();		
 	}
 
 	public static String getName(int n) {
-		if (isValidIndex(n, names != null ? names.length : 0)) {
-			return names[n];
-		}
-		return "";
+		n = n % materials.length;	
+			return names[n];		
 	}
 
 	public static String getDesc(int n) {
-		if (isValidIndex(n, descs != null ? descs.length : 0)) {
-			return descs[n];
-		}
-		return "";
+		n = n % materials.length;	
+			return descs[n];		
 	}
 
 	public static int getHardness(int n) {
-		if (isValidIndex(n, hardness != null ? hardness.length : 0)) {
-			return hardness[n];
-		}
-		return 0;
+		n = n % materials.length;	
+			return hardness[n];		
 	}
 
-	private static boolean isValidIndex(int n, int size) {
-		return n < size;
-	}
 
 }

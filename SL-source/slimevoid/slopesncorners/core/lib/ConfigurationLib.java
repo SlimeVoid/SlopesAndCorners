@@ -4,6 +4,8 @@ import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.Language;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
@@ -74,22 +76,7 @@ public class ConfigurationLib {
 	public static void registerBlocks() {
 		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
-		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
-		MaterialsLib.initMaterials(lengthMats);
-		int currentmatindex = MaterialsLib.minimumlength;
-		for(String custommats:baseBlockIdsNDmgs){
-			Integer blockId= Integer.parseInt(custommats.split("-")[0].split("_")[0]);
-			Integer blockDMG= custommats.split("-")[0].split("_").length == 1 ? 0:Integer.parseInt(custommats.split("-")[0].split("_")[1]);
-			MaterialsLib.addMaterial(currentmatindex, 
-					1, //placeholder will be axed once we get everything else working
-					Block.blocksList[blockId],
-					blockDMG,
-					custommats.split("-").length == 1 ? 
-							Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId,1,blockDMG))
-							: custommats.split("-")[1]);
-			currentmatindex++;
-		}
-		
+		initSlopeMats();		
 		initializeSlopes();
 	}
 		
@@ -109,5 +96,43 @@ public class ConfigurationLib {
 		blockSlopes.registerPlacement(BlockLib.BLOCK_OBLICS_ID, new OblicSlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_TRIPOINT_ID, new TriPointCornerPlacement());
 		
-	}	
+	}
+	
+	public static void reInitSlopeMats(){
+		configuration.load();
+		
+		baseBlockIdsNDmgs = configuration
+				.get(Configuration.CATEGORY_GENERAL,
+						"BaseBlockList",
+						new String[] {}
+						)
+				.getStringList();		
+		
+		configuration.save();
+		initSlopeMats();
+		try{
+			Minecraft.getMinecraft().refreshResources();
+		}catch (Exception e){
+			
+		}
+		
+	}
+
+	private static void initSlopeMats() {
+		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
+		MaterialsLib.initMaterials(lengthMats);
+		int currentmatindex = MaterialsLib.minimumlength;
+		for(String custommats:baseBlockIdsNDmgs){
+			Integer blockId= Integer.parseInt(custommats.split("-")[0].split("_")[0]);
+			Integer blockDMG= custommats.split("-")[0].split("_").length == 1 ? 0:Integer.parseInt(custommats.split("-")[0].split("_")[1]);
+			MaterialsLib.addMaterial(currentmatindex, 
+					1, //placeholder will be axed once we get everything else working
+					Block.blocksList[blockId],
+					blockDMG,
+					custommats.split("-").length == 1 ? 
+							Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId,1,blockDMG))
+							: custommats.split("-")[1]);
+			currentmatindex++;
+		}		
+	}
 }

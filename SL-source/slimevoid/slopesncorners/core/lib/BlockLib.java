@@ -10,7 +10,7 @@ public class BlockLib {
 	public static final int BLOCK_TRIPOINT_ID = 3;
 
 	public static int getBlockDamage(int blockMetadata, short slopeIndex) {
-		return slopeIndex + (blockMetadata << 12);
+		return slopeIndex % MaterialsLib.getSize() + (blockMetadata << 12);
 	}
 
 }

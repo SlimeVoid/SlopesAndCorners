@@ -1,5 +1,6 @@
 package slimevoid.slopesncorners.core;
 
+import slimevoid.slopesncorners.command.ReInitMatsCommand;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoidlib.ICommonProxy;
@@ -8,6 +9,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(
@@ -39,5 +41,11 @@ public class SlopesNCorners {
 	public void slopesPostInit(FMLPostInitializationEvent event) {
 		ConfigurationLib.registerBlocks();
 		proxy.registerRenderInformation();
+	}
+	
+	@EventHandler
+	public void GetServerMatLib(FMLServerStartingEvent event)
+	{
+		event.registerServerCommand(new ReInitMatsCommand());
 	}
 }
