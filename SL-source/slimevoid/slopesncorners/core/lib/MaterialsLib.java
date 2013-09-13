@@ -14,66 +14,58 @@ import net.minecraft.util.Icon;
 public class MaterialsLib {
 
 	public static final int minimumlength = 50;
-	private static ItemStack materials[] = new ItemStack[0];
-	private static String names[] = new String[0];
-	private static String descs[] = new String[0];
-	private static int hardness[] = new int[0];
+	private static ArrayList<ItemStack> materials =  new ArrayList<ItemStack>();
+	private static ArrayList<String> descs = new ArrayList<String>();
 	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
 	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
 	public static int brickIndex = 5;
 
 	public static int getSize() {
-		return materials.length;
+		return materials.size();
 	}
 
-	public static void initMaterials(int newLength) {
-		if (newLength < minimumlength) {
-			newLength = minimumlength;
-		}
-		hardness = new int[newLength];
-		descs = new String[newLength];
-		names = new String[newLength];
-		materials = new ItemStack[newLength];
-		addMaterial(0, 1, Block.cobblestone, "Cobblestone");
-		addMaterial(1, 1, Block.stone, "Stone");
-		addMaterial(2, 0, Block.planks, "Oak Plank");
-		addMaterial(3, 1, Block.sandStone, "Sandstone");
-		addMaterial(4, 1, Block.cobblestoneMossy, "Moss Stone");
-		addMaterial(5, 1, Block.brick, "Brick");
-		addMaterial(6, 2, Block.obsidian, "Obsidian");
-		addMaterial(7, 1, Block.glass, "Glass");
-		addMaterial(8, 0, Block.dirt, "Dirt");
-		addMaterial(9, 0, Block.blockClay, "Clay");
-		addMaterial(10, 0, Block.bookShelf, "Bookshelf");
-		addMaterial(11, 0, Block.netherrack, "Netherrack");
-		addMaterial(12, 0, Block.wood, 0, "Oak Wood");
-		addMaterial(13, 0, Block.wood, 1, "Spruce Wood");
-		addMaterial(14, 0, Block.wood, 2, "Birch Wood");
-		addMaterial(15, 0, Block.slowSand, "Soul Sand");
-		addMaterial(16, 1, Block.stoneSingleSlab, "Polished Stone");
-		addMaterial(17, 1, Block.blockIron, "Iron");
-		addMaterial(18, 1, Block.blockGold, "Gold");
-		addMaterial(19, 2, Block.blockDiamond, "Diamond");
-		addMaterial(20, 1, Block.blockLapis, "Lapis Lazuli");
-		addMaterial(21, 0, Block.blockSnow, "Snow");
-		addMaterial(22, 0, Block.pumpkin, "Pumpkin");
-		addMaterial(23, 1, Block.stoneBrick, 0, "stonebrick", "Stone Brick");
-		addMaterial(24, 1, Block.stoneBrick, 1, "stonebrick1", "Mossy Stone Brick");
-		addMaterial(25, 1, Block.stoneBrick, 2, "stonebrick2", "Cracked Stone Brick");
-		addMaterial(26, 1, Block.netherBrick, "Nether Brick");
-		addMaterial(27, 1, Block.stoneBrick, 3, "Chisled Stone Brick");
-		addMaterial(28, 0, Block.planks, 1, "Spruce Plank");
-		addMaterial(29, 0, Block.planks, 2, "Birch Plank");
-		addMaterial(30, 0, Block.planks, 3, "Jungle Plank");
-		addMaterial(31, 1, Block.sandStone, 1, "Chisled Sandstone");
+	public static void initMaterials() {
+		descs.clear();
+		materials.clear();
+		addMaterial(Block.cobblestone, "Cobblestone");
+		addMaterial(Block.stone, "Stone");
+		addMaterial(Block.planks, "Oak Plank");
+		addMaterial(Block.sandStone, "Sandstone");
+		addMaterial(Block.cobblestoneMossy, "Moss Stone");
+		addMaterial(Block.brick, "Brick");
+		addMaterial(Block.obsidian, "Obsidian");
+		addMaterial(Block.glass, "Glass");
+		addMaterial(Block.dirt, "Dirt");
+		addMaterial(Block.blockClay, "Clay");
+		addMaterial(Block.bookShelf, "Bookshelf");
+		addMaterial(Block.netherrack, "Netherrack");
+		addMaterial(Block.wood, 0, "Oak Wood");
+		addMaterial(Block.wood, 1, "Spruce Wood");
+		addMaterial(Block.wood, 2, "Birch Wood");
+		addMaterial(Block.slowSand, "Soul Sand");
+		addMaterial(Block.stoneSingleSlab, "Polished Stone");
+		addMaterial(Block.blockIron, "Iron");
+		addMaterial(Block.blockGold, "Gold");
+		addMaterial(Block.blockDiamond, "Diamond");
+		addMaterial(Block.blockLapis, "Lapis Lazuli");
+		addMaterial(Block.blockSnow, "Snow");
+		addMaterial(Block.pumpkin, "Pumpkin");
+		addMaterial(Block.stoneBrick, 0, "Stone Brick");
+		addMaterial(Block.stoneBrick, 1, "Mossy Stone Brick");
+		addMaterial(Block.stoneBrick, 2, "Cracked Stone Brick");
+		addMaterial(Block.netherBrick, "Nether Brick");
+		addMaterial(Block.stoneBrick, 3, "Chisled Stone Brick");
+		addMaterial(Block.planks, 1, "Spruce Plank");
+		addMaterial(Block.planks, 2, "Birch Plank");
+		addMaterial(Block.planks, 3, "Jungle Plank");
+		addMaterial(Block.sandStone, 1, "Chisled Sandstone");
 		for (int i = 0; i < 16; i++) {
-			addMaterial(32 + i, 0, Block.cloth, i, (new StringBuilder())
-					.append("wool.").append(ItemDye.dyeColors[15-i]).toString(),
+			addMaterial(Block.cloth, i,
 					(new StringBuilder()).append(ItemDye.dyeColorNames[15-i])
 							.append(" Wool").toString());
 		}
-		addMaterial(48, 1, Block.sandStone, 2, "sandstone2", "Smooth Sandstone");
-		addMaterial(49, 0, Block.wood, 3, "wood3", "Jungle Wood");
+		addMaterial(Block.sandStone, 2, "Smooth Sandstone");
+		addMaterial(Block.wood, 3, "Jungle Wood");
 
 	}
 
@@ -83,8 +75,8 @@ public class MaterialsLib {
 	}
 
 	public static void addMaterialHandler(IMaterialHandler handler) {
-		for (int i = 0; i < materials.length; i++) {
-			if (materials[i] != null) {
+		for (int i = 0; i < materials.size(); i++) {
+			if (materials.get(i) != null) {
 				handler.addMaterialReference(i);
 			}
 		}
@@ -97,47 +89,21 @@ public class MaterialsLib {
 				Integer.valueOf(ist.itemID),
 				Integer.valueOf(ist.getItemDamage()) }));
 	}
-
-	private static void addMaterial(int n, int hard, Block bl, String desc) {
-		addMaterial(n, hard, bl, bl.getUnlocalizedName(), desc);
+	
+	public static void addMaterial(Block bl, String desc) {
+		addMaterial(bl, 0, desc);
 	}
-
-	static void addMaterial(int n, int hard, Block bl, int md, String desc) {
-		addMaterial(n, hard, bl, md, bl.getUnlocalizedName(), desc);
-	}
-
-	public static void addMaterial(int n, int hard, Block bl, String name, String desc) {
-		addMaterial(n, hard, false, bl, 0, name, desc);
-	}
-
-	public static void addMaterial(int n, int hard, Block bl, int md, String name, String desc) {
-		addMaterial(n, hard, false, bl, md, name, desc);
-	}
-
-	public static void addMaterial(int n, int hard, boolean tpar, Block bl, String name, String desc) {
-		addMaterial(n, hard, tpar, bl, 0, name, desc);
-	}
-
-	public static void addMaterial(int materialID, int hard, boolean tpar, Block bl, int md, String name, String desc) {
+	
+	public static void addMaterial(Block bl, int md, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
-		// System.out.println("Name: " + name);
-		if (name.endsWith(".name")) {
-			name = name.substring(0, name.length() - 6);
-		}
-		if (md > 0) {
-			// add damage to name for better localization
-			name += "." + md;
-		}
-		materials[materialID] = ist;
-		names[materialID] = name;
-		descs[materialID] = desc;
-		hardness[materialID] = hard;
+		materials.add(ist);
+		descs.add(desc);
 		materialIndex.put(
 				Arrays.asList(new Integer[] { Integer.valueOf(bl.blockID),
-						Integer.valueOf(md) }), Integer.valueOf(materialID));
+						Integer.valueOf(md) }), Integer.valueOf(materials.size()));
 		IMaterialHandler imh;
 		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext(); imh
-				.addMaterialReference(materialID)) {
+				.addMaterialReference(materials.size())) {
 			imh = (IMaterialHandler) i$.next();
 		}
 	}
@@ -281,7 +247,7 @@ public class MaterialsLib {
 	}
 
 	public static Icon getIconForSide(int n, int side) {
-		n = n % materials.length;		
+		n = n % materials.size();		
 		ItemStack ist = getItemStack(n);
 		if (ist ==null){
 			return Block.stone.getIcon(side,0);
@@ -295,36 +261,38 @@ public class MaterialsLib {
 	}
 
 	public static ItemStack getItemStack(int n) {
-		n = n % materials.length;	
-			return materials[n];		
+		n = n % materials.size();	
+			return materials.get(n);		
 	}
 
 	public static Block getBlock(int n) {
-		n = n % materials.length;	
-			ItemStack ist = materials[n];
+		n = n % materials.size();	
+			ItemStack ist = materials.get(n);
 			return Block.blocksList[ist.itemID];		
 	}
 
 	public static int getBlockDmg(int n) {
-		n = n % materials.length;	
-			ItemStack ist = materials[n];
+		n = n % materials.size();	
+			ItemStack ist = materials.get(n);
 			return ist.getItemDamage();		
 	}
 
 	public static String getName(int n) {
-		n = n % materials.length;	
-			return names[n];		
+		n = n % materials.size();	
+		ItemStack bl = getItemStack(n);
+		String name = getBlock(n).getUnlocalizedName();
+		if (name.endsWith(".name")) {
+			name = name.substring(0, name.length() - 6);
+		}
+		if (getBlockDmg(n) > 0) {
+			// add damage to name for better localization
+			name += "." + getBlockDmg(n);
+		}	
+		return name;
 	}
 
 	public static String getDesc(int n) {
-		n = n % materials.length;	
-			return descs[n];		
+		n = n % materials.size();	
+			return descs.get(n);		
 	}
-
-	public static int getHardness(int n) {
-		n = n % materials.length;	
-			return hardness[n];		
-	}
-
-
 }

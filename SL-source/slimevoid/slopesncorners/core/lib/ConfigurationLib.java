@@ -60,7 +60,7 @@ public class ConfigurationLib {
 
 	public static void setBaseBlockList(String[] materialList) {
 		baseBlockIdsNDmgs = materialList;
-		reInitSlopeMats(true);
+		reInitSlopeMats();
 	}
 	
 	public static void CommonConfig(File configFile) {
@@ -122,31 +122,25 @@ public class ConfigurationLib {
 		
 	}
 	
-	public static void reInitSlopeMats(boolean serverload){
-		getBaseBlockList(!serverload);
+	public static void reInitSlopeMats(){		
 		initSlopeMats();
 		try{
 			FMLCommonHandler.instance().updateResourcePackList();
-		}catch(Exception ex){}
-		
-		
+		}catch(Exception ex){}		
 	}
 
-	private static void initSlopeMats() {
-		int lengthMats = baseBlockIdsNDmgs.length + MaterialsLib.minimumlength;
-		MaterialsLib.initMaterials(lengthMats);
-		int currentmatindex = MaterialsLib.minimumlength;
+	private static void initSlopeMats() {		
+		MaterialsLib.initMaterials();		
 		for(String custommats:baseBlockIdsNDmgs){
 			Integer blockId= Integer.parseInt(custommats.split("-")[0].split("_")[0]);
 			Integer blockDMG= custommats.split("-")[0].split("_").length == 1 ? 0:Integer.parseInt(custommats.split("-")[0].split("_")[1]);
-			MaterialsLib.addMaterial(currentmatindex, 
-					1, //placeholder will be axed once we get everything else working
+			MaterialsLib.addMaterial(
 					Block.blocksList[blockId],
 					blockDMG,
 					custommats.split("-").length == 1 ? 
 							Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId,1,blockDMG))
 							: custommats.split("-")[1]);
-			currentmatindex++;
+			
 		}		
 	}
 }

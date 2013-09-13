@@ -21,8 +21,8 @@ public class ReInitMatsCommand extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender icommandsender, String[] astring) {
-		
-			ConfigurationLib.reInitSlopeMats(false);
+			ConfigurationLib.getBaseBlockList(true);
+			ConfigurationLib.reInitSlopeMats();
 			if (FMLCommonHandler.instance().getSide() == Side.SERVER){
 				PacketLib.sendAllMaterialList();
 			}

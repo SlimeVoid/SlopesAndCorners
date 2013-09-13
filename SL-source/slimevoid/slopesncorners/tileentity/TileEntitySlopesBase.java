@@ -3,6 +3,7 @@ package slimevoid.slopesncorners.tileentity;
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
 import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
@@ -144,4 +145,7 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID, this.slopeIndex);
 	}
 
+	public float getExplosionResistance(BlockBase blockSlopesBase,Entity entity, double explosionX, double explosionY, double explosionZ) {
+		return MaterialsLib.getBlock(this.getMaterial()).getExplosionResistance(entity, this.worldObj, this.xCoord, this.yCoord, this.zCoord, explosionX, explosionY, explosionZ);
+	}
 }
