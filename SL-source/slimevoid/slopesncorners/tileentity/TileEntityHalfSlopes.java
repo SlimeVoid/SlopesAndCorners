@@ -43,7 +43,7 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 			z = this.zCoord;
 		MovingObjectPosition amovingobjectposition = null;
 		raytracing = true;
-		for (int i = 1; i <= 8 && amovingobjectposition == null; i++) {
+		for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
 			raytraceheight = i;
 			// setBlockBoundsBasedOnState(world,x,y,z);
 			amovingobjectposition = blockbase.superCollisionRayTrace(world, x, y, z, startVec, endVec);
@@ -80,6 +80,12 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 	}
 
 	private void setSlopesBounds(BlockBase blockbase, int i, int iDir) {
+		if ((i >= 6 && iDir < 4) || (i < 6 && iDir >= 4)){
+			blockbase.setBlockBounds(0,0,0,0,0,0);
+			return;
+		}
+		
+		
 		switch (iDir) {
 		case 0:
 		case 1:

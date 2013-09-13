@@ -546,7 +546,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 
 		if (renderblocks.renderAllFaces
 				|| block.shouldSideBeRendered(iblockaccess, i, j + 1, k, 1)) {
-			if (iDir / 4 != 1) {
+			
 				float f21 = block.getAmbientOcclusionLightValue(iblockaccess,
 						i, j + 1, k);
 				if (block.getBlockBoundsMaxY() != 1.0D
@@ -559,7 +559,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						renderblocks,
 						block.getMixedBrightnessForBlock(iblockaccess, i, j, k));
 				flag = true;
-			}
+			
 		}
 
 		if (renderblocks.renderAllFaces
@@ -834,7 +834,9 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 
         double d3 = (double)i.getInterpolatedU(renderblocks.renderMinZ * 16.0D);
         double d4 = (double)i.getInterpolatedU(renderblocks.renderMaxZ * 16.0D);
+        double halfd4 = (double)i.getInterpolatedU(renderblocks.renderMaxZ * 8.0D);
         double d5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 16.0D);
+        double halfd5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 8.0D);
         double d6 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMinY * 16.0D);
 		if (renderblocks.flipTexture) {
 			double d7 = d3;
@@ -853,32 +855,17 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 		}
 		double d8 = d + block.getBlockBoundsMinX();
 		double d9 = d + block.getBlockBoundsMaxX();
+		double halfd9 = d + (block.getBlockBoundsMaxX()/2);
 		double d10 = d1 + block.getBlockBoundsMinY();
-		double d11 = d1 + block.getBlockBoundsMaxY();
+		double d11 = d1 + (block.getBlockBoundsMaxY());
+		double halfd11 = d1 + (block.getBlockBoundsMaxY() / 2);
 		double d12 = d2 + block.getBlockBoundsMinZ();
 		double d13 = d2 + block.getBlockBoundsMaxZ();
+		double halfd13 = d2 + (block.getBlockBoundsMaxZ() / 2);
 
 		if (enableAO) {
-			if (iDir == 3 || iDir == 7) {
-				// Standard
-				tessellator.setColorOpaque_F(colorRedTopLeft_EastFace,
-						colorGreenTopLeft_EastFace, colorBlueTopLeft_EastFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_EastFace,
-						colorGreenBottomLeft_EastFace,
-						colorBlueBottomLeft_EastFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_EastFace,
-						colorGreenBottomRight_EastFace,
-						colorBlueBottomRight_EastFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_EastFace,
-								colorGreenTopRight_EastFace,
-								colorBlueTopRight_EastFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 0) {
-				// Triangle Down pointing north
+			 if (iDir == 0 || iDir == 1) {
+				// Triangle Down pointing up
 				tessellator
 						.setColorOpaque_F(colorRedTopRight_EastFace,
 								colorGreenTopRight_EastFace,
@@ -887,7 +874,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.setColorOpaque_F(colorRedBottomLeft_EastFace,
 						colorGreenBottomLeft_EastFace,
 						colorBlueBottomLeft_EastFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator.setColorOpaque_F(colorRedBottomRight_EastFace,
 						colorGreenBottomRight_EastFace,
 						colorBlueBottomRight_EastFace);
@@ -897,25 +884,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 								colorGreenTopRight_EastFace,
 								colorBlueTopRight_EastFace);
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 1) {
-				// Triangle Down pointing south
-				tessellator.setColorOpaque_F(colorRedTopLeft_EastFace,
-						colorGreenTopLeft_EastFace, colorBlueTopLeft_EastFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_EastFace,
-						colorGreenBottomRight_EastFace,
-						colorBlueBottomRight_EastFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_EastFace,
-						colorGreenBottomRight_EastFace,
-						colorBlueBottomRight_EastFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_EastFace,
-								colorGreenTopRight_EastFace,
-								colorBlueTopRight_EastFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 2) {
+			} else if (iDir == 2|| iDir == 3) {
 				// Slope facing Up - East
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueXNegYPos)
@@ -924,7 +893,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorEast) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueXNegYPos)
 						* (factorTop + factorEast) / 4F);
-				tessellator.addVertexWithUV(d8, d11, d13, d4, d5);
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d4, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueXPosYPos)
 						* (factorTop + factorEast) / 4F, colorGreenSlopes
@@ -932,7 +901,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorEast) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueXPosYPos)
 						* (factorTop + factorEast) / 4F);
-				tessellator.addVertexWithUV(d9, d11, d13, d3, d5);
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueZNeg + aoLightValueXPosZNeg)
 						* (factorTop + factorEast) / 4F, colorGreenSlopes
@@ -949,7 +918,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (aoLightValueZNeg + aoLightValueXNegZNeg)
 						* (factorTop + factorEast) / 4F);
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 4) {
+			} else if (iDir == 4 || iDir == 5) {
 				// Triangle Up pointing north
 				tessellator.setColorOpaque_F(colorRedTopLeft_EastFace,
 						colorGreenTopLeft_EastFace, colorBlueTopLeft_EastFace);
@@ -961,29 +930,11 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.setColorOpaque_F(colorRedBottomRight_EastFace,
 						colorGreenBottomRight_EastFace,
 						colorBlueBottomRight_EastFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator.setColorOpaque_F(colorRedTopLeft_EastFace,
 						colorGreenTopLeft_EastFace, colorBlueTopLeft_EastFace);
 				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-			} else if (iDir == 5) {
-				// Triangle Up pointing south
-				tessellator.setColorOpaque_F(colorRedTopLeft_EastFace,
-						colorGreenTopLeft_EastFace, colorBlueTopLeft_EastFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_EastFace,
-						colorGreenBottomLeft_EastFace,
-						colorBlueBottomLeft_EastFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_EastFace,
-						colorGreenBottomLeft_EastFace,
-						colorBlueBottomLeft_EastFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_EastFace,
-								colorGreenTopRight_EastFace,
-								colorBlueTopRight_EastFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 6) {
+			}  else if (iDir == 6 || iDir == 7) {
 				// Slope facing Down - East
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueZNeg + aoLightValueXNegZNeg)
@@ -1008,7 +959,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorEast) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueXPosYNeg)
 						* (factorBottom + factorEast) / 4F);
-				tessellator.addVertexWithUV(d9, d10, d13, d3, d6);
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYNeg + aoLightValueXNegYNeg)
 						* (factorBottom + factorEast) / 4F, colorGreenSlopes
@@ -1016,52 +967,34 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorEast) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueXNegYNeg)
 						* (factorBottom + factorEast) / 4F);
-				tessellator.addVertexWithUV(d8, d10, d13, d4, d6);
-			} 
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d4, halfd5);
+			}
 		} else {
-			if (iDir == 3 || iDir == 7) {
-				// Standard
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
+			if (iDir == 0 || iDir == 1) {
+				// Triangle Down pointing up
+				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 0) {
-				// Triangle Down pointing north
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
+			} else if (iDir == 2|| iDir == 3) {
+				// Slope facing Up - East
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d4, halfd5);
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d3, halfd5);
 				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 1) {
-				// Triangle Down pointing south
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 2) {
-				// Slope Down
-				tessellator.addVertexWithUV(d8, d11, d13, d4, d5);
-				tessellator.addVertexWithUV(d9, d11, d13, d3, d5);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 4) {
+			} else if (iDir == 4 || iDir == 5) {
 				// Triangle Up pointing north
 				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
 				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d9, d10, d12, d3, d6);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-			} else if (iDir == 5) {
-				// Triangle Up pointing south
-				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d6);
-			} else if (iDir == 6) {
-				// Slope Up
+			}  else if (iDir == 6 || iDir == 7) {
+				// Slope facing Down - East
 				tessellator.addVertexWithUV(d8, d11, d12, d4, d5);
 				tessellator.addVertexWithUV(d9, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d9, d10, d13, d3, d6);
-				tessellator.addVertexWithUV(d8, d10, d13, d4, d6);
-			} 
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d3, halfd5);
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d4, halfd5);
+			}
 		}
 	}
 
@@ -1077,7 +1010,9 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 
         double d3 = (double)i.getInterpolatedU(renderblocks.renderMinZ * 16.0D);
         double d4 = (double)i.getInterpolatedU(renderblocks.renderMaxZ * 16.0D);
+        double halfd4 = (double)i.getInterpolatedU(renderblocks.renderMaxZ * 8.0D);
         double d5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 16.0D);
+        double halfd5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 8.0D);
         double d6 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMinY * 16.0D);
 		if (renderblocks.flipTexture) {
 			double d7 = d3;
@@ -1096,31 +1031,16 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 		}
 		double d8 = d + block.getBlockBoundsMinX();
 		double d9 = d + block.getBlockBoundsMaxX();
+		double halfd9 = d + (block.getBlockBoundsMaxX() / 2);
 		double d10 = d1 + block.getBlockBoundsMinY();
 		double d11 = d1 + block.getBlockBoundsMaxY();
+		double halfd11 = d1 + (block.getBlockBoundsMaxY() / 2);
 		double d12 = d2 + block.getBlockBoundsMaxZ();
 		double d13 = d2 + block.getBlockBoundsMinZ();
+		double halfd13 = d2 + (block.getBlockBoundsMaxZ() / 2);
 
 		if (enableAO) {
-			if (iDir == 2 || iDir == 6) {
-				// Standard
-				tessellator.setColorOpaque_F(colorRedTopLeft_WestFace,
-						colorGreenTopLeft_WestFace, colorBlueTopLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_WestFace,
-						colorGreenBottomLeft_WestFace,
-						colorBlueBottomLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_WestFace,
-						colorGreenBottomRight_WestFace,
-						colorBlueBottomRight_WestFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_WestFace,
-								colorGreenTopRight_WestFace,
-								colorBlueTopRight_WestFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 0) {
+			if (iDir == 0 || iDir == 1) {
 				// Triangle Down pointing north
 				tessellator.setColorOpaque_F(colorRedBottomLeft_WestFace,
 						colorGreenBottomLeft_WestFace,
@@ -1138,26 +1058,9 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						.setColorOpaque_F(colorRedTopRight_WestFace,
 								colorGreenTopRight_WestFace,
 								colorBlueTopRight_WestFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 1) {
-				// Triangle Down pointing south
-				tessellator.setColorOpaque_F(colorRedTopLeft_WestFace,
-						colorGreenTopLeft_WestFace, colorBlueTopLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_WestFace,
-						colorGreenBottomLeft_WestFace,
-						colorBlueBottomLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_WestFace,
-						colorGreenBottomRight_WestFace,
-						colorBlueBottomRight_WestFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_WestFace,
-						colorGreenBottomRight_WestFace,
-						colorBlueBottomRight_WestFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-			} else if (iDir == 3) {
-				// Slope Facing Up - West
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
+			} else if (iDir == 2 || iDir == 3) {
+				// Slope Facing Up
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueXNegYPos)
 						* (factorTop + factorWest) / 4F, colorGreenSlopes
@@ -1165,7 +1068,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorWest) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueXNegYPos)
 						* (factorTop + factorWest) / 4F);
-				tessellator.addVertexWithUV(d8, d11, d13, d3, d5);
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueZPos + aoLightValueXNegZPos)
 						* (factorTop + factorWest) / 4F, colorGreenSlopes
@@ -1189,8 +1092,8 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorWest) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueXPosYPos)
 						* (factorTop + factorWest) / 4F);
-				tessellator.addVertexWithUV(d9, d11, d13, d4, d5);
-			} else if (iDir == 4) {
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d4, halfd5);
+			} else if (iDir == 4 || iDir == 5) {
 				// Triangle Up pointing north
 				tessellator.setColorOpaque_F(colorRedTopLeft_WestFace,
 						colorGreenTopLeft_WestFace, colorBlueTopLeft_WestFace);
@@ -1201,32 +1104,13 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.setColorOpaque_F(colorRedBottomRight_WestFace,
 						colorGreenBottomRight_WestFace,
 						colorBlueBottomRight_WestFace);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator
 						.setColorOpaque_F(colorRedTopRight_WestFace,
 								colorGreenTopRight_WestFace,
 								colorBlueTopRight_WestFace);
 				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 5) {
-				// Triangle Up pointing south
-				tessellator.setColorOpaque_F(colorRedTopLeft_WestFace,
-						colorGreenTopLeft_WestFace, colorBlueTopLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_WestFace,
-						colorGreenBottomLeft_WestFace,
-						colorBlueBottomLeft_WestFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_WestFace,
-								colorGreenTopRight_WestFace,
-								colorBlueTopRight_WestFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-				tessellator
-						.setColorOpaque_F(colorRedTopRight_WestFace,
-								colorGreenTopRight_WestFace,
-								colorBlueTopRight_WestFace);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 7) {
+			}else if (iDir == 6 || iDir == 7) {
 				// Slope Facing Down - West
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueZPos + aoLightValueXNegZPos)
@@ -1243,7 +1127,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorWest) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueXNegYNeg)
 						* (factorBottom + factorWest) / 4F);
-				tessellator.addVertexWithUV(d8, d10, d13, d3, d6);
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYNeg + aoLightValueXPosYNeg)
 						* (factorBottom + factorWest) / 4F, colorGreenSlopes
@@ -1251,7 +1135,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorWest) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueXPosYNeg)
 						* (factorBottom + factorWest) / 4F);
-				tessellator.addVertexWithUV(d9, d10, d13, d4, d6);
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d4, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueZPos + aoLightValueXPosZPos)
 						* (factorBottom + factorWest) / 4F, colorGreenSlopes
@@ -1262,49 +1146,31 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
 			} 
 		} else {
-			if (iDir == 2 || iDir == 6) {
-				// Standard
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 0) {
+			if (iDir == 0 || iDir == 1) {
 				// Triangle Down pointing north
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
 				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 1) {
-				// Triangle Down pointing south
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
+			} else if (iDir == 2 || iDir == 3) {
+				// Slope Facing Up
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d3, halfd5);
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
 				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-			} else if (iDir == 3) {
-				// Slope Down
-				tessellator.addVertexWithUV(d8, d11, d13, d3, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
-				tessellator.addVertexWithUV(d9, d11, d13, d4, d5);
-			} else if (iDir == 4) {
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d4, halfd5);
+			} else if (iDir == 4 || iDir == 5) {
 				// Triangle Up pointing north
 				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
 				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d9, d10, d12, d4, d6);
+				tessellator.addVertexWithUV(halfd9, halfd11, d12, halfd4, halfd5);
 				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 5) {
-				// Triangle Up pointing south
+			}else if (iDir == 6 || iDir == 7) {
+				// Slope Facing Down - West
 				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d6);
+				tessellator.addVertexWithUV(d8, halfd11, halfd13, d3, halfd5);
+				tessellator.addVertexWithUV(d9, halfd11, halfd13, d4, halfd5);
 				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			} else if (iDir == 7) {
-				// Slope Up
-				tessellator.addVertexWithUV(d8, d11, d12, d3, d5);
-				tessellator.addVertexWithUV(d8, d10, d13, d3, d6);
-				tessellator.addVertexWithUV(d9, d10, d13, d4, d6);
-				tessellator.addVertexWithUV(d9, d11, d12, d4, d5);
-			}
+			} 
 		}
 	}
 
@@ -1320,7 +1186,9 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 
         double d3 = (double)i.getInterpolatedU(renderblocks.renderMinX * 16.0D);
         double d4 = (double)i.getInterpolatedU(renderblocks.renderMaxX * 16.0D);
+        double halfd4 = (double)i.getInterpolatedU(renderblocks.renderMaxX * 8.0D);
         double d5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 16.0D);
+        double halfd5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 8.0D);
         double d6 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMinY * 16.0D);
 		if (renderblocks.flipTexture) {
 			double d7 = d3;
@@ -1340,31 +1208,15 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 		double d8 = d + block.getBlockBoundsMinX();
 		double d9 = d1 + block.getBlockBoundsMinY();
 		double d10 = d1 + block.getBlockBoundsMaxY();
+		double halfd10 = d1 + (block.getBlockBoundsMaxY() / 2);
 		double d11 = d2 + block.getBlockBoundsMinZ();
 		double d12 = d2 + block.getBlockBoundsMaxZ();
+		double halfd12 = d2 + (block.getBlockBoundsMaxZ() / 2);
 		double d13 = d + block.getBlockBoundsMaxX();
+		double halfd13 = d + (block.getBlockBoundsMaxX() / 2);
 
 		if (enableAO) {
-			if (iDir == 1 || iDir == 5 ) {
-				// Standard
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_NorthFace,
-								colorGreenTopLeft_NorthFace,
-								colorBlueTopLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_NorthFace,
-						colorGreenBottomLeft_NorthFace,
-						colorBlueBottomLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_NorthFace,
-						colorGreenBottomRight_NorthFace,
-						colorBlueBottomRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator.setColorOpaque_F(colorRedTopRight_NorthFace,
-						colorGreenTopRight_NorthFace,
-						colorBlueTopRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 0) {
+			if (iDir == 0 || iDir == 1) {
 				// Slope facing Up - North
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueYPosZPos)
@@ -1373,7 +1225,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorNorth) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueYPosZPos)
 						* (factorTop + factorNorth) / 4F);
-				tessellator.addVertexWithUV(d13, d10, d12, d4, d5);
+				tessellator.addVertexWithUV(halfd13, halfd10, d12, d4, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueYPosZNeg)
 						* (factorTop + factorNorth) / 4F, colorGreenSlopes
@@ -1381,7 +1233,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorNorth) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueYPosZNeg)
 						* (factorTop + factorNorth) / 4F);
-				tessellator.addVertexWithUV(d13, d10, d11, d3, d5);
+				tessellator.addVertexWithUV(halfd13, halfd10, d11, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueXNeg + aoLightValueXNegZNeg)
 						* (factorTop + factorNorth) / 4F, colorGreenSlopes
@@ -1398,13 +1250,13 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (aoLightValueXNeg + aoLightValueXNegZPos)
 						* (factorTop + factorNorth) / 4F);
 				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 2) {
+			} else if (iDir == 2 || iDir == 3) {
 				// Triangle Down pointing east
 				tessellator
 						.setColorOpaque_F(colorRedTopLeft_NorthFace,
 								colorGreenTopLeft_NorthFace,
 								colorBlueTopLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
 				tessellator.setColorOpaque_F(colorRedBottomRight_NorthFace,
 						colorGreenBottomRight_NorthFace,
 						colorBlueBottomRight_NorthFace);
@@ -1418,25 +1270,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						colorBlueTopRight_NorthFace);
 				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
 
-			} else if (iDir == 3) {
-				// Triangle Down pointing west
-				tessellator.setColorOpaque_F(colorRedTopRight_NorthFace,
-						colorGreenTopRight_NorthFace,
-						colorBlueTopRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_NorthFace,
-						colorGreenBottomLeft_NorthFace,
-						colorBlueBottomLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_NorthFace,
-						colorGreenBottomRight_NorthFace,
-						colorBlueBottomRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator.setColorOpaque_F(colorRedTopRight_NorthFace,
-						colorGreenTopRight_NorthFace,
-						colorBlueTopRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 4) {
+			} else if (iDir == 4 || iDir == 5) {
 				// Slope facing Down - North
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueXNeg + aoLightValueXNegZPos)
@@ -1461,7 +1295,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorNorth) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZNeg)
 						* (factorBottom + factorNorth) / 4F);
-				tessellator.addVertexWithUV(d13, d9, d11, d3, d6);
+				tessellator.addVertexWithUV(halfd13, halfd10, d11, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZPos)
 						* (factorBottom + factorNorth) / 4F, colorGreenSlopes
@@ -1469,8 +1303,8 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorNorth) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZPos)
 						* (factorBottom + factorNorth) / 4F);
-				tessellator.addVertexWithUV(d13, d9, d12, d4, d6);
-			} else if (iDir == 6) {
+				tessellator.addVertexWithUV(halfd13, halfd10, d12, d4, halfd5);
+			} else if (iDir == 6 || iDir == 7) {
 				// Triangle Up pointing east
 				tessellator
 						.setColorOpaque_F(colorRedTopLeft_NorthFace,
@@ -1488,72 +1322,34 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.setColorOpaque_F(colorRedTopRight_NorthFace,
 						colorGreenTopRight_NorthFace,
 						colorBlueTopRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 7) {
-				// Triangle Up pointing west
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_NorthFace,
-								colorGreenTopLeft_NorthFace,
-								colorBlueTopLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_NorthFace,
-						colorGreenBottomLeft_NorthFace,
-						colorBlueBottomLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_NorthFace,
-						colorGreenBottomRight_NorthFace,
-						colorBlueBottomRight_NorthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_NorthFace,
-								colorGreenTopLeft_NorthFace,
-								colorBlueTopLeft_NorthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
-			} 
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
+			}
 		} else {
-			if (iDir == 1 || iDir == 5 ) {
-				// Standard
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
+			if (iDir == 0 || iDir == 1) {
+				// Slope facing Up - North
+				tessellator.addVertexWithUV(halfd13, halfd10, d12, d4, halfd5);
+				tessellator.addVertexWithUV(halfd13, halfd10, d11, d3, halfd5);
 				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
 				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 0) {
-				// Slope Down
-				tessellator.addVertexWithUV(d13, d10, d12, d4, d5);
-				tessellator.addVertexWithUV(d13, d10, d11, d3, d5);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 2) {
+			} else if (iDir == 2 || iDir == 3) {
 				// Triangle Down pointing east
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
 				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
 				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
 				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
 
-			} else if (iDir == 3) {
-				// Triangle Down pointing west
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 4) {
-				// Slope Up
+			} else if (iDir == 4 || iDir == 5) {
+				// Slope facing Down - North
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
 				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.addVertexWithUV(d13, d9, d11, d3, d6);
-				tessellator.addVertexWithUV(d13, d9, d12, d4, d6);
-			} else if (iDir == 6) {
+				tessellator.addVertexWithUV(halfd13, halfd10, d11, d3, halfd5);
+				tessellator.addVertexWithUV(halfd13, halfd10, d12, d4, halfd5);
+			} else if (iDir == 6 || iDir == 7) {
 				// Triangle Up pointing east
 				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
 				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
 				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.addVertexWithUV(d8, d9, d12, d4, d6);
-			} else if (iDir == 7) {
-				// Triangle Up pointing west
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
-				tessellator.addVertexWithUV(d8, d10, d11, d3, d5);
-				tessellator.addVertexWithUV(d8, d9, d11, d3, d6);
-				tessellator.addVertexWithUV(d8, d10, d12, d4, d5);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
 			}
 		}
 	}
@@ -1570,7 +1366,9 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 
         double d3 = (double)i.getInterpolatedU(renderblocks.renderMinX * 16.0D);
         double d4 = (double)i.getInterpolatedU(renderblocks.renderMaxX * 16.0D);
+        double halfd4 = (double)i.getInterpolatedU(renderblocks.renderMaxX * 8.0D);
         double d5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 16.0D);
+        double halfd5 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMaxY * 8.0D);
         double d6 = (double)i.getInterpolatedV(16.0D - renderblocks.renderMinY * 16.0D);
 		if (renderblocks.flipTexture) {
 			double d7 = d3;
@@ -1588,33 +1386,17 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 			d6 = i.getMaxV();
 		}
 		double d8 = d + block.getBlockBoundsMaxX();
+		double halfd8 = d + (block.getBlockBoundsMaxX()/2);
 		double d9 = d1 + block.getBlockBoundsMinY();
 		double d10 = d1 + block.getBlockBoundsMaxY();
+		double halfd10 = d1 + (block.getBlockBoundsMaxY()/2);		
 		double d11 = d2 + block.getBlockBoundsMinZ();
 		double d12 = d2 + block.getBlockBoundsMaxZ();
+		double halfd12 = d2 + (block.getBlockBoundsMaxZ()/2);
 		double d13 = d + block.getBlockBoundsMinX();
 
 		if (enableAO) {
-			if (iDir == 0 || iDir == 4) {
-				// Standard
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_SouthFace,
-								colorGreenTopLeft_SouthFace,
-								colorBlueTopLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_SouthFace,
-						colorGreenBottomLeft_SouthFace,
-						colorBlueBottomLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_SouthFace,
-						colorGreenBottomRight_SouthFace,
-						colorBlueBottomRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.setColorOpaque_F(colorRedTopRight_SouthFace,
-						colorGreenTopRight_SouthFace,
-						colorBlueTopRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 1) {
+			if (iDir == 0 || iDir == 1) {
 				// Slope facing Up - South
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueXPos + aoLightValueXPosZPos)
@@ -1639,7 +1421,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorSouth) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueYPosZNeg)
 						* (factorTop + factorSouth) / 4F);
-				tessellator.addVertexWithUV(d13, d10, d11, d4, d5);
+				tessellator.addVertexWithUV(halfd8, halfd10, d11, d4, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYPos + aoLightValueYPosZPos)
 						* (factorTop + factorSouth) / 4F, colorGreenSlopes
@@ -1647,8 +1429,8 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorTop + factorSouth) / 4F, colorBlueSlopes
 						* (aoLightValueYPos + aoLightValueYPosZPos)
 						* (factorTop + factorSouth) / 4F);
-				tessellator.addVertexWithUV(d13, d10, d12, d3, d5);
-			} else if (iDir == 2) {
+				tessellator.addVertexWithUV(halfd8, halfd10, d12, d3, halfd5);
+			} else if (iDir == 2 || iDir == 3) {
 				// Triangle Down pointing east
 				tessellator
 						.setColorOpaque_F(colorRedTopLeft_SouthFace,
@@ -1666,28 +1448,8 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.setColorOpaque_F(colorRedTopRight_SouthFace,
 						colorGreenTopRight_SouthFace,
 						colorBlueTopRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 3) {
-				// Triangle Down pointing west
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_SouthFace,
-								colorGreenTopLeft_SouthFace,
-								colorBlueTopLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_SouthFace,
-						colorGreenBottomLeft_SouthFace,
-						colorBlueBottomLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.setColorOpaque_F(colorRedBottomRight_SouthFace,
-						colorGreenBottomRight_SouthFace,
-						colorBlueBottomRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator
-						.setColorOpaque_F(colorRedTopLeft_SouthFace,
-								colorGreenTopLeft_SouthFace,
-								colorBlueTopLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-			} else if (iDir == 5) {
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
+			} else if (iDir == 4 || iDir == 5) {
 				// Slope facing Down - South
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZPos)
@@ -1696,7 +1458,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorSouth) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZPos)
 						* (factorBottom + factorSouth) / 4F);
-				tessellator.addVertexWithUV(d13, d9, d12, d3, d6);
+				tessellator.addVertexWithUV(halfd8, halfd10, d12, d3, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZNeg)
 						* (factorBottom + factorSouth) / 4F, colorGreenSlopes
@@ -1704,7 +1466,7 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (factorBottom + factorSouth) / 4F, colorBlueSlopes
 						* (aoLightValueYNeg + aoLightValueYNegZNeg)
 						* (factorBottom + factorSouth) / 4F);
-				tessellator.addVertexWithUV(d13, d9, d11, d4, d6);
+				tessellator.addVertexWithUV(halfd8, halfd10, d11, d4, halfd5);
 				tessellator.setColorOpaque_F(colorRedSlopes
 						* (aoLightValueXPos + aoLightValueXPosZNeg)
 						* (factorBottom + factorSouth) / 4F, colorGreenSlopes
@@ -1721,35 +1483,17 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 						* (aoLightValueXPos + aoLightValueXPosZPos)
 						* (factorBottom + factorSouth) / 4F);
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 6) {
+			} else if (iDir == 6 || iDir == 7) {
 				// Triangle Up pointing east
 				tessellator
 						.setColorOpaque_F(colorRedTopLeft_SouthFace,
 								colorGreenTopLeft_SouthFace,
 								colorBlueTopLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
 				tessellator.setColorOpaque_F(colorRedBottomRight_SouthFace,
 						colorGreenBottomRight_SouthFace,
 						colorBlueBottomRight_SouthFace);
 				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.setColorOpaque_F(colorRedBottomRight_SouthFace,
-						colorGreenBottomRight_SouthFace,
-						colorBlueBottomRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.setColorOpaque_F(colorRedTopRight_SouthFace,
-						colorGreenTopRight_SouthFace,
-						colorBlueTopRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 7) {
-				// Triangle Up pointing west
-				tessellator.setColorOpaque_F(colorRedTopRight_SouthFace,
-						colorGreenTopRight_SouthFace,
-						colorBlueTopRight_SouthFace);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-				tessellator.setColorOpaque_F(colorRedBottomLeft_SouthFace,
-						colorGreenBottomLeft_SouthFace,
-						colorBlueBottomLeft_SouthFace);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
 				tessellator.setColorOpaque_F(colorRedBottomRight_SouthFace,
 						colorGreenBottomRight_SouthFace,
 						colorBlueBottomRight_SouthFace);
@@ -1760,55 +1504,31 @@ public class BlockHalfSlopesRenderer extends BlockSlopesRendererBase {
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
 			} 
 		} else {
-			if (iDir == 0 || iDir == 4) {
-				// Standard
+			if (iDir == 0 || iDir == 1) {
+				// Slope facing Up - South
 				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
 				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 1) {
-				// Slope Down
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d13, d10, d11, d4, d5);
-				tessellator.addVertexWithUV(d13, d10, d12, d3, d5);
-			} else if (iDir == 2) {
+				tessellator.addVertexWithUV(halfd8, halfd10, d11, d4, halfd5);
+				tessellator.addVertexWithUV(halfd8, halfd10, d12, d3, halfd5);
+			} else if (iDir == 2 || iDir == 3) {
 				// Triangle Down pointing east
 				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
 				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
 				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 3) {
-				// Triangle Down pointing west
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-			} else if (iDir == 4) {
-				// Slope Up
-				tessellator.addVertexWithUV(d13, d9, d12, d3, d6);
-				tessellator.addVertexWithUV(d13, d9, d11, d4, d6);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
+			} else if (iDir == 4 || iDir == 5) {
+				// Slope facing Down - South
+				tessellator.addVertexWithUV(halfd8, halfd10, d12, d3, halfd5);
+				tessellator.addVertexWithUV(halfd8, halfd10, d11, d4, halfd5);
 				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 5) {
+			} else if (iDir == 6 || iDir == 7) {
 				// Triangle Up pointing east
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
+				tessellator.addVertexWithUV(d8, halfd10, halfd12, halfd4, halfd5);
 				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
 				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
 				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 6) {
-				// Triangle Up pointing west
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-				tessellator.addVertexWithUV(d8, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d8, d10, d11, d4, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			} else if (iDir == 7) {
-				// Side Slope
-				tessellator.addVertexWithUV(d8, d9, d12, d3, d6);
-				tessellator.addVertexWithUV(d13, d9, d11, d4, d6);
-				tessellator.addVertexWithUV(d13, d10, d11, d4, d5);
-				tessellator.addVertexWithUV(d8, d10, d12, d3, d5);
-			}
+			} 
 		}
 	}
 

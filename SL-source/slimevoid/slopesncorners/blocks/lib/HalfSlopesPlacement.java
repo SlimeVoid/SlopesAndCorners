@@ -69,7 +69,7 @@ public class HalfSlopesPlacement implements ISlopePlacement {
 
 	@Override
 	public String getName() {
-		return "halfslope";
+		return "halfSlope";
 	}
 
 	@Override

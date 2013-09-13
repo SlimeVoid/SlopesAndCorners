@@ -566,7 +566,7 @@ public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {
 
 		if (renderblocks.renderAllFaces
 				|| block.shouldSideBeRendered(iblockaccess, i, j + 1, k, 1)) {
-			if (iDir / 4 != 1) {
+			
 				float f21 = block.getAmbientOcclusionLightValue(iblockaccess,
 						i, j + 1, k);
 				if (block.getBlockBoundsMaxY() != 1.0D
@@ -579,7 +579,7 @@ public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {
 						renderblocks,
 						block.getMixedBrightnessForBlock(iblockaccess, i, j, k));
 				flag = true;
-			}
+			
 		}
 
 		if (renderblocks.renderAllFaces
@@ -1177,7 +1177,7 @@ public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {
 	
 		if (renderblocks.renderAllFaces
 				|| block.shouldSideBeRendered(iblockaccess, i, j + 1, k, 1)) {
-			if (iDir / 4 != 0 && iDir / 4 != 2) {
+			
 				float f21 = block.getAmbientOcclusionLightValue(iblockaccess,
 						i, j + 1, k);
 				if (block.getBlockBoundsMaxY() != 1.0D
@@ -1190,7 +1190,7 @@ public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {
 						renderblocks,
 						block.getMixedBrightnessForBlock(iblockaccess, i, j, k));
 				flag = true;
-			}
+			
 		}
 	
 		if (renderblocks.renderAllFaces
