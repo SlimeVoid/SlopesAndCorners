@@ -108,6 +108,11 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	}
 
 	@Override
+	public float getExplosionResistance(Entity entity, double explosionX, double explosionY, double explosionZ, BlockBase blockBase) {
+		return MaterialsLib.getBlock(this.getMaterial()).getExplosionResistance(entity, this.worldObj, this.xCoord, this.yCoord, this.zCoord, explosionX, explosionY, explosionZ);
+	}
+
+	@Override
 	public StepSound getStepSound() {
 		Block block = MaterialsLib.getBlock(this.getMaterial());
 		return block != null ? block.stepSound : null;
@@ -143,9 +148,5 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID, this.slopeIndex);
-	}
-
-	public float getExplosionResistance(BlockBase blockSlopesBase,Entity entity, double explosionX, double explosionY, double explosionZ) {
-		return MaterialsLib.getBlock(this.getMaterial()).getExplosionResistance(entity, this.worldObj, this.xCoord, this.yCoord, this.zCoord, explosionX, explosionY, explosionZ);
 	}
 }
