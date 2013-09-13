@@ -3,9 +3,9 @@ package slimevoid.slopesncorners.client.proxy;
 import java.io.File;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
-
 import slimevoid.slopesncorners.client.network.ClientPacketHandler;
 import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
+import slimevoid.slopesncorners.client.render.handlers.BlockHalfSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockOblicSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSideSlopeRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRenderer;
@@ -30,6 +30,7 @@ public class ClientProxy extends CommonProxy {
 		renderHandler.registerSlopeRenderer(1, new BlockSideSlopeRenderer());
 		renderHandler.registerSlopeRenderer(2, new BlockOblicSlopesRenderer());
 		renderHandler.registerSlopeRenderer(3, new BlockTriCornersRenderer());
+		renderHandler.registerSlopeRenderer(4, new BlockHalfSlopesRenderer());
 		RenderingRegistry.registerBlockHandler(ConfigurationLib.slopesRenderID, renderHandler);
 	}
 	

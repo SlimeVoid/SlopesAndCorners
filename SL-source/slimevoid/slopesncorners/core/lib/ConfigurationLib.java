@@ -4,23 +4,22 @@ import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.Language;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
+import slimevoid.slopesncorners.blocks.lib.HalfSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.OblicSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
+import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -111,14 +110,17 @@ public class ConfigurationLib {
 		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
 		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
 		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class, "tri");
+		GameRegistry.registerTileEntity(TileEntityHalfSlopes.class, "halfslope");
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SLOPES_ID, TileEntitySlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SIDES_ID, TileEntitySideSlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_OBLICS_ID, TileEntityOblicSlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_TRIPOINT_ID, TileEntityTriPointCorner.class);
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_HALF_SLOPE_ID, TileEntityHalfSlopes.class);
 		blockSlopes.registerPlacement(BlockLib.BLOCK_SLOPES_ID, new SlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_SIDES_ID, new SideSlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_OBLICS_ID, new OblicSlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_TRIPOINT_ID, new TriPointCornerPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_HALF_SLOPE_ID, new HalfSlopesPlacement());
 		
 	}
 	

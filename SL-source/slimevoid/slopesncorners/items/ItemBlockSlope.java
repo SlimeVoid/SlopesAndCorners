@@ -4,6 +4,7 @@ import java.util.List;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import slimevoid.slopesncorners.api.ISlopePlacement;
+import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,20 +20,11 @@ public class ItemBlockSlope extends ItemBlock {
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[4];
-		tabs = new CreativeTabs[4];
+		placers = new ISlopePlacement[BlockLib.MAX_TILES];
+		tabs = new CreativeTabs[BlockLib.MAX_TILES];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
-
-/*	@Override
-	public boolean onItemUseFirst(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l, float xp, float yp, float zp) {
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT
-				&& world.isRemote) {
-			return false;
-		}
-		return itemUseShared(ist, player, world, i, j, k, l);
-	}*/
 	
 	@Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
