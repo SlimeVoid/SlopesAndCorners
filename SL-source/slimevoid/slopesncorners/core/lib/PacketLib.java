@@ -16,8 +16,16 @@ public class PacketLib {
 
 	public static void sendMaterialList(Player player, NetHandler netHandler, INetworkManager manager) {
 		PacketMaterialList packet = new PacketMaterialList(ConfigurationLib.getBaseBlockList(false));
+		System.out.println("Sending Mats List");
 		packet.setCommand(CommandLib.SEND_MATERIALS);
 		PacketDispatcher.sendPacketToPlayer(packet.getPacket(), player);
+	}
+	
+	public static void sendAllMaterialList() {
+		PacketMaterialList packet = new PacketMaterialList(ConfigurationLib.getBaseBlockList(false));
+		System.out.println("Sending updated Mats List");
+		packet.setCommand(CommandLib.SEND_MATERIALS);
+		PacketDispatcher.sendPacketToAllPlayers(packet.getPacket());
 	}
 	
 	@SideOnly(Side.CLIENT)

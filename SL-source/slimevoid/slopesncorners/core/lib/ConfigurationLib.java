@@ -20,7 +20,9 @@ import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -58,7 +60,7 @@ public class ConfigurationLib {
 
 	public static void setBaseBlockList(String[] materialList) {
 		baseBlockIdsNDmgs = materialList;
-		reInitSlopeMats();
+		reInitSlopeMats(true);
 	}
 	
 	public static void CommonConfig(File configFile) {
@@ -88,7 +90,8 @@ public class ConfigurationLib {
 								+ "\nexample 35_14-Red Wool will create a slope, slanted corner, and oblic slope blocks"
 								+ "\nwith the texture based on the blockid 35 with damage 14, Damage is optional if 0"
 								+ "\ndisplay names will use the Friendly prefix given if non is specified then a name"
-								+ "\nwill be assigned based on the firendly name of the base block")
+								+ "\nwill be assigned based on the firendly name of the base block recomended to give a"
+								+ "\nFriendly Prefix")
 				.getStringList();		
 		
 		configuration.save();
@@ -119,14 +122,13 @@ public class ConfigurationLib {
 		
 	}
 	
-	public static void reInitSlopeMats(){
-		getBaseBlockList(true);
+	public static void reInitSlopeMats(boolean serverload){
+		getBaseBlockList(!serverload);
 		initSlopeMats();
 		try{
-			Minecraft.getMinecraft().refreshResources();
-		}catch (Exception e){
-			
-		}
+			FMLCommonHandler.instance().updateResourcePackList();
+		}catch(Exception ex){}
+		
 		
 	}
 

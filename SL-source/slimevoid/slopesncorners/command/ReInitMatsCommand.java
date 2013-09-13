@@ -3,7 +3,9 @@ package slimevoid.slopesncorners.command;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoid.slopesncorners.core.lib.PacketLib;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class ReInitMatsCommand extends CommandBase {
 
@@ -19,7 +21,11 @@ public class ReInitMatsCommand extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender icommandsender, String[] astring) {
-		ConfigurationLib.reInitSlopeMats();;
+		
+			ConfigurationLib.reInitSlopeMats(false);
+			if (FMLCommonHandler.instance().getSide() == Side.SERVER){
+				PacketLib.sendAllMaterialList();
+			}
 	}
 
 }
