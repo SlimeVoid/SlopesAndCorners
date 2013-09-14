@@ -40,6 +40,11 @@ public class SlopeMaterialHandler implements IMaterialHandler {
 					.append(name).append(".halfSlope").append(".name").toString(),
 				(new StringBuilder())
 					.append(desc).append(" Half Slope").toString());
+		LanguageRegistry.instance().addStringLocalization(
+				(new StringBuilder())
+					.append(name).append(".pointSlope").append(".name").toString(),
+				(new StringBuilder())
+					.append(desc).append(" Point Slope").toString());
 		ItemStack baseItem = MaterialsLib.getItemStack(i);
 		System.out.println(baseItem);
 		if (baseItem != null) {
@@ -70,6 +75,15 @@ public class SlopeMaterialHandler implements IMaterialHandler {
 					new Object [] {
 						" B",
 						"B ",
+						Character.valueOf('B'),
+						slopeStack
+					});
+			stack = new ItemStack(ConfigurationLib.blockSlopes, 6, (BlockLib.BLOCK_POINT_SLOPE_ID << 12) + i);
+			GameRegistry.addShapedRecipe(
+					stack,
+					new Object [] {
+						" B ",
+						"B B",
 						Character.valueOf('B'),
 						slopeStack
 					});

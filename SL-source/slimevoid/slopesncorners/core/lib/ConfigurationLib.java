@@ -10,6 +10,7 @@ import net.minecraftforge.common.Configuration;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.blocks.lib.HalfSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.OblicSlopesPlacement;
+import slimevoid.slopesncorners.blocks.lib.PointSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
@@ -17,6 +18,7 @@ import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
+import slimevoid.slopesncorners.tileentity.TileEntityPointSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
@@ -110,17 +112,20 @@ public class ConfigurationLib {
 		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
 		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
 		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class, "tri");
-		GameRegistry.registerTileEntity(TileEntityHalfSlopes.class, "halfslope");
+		GameRegistry.registerTileEntity(TileEntityHalfSlopes.class, "halfSlope");
+		GameRegistry.registerTileEntity(TileEntityPointSlopes.class, "pointSlope");
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SLOPES_ID, TileEntitySlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_SIDES_ID, TileEntitySideSlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_OBLICS_ID, TileEntityOblicSlopes.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_TRIPOINT_ID, TileEntityTriPointCorner.class);
 		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_HALF_SLOPE_ID, TileEntityHalfSlopes.class);
+		blockSlopes.addTileEntityMapping(BlockLib.BLOCK_POINT_SLOPE_ID, TileEntityPointSlopes.class);
 		blockSlopes.registerPlacement(BlockLib.BLOCK_SLOPES_ID, new SlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_SIDES_ID, new SideSlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_OBLICS_ID, new OblicSlopesPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_TRIPOINT_ID, new TriPointCornerPlacement());
 		blockSlopes.registerPlacement(BlockLib.BLOCK_HALF_SLOPE_ID, new HalfSlopesPlacement());
+		blockSlopes.registerPlacement(BlockLib.BLOCK_POINT_SLOPE_ID, new PointSlopesPlacement());
 		
 	}
 	
