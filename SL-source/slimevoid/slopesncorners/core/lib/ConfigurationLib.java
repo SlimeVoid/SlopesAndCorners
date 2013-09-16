@@ -3,6 +3,7 @@ package slimevoid.slopesncorners.core.lib;
 import java.io.File;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,6 +37,7 @@ public class ConfigurationLib {
 	private static String[] baseBlockIdsNDmgs;
 	@SideOnly(Side.CLIENT)
 	public static int slopesRenderID;
+	//public static Material slopesMaterial;
 	
 	@SideOnly(Side.CLIENT)
 	public static void ClientConfig(File configFile) {
@@ -99,6 +101,7 @@ public class ConfigurationLib {
 	}
 	
 	public static void registerBlocks() {
+		//slopesMaterial = new Material(MapColor.waterColor);
 		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
 		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
 		initSlopeMats();		
@@ -142,7 +145,7 @@ public class ConfigurationLib {
 			Integer blockId= Integer.parseInt(custommats.split("-")[0].split("_")[0]);
 			Integer blockDMG= custommats.split("-")[0].split("_").length == 1 ? 0:Integer.parseInt(custommats.split("-")[0].split("_")[1]);
 			MaterialsLib.addMaterial(
-					Block.blocksList[blockId],
+					blockId,
 					blockDMG,
 					custommats.split("-").length == 1 ? 
 							Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId,1,blockDMG))

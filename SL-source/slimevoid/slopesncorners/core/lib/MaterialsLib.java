@@ -89,6 +89,15 @@ public class MaterialsLib {
 				Integer.valueOf(ist.itemID),
 				Integer.valueOf(ist.getItemDamage()) }));
 	}
+
+	public static void addMaterial(int blockId, int md, String desc) {
+		Block block = Block.blocksList[blockId];
+		if (block != null) {
+			addMaterial(block, md, desc);
+		} else {
+			throw new IndexOutOfBoundsException("Block ID: " + blockId + " is not a valid block");
+		}
+	}
 	
 	public static void addMaterial(Block bl, String desc) {
 		addMaterial(bl, 0, desc);
@@ -261,8 +270,8 @@ public class MaterialsLib {
 	}
 
 	public static ItemStack getItemStack(int n) {
-		n = n % materials.size();	
-			return materials.get(n);		
+		n = n % materials.size();
+		return materials.get(n);
 	}
 
 	public static Block getBlock(int n) {

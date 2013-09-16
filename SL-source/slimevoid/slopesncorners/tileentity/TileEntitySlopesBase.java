@@ -1,12 +1,20 @@
 package slimevoid.slopesncorners.tileentity;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.StepSound;
 import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
@@ -14,6 +22,7 @@ import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoidlib.blocks.BlockBase;
 import slimevoidlib.tileentity.TileEntityBase;
+import slimevoidlib.util.helpers.ItemHelper;
 
 public class TileEntitySlopesBase extends TileEntityBase {
 	
@@ -100,11 +109,65 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	public int getBlockID() {
 		return ConfigurationLib.blockSlopes.blockID;
 	}
-	
+
+	@Override
+	public boolean removeBlockByPlayer(EntityPlayer player, BlockBase blockBase) {
+		if (this.worldObj.isRemote) {
+			return true;
+		}
+		ItemStack blockStack = MaterialsLib.getItemStack(this.getMaterial());
+		int metadata = blockStack.getItemDamage();
+		Block block = Block.blocksList[blockStack.itemID];
+		if (block == null) {
+			return false;
+		}
+		if (ForgeHooks.canHarvestBlock(block, player, metadata) && !player.capabilities.isCreativeMode) {
+			ArrayList blockDropped = blockBase
+					.getBlockDropped(	this.worldObj,
+										this.xCoord,
+										this.yCoord,
+										this.zCoord,
+										this.getBlockMetadata(),
+										EnchantmentHelper
+												.getFortuneModifier(player));
+			ItemStack itemstack;
+			for (Iterator stack = blockDropped.iterator(); stack.hasNext(); ItemHelper
+					.dropItem(	this.worldObj,
+								this.xCoord,
+								this.yCoord,
+								this.zCoord,
+								itemstack))
+				itemstack = (ItemStack) stack.next();
+
+		}
+		return this.worldObj.setBlockToAir(	this.xCoord,
+											this.yCoord,
+											this.zCoord);
+	}
+
 	@Override
 	public float getBlockHardness(BlockBase blockBase) {
 		Block block = MaterialsLib.getBlock(this.getMaterial());
-		return block.getBlockHardness(worldObj, xCoord, yCoord, zCoord);
+		return block.getBlockHardness(	this.worldObj,
+										this.xCoord,
+										this.yCoord,
+										this.zCoord);
+	}
+
+	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer entityplayer, BlockBase blockBase) {
+		ItemStack blockStack = MaterialsLib.getItemStack(this.getMaterial());
+		int metadata = blockStack.getItemDamage();
+		Block block = Block.blocksList[blockStack.itemID];
+		float hardness = this.getBlockHardness(blockBase);
+		if (!ForgeHooks.canHarvestBlock(block, entityplayer, metadata)) {
+			float speed = ForgeEventFactory.getBreakSpeed(entityplayer, block, metadata, 1.0F);
+			return (speed < 0 ? 0 : speed) / hardness / 100F;
+		} else {
+			return entityplayer.getCurrentPlayerStrVsBlock(	block,
+															true,
+															metadata) / hardness / 30F;
+		}
 	}
 
 	@Override
