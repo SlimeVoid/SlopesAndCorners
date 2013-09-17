@@ -3,7 +3,7 @@
   "modid": "SlimevoidSlopeNCorners",
   "name": "Slime Void Slopes",
   "description": "Adds sloping blocks to the game",
-  "version": "2.0.2.0",
+  "version": "2.0.2.2",
   "mcversion": "1.6.2",
   "url": "",
   "updateUrl": "",
@@ -12,6 +12,6 @@
   "logoFile": "",
   "screenshots": [],
   "parent":"",
-  "dependencies": ["EurysCore"]
+  "dependencies": ["SlimevoidLib"]
 }
 ]
