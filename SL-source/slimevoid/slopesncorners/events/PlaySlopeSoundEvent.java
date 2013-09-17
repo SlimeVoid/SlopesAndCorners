@@ -17,7 +17,8 @@ public class PlaySlopeSoundEvent {
 	@ForgeSubscribe
 	public void SlopeSoundEvent(PlaySoundEvent event) {
 		if (event.name.startsWith("place.slopesncorners") || event.name
-				.startsWith("dig.slopesncorners")) {
+				.startsWith("dig.slopesncorners") || event.name
+				.startsWith("step.slopesncorners")) {
 			if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 				World world = FMLClientHandler.instance().getClient().theWorld;
 				int x = MathHelper.floor_float(event.x), y = MathHelper
@@ -31,7 +32,9 @@ public class PlaySlopeSoundEvent {
 						SoundPoolEntry sound = event.manager.soundPoolSounds
 								.getRandomSoundFromSoundPool(event.name
 										.startsWith("dig.") ? tileentity
-										.getStepSound().getBreakSound() : tileentity
+										.getStepSound().getBreakSound() : event.name
+										.startsWith("place.") ? tileentity
+										.getStepSound().getPlaceSound() : tileentity
 										.getStepSound().getStepSound());
 						event.result = sound;
 					}
