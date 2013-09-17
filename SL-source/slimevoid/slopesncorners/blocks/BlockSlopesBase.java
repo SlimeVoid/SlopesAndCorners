@@ -25,11 +25,6 @@ public class BlockSlopesBase extends BlockBase {
 
 	public BlockSlopesBase(int blockID, Material material, int maxTiles) {
 		super(blockID, material, maxTiles);
-		this.setStepSound(new StepSound("slopesncorners", 1.0F, 1.0F) {
-			public String getPlaceSound() {
-				return "place." + this.stepSoundName;
-			}
-		});
 	}
 
 	@Override
