@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
@@ -157,7 +158,8 @@ public class ConfigurationLib {
 	public static void reInitSlopeMats() {
 		initSlopeMats();
 		try {
-			FMLCommonHandler.instance().updateResourcePackList();
+			//FMLCommonHandler.instance().updateResourcePackList();
+			StringTranslate.getInstance().setLanguage(StringTranslate.getInstance().currentLanguage, true);
 		} catch (Exception ex) {
 		}
 	}
@@ -169,7 +171,7 @@ public class ConfigurationLib {
 			Integer blockDMG = custommats.split("-")[0].split("_").length == 1 ? 0 : Integer.parseInt(custommats.split("-")[0].split("_")[1]);
 			MaterialsLib.addMaterial(	blockId,
 										blockDMG,
-										custommats.split("-").length == 1 ? Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId, 1, blockDMG)) : custommats.split("-")[1]);
+										custommats.split("-").length == 1 ? Item.itemsList[blockId].getItemDisplayName(new ItemStack(blockId, 1, blockDMG)) : custommats.split("-")[1]);
 
 		}
 	}

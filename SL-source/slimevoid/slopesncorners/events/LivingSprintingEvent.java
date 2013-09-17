@@ -7,7 +7,7 @@ import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -19,7 +19,7 @@ public class LivingSprintingEvent {
 
 	@ForgeSubscribe
 	public void onLivingUpdate(LivingUpdateEvent event) {
-		EntityLivingBase entity = event.entityLiving;
+		EntityLiving entity = event.entityLiving;
 		if (entity.isSprinting() && !entity.isInWater()) {
 			int x = MathHelper.floor_double(entity.posX);
 			int y = MathHelper

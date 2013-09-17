@@ -8,7 +8,9 @@ import slimevoid.slopesncorners.network.CommonPacketHandler;
 import slimevoid.slopesncorners.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.PostInit;
+import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -37,7 +39,7 @@ public class SlopesNCorners {
 			serverSide = CoreLib.COMMON_PROXY)
 	public static ICommonProxy	proxy;
 
-	@EventHandler
+	@PreInit
 	public void slopesPreInit(FMLPreInitializationEvent event) {
 
 		proxy.preInit();
@@ -46,13 +48,13 @@ public class SlopesNCorners {
 				.getSuggestedConfigurationFile());
 	}
 
-	@EventHandler
+	@PostInit
 	public void slopesPostInit(FMLPostInitializationEvent event) {
 		ConfigurationLib.registerBlocks();
 		proxy.registerRenderInformation();
 	}
 
-	@EventHandler
+	@ServerStarting
 	public void registerCommand(FMLServerStartingEvent event) {
 		event.registerServerCommand(new ReInitMatsCommand());
 	}
