@@ -44,7 +44,6 @@ public class ConfigurationLib {
 	@SideOnly(Side.CLIENT)
 	public static void ClientConfig(File configFile) {
 		CommonConfig(configFile);
-		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
 	}
 
 	public static String[] getBaseBlockList(boolean getLatest) {
@@ -66,6 +65,8 @@ public class ConfigurationLib {
 	}
 
 	public static void CommonConfig(File configFile) {
+		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
+		
 		configuration = new Configuration(configFile);
 
 		configuration.load();
