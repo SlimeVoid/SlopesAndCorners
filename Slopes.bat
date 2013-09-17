@@ -44,7 +44,7 @@ del "%packagedir%\Slopes\*.*" /S /Q
 rmdir "%packagedir%\Slopes" /S /Q
 )
 mkdir "%packagedir%\Slopes"
-xcopy "%mcpdir%\reobf\minecraft\*.*" "%packagedir%\Slopes\" /S
+xcopy "%mcpdir%\reobf\minecraft\slimevoid\slopesncorners\*.*" "%packagedir%\Slopes\slimevoid\slopesncorners\" /S
 xcopy "%slopes%\SL-resources\*.*" "%packagedir%\Slopes\" /S
 echo Slopes Packaged Successfully
 pause
