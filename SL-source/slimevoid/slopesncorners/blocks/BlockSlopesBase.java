@@ -4,17 +4,24 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import slimevoid.slopesncorners.api.ISlopePlacement;
+import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
 
 public class BlockSlopesBase extends BlockBase {
+	
+	@Override
+	public void registerIcons(IconRegister iconRegister) {
+		this.blockIcon = iconRegister.registerIcon(BlockLib.DEFAULT_ICON);
+	}
 
 	public BlockSlopesBase(int blockID, Material material, int maxTiles) {
 		super(blockID, material, maxTiles);
@@ -58,7 +65,7 @@ public class BlockSlopesBase extends BlockBase {
 	
 	@Override
 	public Icon getIcon(int side, int meta){
-		return Block.glass.getIcon(0, 0);
+		return this.blockIcon;
 		
 	}
 }
