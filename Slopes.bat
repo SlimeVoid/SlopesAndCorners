@@ -5,7 +5,7 @@ set packagedir="%programdir%\Packages"
 set repodir="%programdir%\Repositories"
 set forgedir="%repodir%\MinecraftForge"
 set fmldir="%repodir%\MinecraftForge\fml"
-set mcpdir="%programdir%\mcp"
+set mcpdir="%forgedir%\mcp"
 set euryscore="%repodir%\EurysCore-FML"
 set slopes="%repodir%\SlopesAndCorners"
 cd %mcpdir%
@@ -30,7 +30,6 @@ GOTO :ECFAIL
 
 :COPYEC
 xcopy "%euryscore%\SV-common\*.*" "%mcpdir%\src\minecraft\" /S
-xcopy "%euryscore%\LB-api\*.*" "%mcpdir%\src\minecraft\" /S
 xcopy "%slopes%\SL-source\*.*" "%mcpdir%\src\minecraft\" /S
 pause
 call %mcpdir%\recompile.bat
