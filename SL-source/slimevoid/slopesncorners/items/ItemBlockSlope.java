@@ -2,16 +2,16 @@ package slimevoid.slopesncorners.items;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import slimevoid.slopesncorners.api.ISlopePlacement;
-import slimevoid.slopesncorners.core.lib.BlockLib;
-import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import slimevoid.slopesncorners.api.ISlopePlacement;
+import slimevoid.slopesncorners.core.lib.BlockLib;
+import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ItemBlockSlope extends ItemBlock {
 
@@ -56,6 +56,7 @@ public class ItemBlockSlope extends ItemBlock {
 										hitZ,
 										metadata);
 		} else {
+			placers[hb].onPlaceSlope(stack, player, world, x, y, z, side);
 			return placers[hb].placeSlopeAt(stack,
 											player,
 											world,

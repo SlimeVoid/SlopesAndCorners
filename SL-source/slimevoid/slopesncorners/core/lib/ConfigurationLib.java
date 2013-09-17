@@ -2,8 +2,6 @@ package slimevoid.slopesncorners.core.lib;
 
 import java.io.File;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,6 +16,7 @@ import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
 import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
 import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
+import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
@@ -142,6 +141,7 @@ public class ConfigurationLib {
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_POINT_SLOPE_ID,
 										new PointSlopesPlacement());
 		MinecraftForge.EVENT_BUS.register(new LivingSprintingEvent());
+		MinecraftForge.EVENT_BUS.register(new StepSoundEvent());
 
 	}
 

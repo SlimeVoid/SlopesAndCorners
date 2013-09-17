@@ -18,11 +18,12 @@ import net.minecraftforge.event.ForgeEventFactory;
 import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoid.slopesncorners.core.lib.NBTLib;
 import slimevoidlib.blocks.BlockBase;
 import slimevoidlib.tileentity.TileEntityBase;
 import slimevoidlib.util.helpers.ItemHelper;
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class TileEntitySlopesBase extends TileEntityBase {
 
@@ -203,6 +204,14 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public boolean addBlockDestroyEffects(BlockBase blockBase, int meta, EffectRenderer effectRenderer) {
+		Block block = MaterialsLib.getBlock(this.getMaterial());
+		FMLClientHandler.instance().getClient().sndManager
+				.playSound(	block.stepSound.getBreakSound(),
+							(float) this.xCoord + 0.5F,
+							(float) this.yCoord + 0.5F,
+							(float) this.zCoord + 0.5F,
+							(block.stepSound.getVolume() + 1.0F) / 2.0F,
+							block.stepSound.getPitch() * 0.8F);
 		return SlopesEntityDiggingFX.doBlockDestroyEffects(	this.worldObj,
 															this.xCoord,
 															this.yCoord,
