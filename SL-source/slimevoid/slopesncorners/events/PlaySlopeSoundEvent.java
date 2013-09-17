@@ -17,9 +17,9 @@ public class PlaySlopeSoundEvent {
 
 	@ForgeSubscribe
 	public void SlopeSoundEvent(PlaySoundEvent event) {
-		if (event.name.startsWith("place.slimevoid" + CoreLib.MOD_RESOURCES)
-			|| event.name.startsWith("dig.slimevoid" + CoreLib.MOD_RESOURCES)
-			|| event.name.startsWith("step.slimevoid" + CoreLib.MOD_RESOURCES)) {
+		if (event.name.startsWith("place.slimevoid." + CoreLib.MOD_RESOURCES)
+			|| event.name.startsWith("dig.slimevoid." + CoreLib.MOD_RESOURCES)
+			|| event.name.startsWith("step.slimevoid." + CoreLib.MOD_RESOURCES)) {
 			if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 				World world = FMLClientHandler.instance().getClient().theWorld;
 				int x = MathHelper.floor_float(event.x), y = MathHelper.floor_float(event.y), z = MathHelper.floor_float(event.z);
