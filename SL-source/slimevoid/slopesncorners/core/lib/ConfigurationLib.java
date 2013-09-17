@@ -5,7 +5,6 @@ import java.io.File;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
@@ -15,7 +14,6 @@ import slimevoid.slopesncorners.blocks.lib.PointSlopes;
 import slimevoid.slopesncorners.blocks.lib.SideSlopes;
 import slimevoid.slopesncorners.blocks.lib.Slopes;
 import slimevoid.slopesncorners.blocks.lib.TriPointCorners;
-import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
 import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
@@ -37,7 +35,6 @@ public class ConfigurationLib {
 	public static BlockSlopesBase	blockSlopes;
 	public static int				blockSlopesID;
 	private static String[]			baseBlockIdsNDmgs;
-	@SideOnly(Side.CLIENT)
 	public static int				slopesRenderID;
 
 	// public static Material slopesMaterial;
@@ -45,7 +42,6 @@ public class ConfigurationLib {
 	@SideOnly(Side.CLIENT)
 	public static void ClientConfig(File configFile) {
 		CommonConfig(configFile);
-		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
 	}
 
 	public static String[] getBaseBlockList(boolean getLatest) {
@@ -67,6 +63,8 @@ public class ConfigurationLib {
 	}
 
 	public static void CommonConfig(File configFile) {
+		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
+		
 		configuration = new Configuration(configFile);
 
 		configuration.load();

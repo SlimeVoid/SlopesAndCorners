@@ -43,7 +43,6 @@ public class BlockSlopesBase extends BlockBase {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
 	public int getRenderType() {
 		return ConfigurationLib.slopesRenderID;
