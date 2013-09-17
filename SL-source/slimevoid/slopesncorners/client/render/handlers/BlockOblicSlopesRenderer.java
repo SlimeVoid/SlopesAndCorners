@@ -2,7 +2,6 @@ package slimevoid.slopesncorners.client.render.handlers;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
@@ -10,10 +9,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
-import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
@@ -34,7 +30,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 									MaterialsLib.getIconForSide(i, 0),
 									1,
 									renderblocks,
-									240);
+									-1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
@@ -45,7 +41,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 								MaterialsLib.getIconForSide(i, 1),
 								1,
 								renderblocks,
-								240);
+								-1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, -1F);
@@ -56,7 +52,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 									MaterialsLib.getIconForSide(i, 2),
 									1,
 									renderblocks,
-									240);
+									-1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, 1.0F);
@@ -67,7 +63,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 									MaterialsLib.getIconForSide(i, 3),
 									1,
 									renderblocks,
-									240);
+									-1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1F, 0.0F, 0.0F);
@@ -78,7 +74,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 									MaterialsLib.getIconForSide(i, 4),
 									1,
 									renderblocks,
-									240);
+									-1);
 		tessellator.draw();
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
@@ -89,7 +85,7 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 									MaterialsLib.getIconForSide(i, 5),
 									1,
 									renderblocks,
-									240);
+									-1);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 
@@ -800,7 +796,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersBottomFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
@@ -966,7 +964,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersTopFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
@@ -1122,7 +1122,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersEastFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
@@ -1371,7 +1373,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersWestFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
@@ -1609,7 +1613,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersNorthFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
@@ -1852,7 +1858,9 @@ public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 
 	public void renderIntCornersSouthFace(Block block, double d, double d1, double d2, Icon i, int iDir, RenderBlocks renderblocks, int lBrightness) {
 		Tessellator tessellator = Tessellator.instance;
-		tessellator.setBrightness(lBrightness);
+		if (lBrightness >= 0) {
+			tessellator.setBrightness(lBrightness);
+		}
 		if (renderblocks.hasOverrideBlockTexture()) {
 			i = renderblocks.overrideBlockTexture;
 		}
