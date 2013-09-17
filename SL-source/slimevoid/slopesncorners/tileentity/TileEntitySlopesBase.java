@@ -204,14 +204,14 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public boolean addBlockDestroyEffects(BlockBase blockBase, int meta, EffectRenderer effectRenderer) {
-		Block block = MaterialsLib.getBlock(this.getMaterial());
+/*		Block block = MaterialsLib.getBlock(this.getMaterial());
 		FMLClientHandler.instance().getClient().sndManager
 				.playSound(	block.stepSound.getBreakSound(),
 							(float) this.xCoord + 0.5F,
 							(float) this.yCoord + 0.5F,
 							(float) this.zCoord + 0.5F,
 							(block.stepSound.getVolume() + 1.0F) / 2.0F,
-							block.stepSound.getPitch() * 0.8F);
+							block.stepSound.getPitch() * 0.8F);*/
 		return SlopesEntityDiggingFX.doBlockDestroyEffects(	this.worldObj,
 															this.xCoord,
 															this.yCoord,
@@ -223,6 +223,14 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public boolean addBlockHitEffects(BlockBase blockBase, MovingObjectPosition target, EffectRenderer effectRenderer) {
+/*		Block block = MaterialsLib.getBlock(this.getMaterial());
+		FMLClientHandler.instance().getClient().sndManager
+				.playSound(	block.stepSound.getStepSound(),
+							(float) this.xCoord + 0.5F,
+							(float) this.yCoord + 0.5F,
+							(float) this.zCoord + 0.5F,
+							(block.stepSound.getVolume() + 1.0F) / 8.0F,
+							block.stepSound.getPitch() * 0.5F);*/
 		return SlopesEntityDiggingFX.doBlockHitEffects(	this.worldObj,
 														target,
 														effectRenderer,

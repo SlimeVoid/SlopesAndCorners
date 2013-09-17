@@ -8,14 +8,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
-import slimevoid.slopesncorners.blocks.lib.HalfSlopesPlacement;
-import slimevoid.slopesncorners.blocks.lib.OblicSlopesPlacement;
-import slimevoid.slopesncorners.blocks.lib.PointSlopesPlacement;
-import slimevoid.slopesncorners.blocks.lib.SideSlopesPlacement;
-import slimevoid.slopesncorners.blocks.lib.SlopeMaterialHandler;
-import slimevoid.slopesncorners.blocks.lib.SlopesPlacement;
-import slimevoid.slopesncorners.blocks.lib.TriPointCornerPlacement;
+import slimevoid.slopesncorners.blocks.lib.HalfSlopes;
+import slimevoid.slopesncorners.blocks.lib.OblicSlopes;
+import slimevoid.slopesncorners.blocks.lib.PointSlopes;
+import slimevoid.slopesncorners.blocks.lib.SideSlopes;
+import slimevoid.slopesncorners.blocks.lib.Slopes;
+import slimevoid.slopesncorners.blocks.lib.TriPointCorners;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
+import slimevoid.slopesncorners.events.PlaySlopeSoundEvent;
 import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
@@ -51,10 +51,9 @@ public class ConfigurationLib {
 		if (getLatest) {
 			configuration.load();
 
-			baseBlockIdsNDmgs = configuration
-					.get(	Configuration.CATEGORY_GENERAL,
-							"BaseBlockList",
-							new String[] {}).getStringList();
+			baseBlockIdsNDmgs = configuration.get(	Configuration.CATEGORY_GENERAL,
+													"BaseBlockList",
+													new String[] {}).getStringList();
 
 			configuration.save();
 		}
@@ -71,49 +70,58 @@ public class ConfigurationLib {
 
 		configuration.load();
 
-		LanguageRegistry.instance()
-				.addStringLocalization(	"itemGroup.slopes",
-										"en_US",
-										"Slopes N' Corners");
+		LanguageRegistry.instance().addStringLocalization(	"itemGroup.slopes",
+															"en_US",
+															"Slopes N' Corners");
 
 		blockSlopesID = configuration.get(	Configuration.CATEGORY_GENERAL,
 											"SlopesBlockID",
 											1000,
-											"One BlockID for all the slopes")
-				.getInt();
+											"One BlockID for all the slopes").getInt();
 
-		baseBlockIdsNDmgs = configuration
-				.get(	Configuration.CATEGORY_GENERAL,
-						"BaseBlockList",
-						new String[] {
-								"155",
-								"155_1-Chisled Quartz",
-								"155_2-Pillar Quartz" },
-						"Data to generate custom Blocks with the format BaseBlockID<_DMG-Friendly Prefix>. " + "\nexample 35_14-Red Wool will create a slope, slanted corner, and oblic slope blocks" + "\nwith the texture based on the blockid 35 with damage 14, Damage is optional if 0" + "\ndisplay names will use the Friendly prefix given if non is specified then a name" + "\nwill be assigned based on the firendly name of the base block recomended to give a" + "\nFriendly Prefix")
-				.getStringList();
+		baseBlockIdsNDmgs = configuration.get(	Configuration.CATEGORY_GENERAL,
+												"BaseBlockList",
+												new String[] {
+														"155",
+														"155_1-Chisled Quartz",
+														"155_2-Pillar Quartz" },
+												"Data to generate custom Blocks with the format BaseBlockID<_DMG-Friendly Prefix>. "
+														+ "\nexample 35_14-Red Wool will create a slope, slanted corner, and oblic slope blocks"
+														+ "\nwith the texture based on the blockid 35 with damage 14, Damage is optional if 0"
+														+ "\ndisplay names will use the Friendly prefix given if non is specified then a name"
+														+ "\nwill be assigned based on the firendly name of the base block recomended to give a"
+														+ "\nFriendly Prefix").getStringList();
 
 		configuration.save();
 	}
 
 	public static void registerBlocks() {
 		// slopesMaterial = new Material(MapColor.waterColor);
-		blockSlopes = new BlockSlopesBase(
-				blockSlopesID,
-				Material.rock,
-				BlockLib.MAX_TILES);
-		GameRegistry.registerBlock(blockSlopes, ItemBlockSlope.class, "slope");
+		blockSlopes = new BlockSlopesBase(blockSlopesID, Material.rock, BlockLib.MAX_TILES);
+		GameRegistry.registerBlock(	blockSlopes,
+									ItemBlockSlope.class,
+									"slope");
 		initSlopeMats();
 		initializeSlopes();
 	}
 
 	private static void initializeSlopes() {
-		MaterialsLib.addMaterialHandler(new SlopeMaterialHandler());
-		GameRegistry.registerTileEntity(TileEntitySlopes.class, "slope");
-		GameRegistry.registerTileEntity(TileEntitySideSlopes.class, "side");
-		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class, "oblic");
-		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class, "tri");
-		GameRegistry
-				.registerTileEntity(TileEntityHalfSlopes.class, "halfSlope");
+		MaterialsLib.addMaterialHandler(Slopes.instance.getMaterialHandler());
+		MaterialsLib.addMaterialHandler(OblicSlopes.instance.getMaterialHandler());
+		MaterialsLib.addMaterialHandler(HalfSlopes.instance.getMaterialHandler());
+		MaterialsLib.addMaterialHandler(SideSlopes.instance.getMaterialHandler());
+		MaterialsLib.addMaterialHandler(TriPointCorners.instance.getMaterialHandler());
+		MaterialsLib.addMaterialHandler(PointSlopes.instance.getMaterialHandler());
+		GameRegistry.registerTileEntity(TileEntitySlopes.class,
+										"slope");
+		GameRegistry.registerTileEntity(TileEntitySideSlopes.class,
+										"side");
+		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class,
+										"oblic");
+		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class,
+										"tri");
+		GameRegistry.registerTileEntity(TileEntityHalfSlopes.class,
+										"halfSlope");
 		GameRegistry.registerTileEntity(TileEntityPointSlopes.class,
 										"pointSlope");
 		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_SLOPES_ID,
@@ -129,19 +137,20 @@ public class ConfigurationLib {
 		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_POINT_SLOPE_ID,
 											TileEntityPointSlopes.class);
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_SLOPES_ID,
-										new SlopesPlacement());
+										Slopes.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_SIDES_ID,
-										new SideSlopesPlacement());
+										SideSlopes.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_OBLICS_ID,
-										new OblicSlopesPlacement());
+										OblicSlopes.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_TRIPOINT_ID,
-										new TriPointCornerPlacement());
+										TriPointCorners.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_HALF_SLOPE_ID,
-										new HalfSlopesPlacement());
+										HalfSlopes.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_POINT_SLOPE_ID,
-										new PointSlopesPlacement());
+										PointSlopes.instance.getPlacementHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingSprintingEvent());
 		MinecraftForge.EVENT_BUS.register(new StepSoundEvent());
+		MinecraftForge.EVENT_BUS.register(new PlaySlopeSoundEvent());
 
 	}
 
@@ -156,19 +165,11 @@ public class ConfigurationLib {
 	private static void initSlopeMats() {
 		MaterialsLib.initMaterials();
 		for (String custommats : baseBlockIdsNDmgs) {
-			Integer blockId = Integer.parseInt(custommats.split("-")[0]
-					.split("_")[0]);
-			Integer blockDMG = custommats.split("-")[0].split("_").length == 1 ? 0 : Integer
-					.parseInt(custommats.split("-")[0].split("_")[1]);
-			MaterialsLib
-					.addMaterial(	blockId,
-									blockDMG,
-									custommats.split("-").length == 1 ? Item.itemsList[blockId]
-											.getItemStackDisplayName(new ItemStack(
-													blockId,
-													1,
-													blockDMG)) : custommats
-											.split("-")[1]);
+			Integer blockId = Integer.parseInt(custommats.split("-")[0].split("_")[0]);
+			Integer blockDMG = custommats.split("-")[0].split("_").length == 1 ? 0 : Integer.parseInt(custommats.split("-")[0].split("_")[1]);
+			MaterialsLib.addMaterial(	blockId,
+										blockDMG,
+										custommats.split("-").length == 1 ? Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId, 1, blockDMG)) : custommats.split("-")[1]);
 
 		}
 	}

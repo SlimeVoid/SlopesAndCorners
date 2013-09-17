@@ -159,4 +159,55 @@ public class TileEntityTriPointCorner extends TileEntitySlopesBase {
 	public boolean isBlockSolidOnSide(BlockBase blockBase, ForgeDirection side) {
 		return false;
 	}
+	
+
+	@Override
+	public int getRotatedSide(int side) {
+
+		switch (rotation % 4) {
+		case 3:
+			switch (side) {
+			case 2: // north
+				return 4; // to west
+			case 3: // south
+				return 5; // to east
+			case 4: // west
+				return 3; // to south
+			case 5: // east
+				return 2; // to north
+			default:
+				return side;
+			}
+		case 2:
+			switch (side) {
+			case 2:// north
+				return 5; // to east
+			case 3:// south
+				return 4; // to west
+			case 4:// west
+				return 2; // to north
+			case 5: // east
+				return 3; // to south
+			default:
+				return side;
+			}
+		case 0:
+			switch (side) {
+			case 2:// north
+				return 3; // to south
+			case 3:// south
+				return 2; // to north
+			case 4:// west
+				return 5; // to east
+			case 5: // east
+				return 4; // to west
+			default:
+				return side;
+			}
+		case 1:
+			return side;
+		default:
+			return 0;
+		}
+	}
 }

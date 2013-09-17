@@ -11,7 +11,7 @@ public class StepSoundEvent {
 
 	@ForgeSubscribe
 	public void StepSoundInterrupt(PlaySoundAtEntityEvent event) {
-		if (event.name.startsWith("step.")) {
+		if (event != null && event.name != null && event.name.startsWith("step.slopesncorners")) {
 			TileEntity tileentity = BlockHelper
 					.getTileEntityAtBase(event.entity);
 			if (tileentity != null && tileentity instanceof TileEntitySlopesBase) {

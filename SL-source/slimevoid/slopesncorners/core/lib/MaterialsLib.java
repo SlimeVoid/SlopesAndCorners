@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import slimevoidlib.util.helpers.ItemHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -63,7 +65,7 @@ public class MaterialsLib {
 			addMaterial(Block.cloth,
 						i,
 						(new StringBuilder())
-								.append(ItemDye.dyeColorNames[15 - i])
+								.append(ItemHelper.correctName(ItemDye.dyeColorNames[15 - i]))
 								.append(" Wool").toString());
 		}
 		addMaterial(Block.sandStone, 2, "Smooth Sandstone");
