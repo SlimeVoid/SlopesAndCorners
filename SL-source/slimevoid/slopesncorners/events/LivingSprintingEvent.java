@@ -14,8 +14,8 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 public class LivingSprintingEvent {
-	
-	private static Random rand = new Random();
+
+	private static Random	rand	= new Random();
 
 	@ForgeSubscribe
 	public void onLivingUpdate(LivingUpdateEvent event) {

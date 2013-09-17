@@ -17,26 +17,34 @@ import slimevoid.slopesncorners.proxy.CommonProxy;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
-	
+
 	@Override
-	public void preInit() {		
+	public void preInit() {
 		super.preInit();
 		ClientPacketHandler.init();
 		PacketLib.registerClientPacketHandlers();
 	}
-	
+
 	@Override
 	public void registerRenderInformation() {
 		BlockSlopesRenderer renderHandler = new BlockSlopesRenderer();
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_SLOPES_ID, new BlockSlopesNCornersRenderer());
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_SIDES_ID, new BlockSideSlopeRenderer());
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_OBLICS_ID, new BlockOblicSlopesRenderer());
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_TRIPOINT_ID, new BlockTriCornersRenderer());
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_HALF_SLOPE_ID, new BlockHalfSlopesRenderer());
-		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_POINT_SLOPE_ID, new BlockPointSlopesRenderer());
-		RenderingRegistry.registerBlockHandler(ConfigurationLib.slopesRenderID, renderHandler);
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_SLOPES_ID,
+											new BlockSlopesNCornersRenderer());
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_SIDES_ID,
+											new BlockSideSlopeRenderer());
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_OBLICS_ID,
+											new BlockOblicSlopesRenderer());
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_TRIPOINT_ID,
+											new BlockTriCornersRenderer());
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_HALF_SLOPE_ID,
+											new BlockHalfSlopesRenderer());
+		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_POINT_SLOPE_ID,
+											new BlockPointSlopesRenderer());
+		RenderingRegistry
+				.registerBlockHandler(	ConfigurationLib.slopesRenderID,
+										renderHandler);
 	}
-	
+
 	@Override
 	public void registerConfigurationProperties(File configFile) {
 		ConfigurationLib.ClientConfig(configFile);

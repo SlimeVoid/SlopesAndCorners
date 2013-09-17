@@ -37,14 +37,12 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
 
@@ -62,8 +60,7 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void registerTileEntitySpecialRenderer(
-			Class<? extends TileEntity> clazz) {
+	public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {
 	}
 
 	@Override
@@ -72,36 +69,30 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void onPacketData(INetworkManager manager,
-			Packet250CustomPayload packet, Player player) {
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 	}
 
 	@Override
-	public void playerLoggedIn(Player player, NetHandler netHandler,
-			INetworkManager manager) {
+	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
 		PacketLib.sendMaterialList(player, netHandler, manager);
 	}
 
 	@Override
-	public String connectionReceived(NetLoginHandler netHandler,
-			INetworkManager manager) {
+	public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
 		return null;
 	}
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler, String server,
-			int port, INetworkManager manager) {
+	public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
 	}
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler,
-			MinecraftServer server, INetworkManager manager) {
+	public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
 	}
 
 	@Override
 	public void connectionClosed(INetworkManager manager) {
 	}
-
 
 	@Override
 	public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {

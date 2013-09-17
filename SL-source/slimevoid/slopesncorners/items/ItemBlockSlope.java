@@ -14,9 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ItemBlockSlope extends ItemBlock {
-	
-	private ISlopePlacement placers[];
-	private CreativeTabs[] tabs;
+
+	private ISlopePlacement	placers[];
+	private CreativeTabs[]	tabs;
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
@@ -25,21 +25,50 @@ public class ItemBlockSlope extends ItemBlock {
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
 	}
-	
+
 	@Override
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-		super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+		super.placeBlockAt(	stack,
+							player,
+							world,
+							x,
+							y,
+							z,
+							side,
+							hitX,
+							hitY,
+							hitZ,
+							metadata);
 		int hb = stack.getItemDamage();
-		//int lb = hb & 0xff;
+		// int lb = hb & 0xff;
 		hb >>= 12;
 		if (placers[hb] == null) {
 			System.out.println("No Placer Registered!!!");
-			return super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+			return super.placeBlockAt(	stack,
+										player,
+										world,
+										x,
+										y,
+										z,
+										side,
+										hitX,
+										hitY,
+										hitZ,
+										metadata);
 		} else {
-			return placers[hb].placeSlopeAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata);
+			return placers[hb].placeSlopeAt(stack,
+											player,
+											world,
+											x,
+											y,
+											z,
+											side,
+											hitX,
+											hitY,
+											hitZ,
+											metadata);
 		}
 	}
-	
 
 	private boolean itemUseShared(ItemStack ist, EntityPlayer player, World world, int i, int j, int k, int l) {
 		int hb = ist.getItemDamage();
@@ -69,8 +98,8 @@ public class ItemBlockSlope extends ItemBlock {
 			if (name == null) {
 				throw new IndexOutOfBoundsException();
 			} else {
-				return (new StringBuilder()).append(name).append(".").append(stub)
-						.toString();
+				return (new StringBuilder()).append(name).append(".")
+						.append(stub).toString();
 			}
 		}
 		if (placers[gethbindex(hb)] == null) {
@@ -83,7 +112,7 @@ public class ItemBlockSlope extends ItemBlock {
 			return name;
 		}
 	}
-	
+
 	private int gethbindex(int hb) {
 		switch (hb) {
 		case 0: // '\0'
@@ -106,31 +135,35 @@ public class ItemBlockSlope extends ItemBlock {
 	}
 
 	@Override
-    public int getMetadata(int damage)
-    {
-        return damage >> 12;
-    }
+	public int getMetadata(int damage) {
+		return damage >> 12;
+	}
 
 	public void registerPlacement(final int md, ISlopePlacement isp) {
 		this.placers[md] = isp;
 		this.tabs[md] = new CreativeTabs(isp.getName()) {
-			      public ItemStack getIconItemStack() {
-			        return new ItemStack(ConfigurationLib.blockSlopes, 1, (md * 4096) + MaterialsLib.brickIndex);
-			      }
-			    };
-			    LanguageRegistry.instance().addStringLocalization(
-			        "itemGroup." + isp.getName(), "en_US", isp.getTabDisplayName());
-			    
+			public ItemStack getIconItemStack() {
+				return new ItemStack(
+						ConfigurationLib.blockSlopes,
+						1,
+						(md * 4096) + MaterialsLib.brickIndex);
+			}
+		};
+		LanguageRegistry.instance()
+				.addStringLocalization(	"itemGroup." + isp.getName(),
+										"en_US",
+										isp.getTabDisplayName());
+
 	}
 
 	@Override
 	public void getSubItems(int id, CreativeTabs tab, List list) {
-		 for(int i = 0; i < placers.length; i++){
-			 if (placers[i] == null || (tab != null && !tabs[i].equals(tab))) continue;        
-			 for (int mi = 0; mi < MaterialsLib.getSize(); mi++) {            
-				 placers[i].addCreativeItems(i * 4096, tab, list, mi);
-			 }
-		 }
+		for (int i = 0; i < placers.length; i++) {
+			if (placers[i] == null || (tab != null && !tabs[i].equals(tab))) continue;
+			for (int mi = 0; mi < MaterialsLib.getSize(); mi++) {
+				placers[i].addCreativeItems(i * 4096, tab, list, mi);
+			}
+		}
 	}
 
 	@Override

@@ -21,11 +21,11 @@ public class ReInitMatsCommand extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender icommandsender, String[] astring) {
-			ConfigurationLib.getBaseBlockList(true);
-			ConfigurationLib.reInitSlopeMats();
-			if (FMLCommonHandler.instance().getSide() == Side.SERVER){
-				PacketLib.sendAllMaterialList();
-			}
+		ConfigurationLib.getBaseBlockList(true);
+		ConfigurationLib.reInitSlopeMats();
+		if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
+			PacketLib.sendAllMaterialList();
+		}
 	}
 
 }

@@ -14,52 +14,59 @@ import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
 import slimevoidlib.util.helpers.BlockHelper;
 
 public class OblicSlopesPlacement implements ISlopePlacement {
-	
+
 	@Override
 	public boolean onPlaceSlope(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int i) {
-		BlockHelper.playBlockPlaceNoise(
-				world, x, y, z,
-				MaterialsLib.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
-		TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper.getTileEntity(world, x, y, z, TileEntityOblicSlopes.class);
+		BlockHelper.playBlockPlaceNoise(world, x, y, z, MaterialsLib
+				.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
+		TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper
+				.getTileEntity(world, x, y, z, TileEntityOblicSlopes.class);
 		if (tileentity != null) {
-			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-			//tileentity.setDropDamage(itemstack.getItemDamage());
-			//System.out.println(tileentity.getSlopeIndex());
+			tileentity.setSlopeIndex((short) MaterialsLib
+					.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
+			// tileentity.setDropDamage(itemstack.getItemDamage());
+			// System.out.println(tileentity.getSlopeIndex());
 		}
-		BlockHelper.updateIndirectNeighbors(
-				world, x, y, z,
-				ConfigurationLib.blockSlopes.blockID);
+		BlockHelper
+				.updateIndirectNeighbors(	world,
+											x,
+											y,
+											z,
+											ConfigurationLib.blockSlopes.blockID);
 		world.markBlockForUpdate(x, y, z);
 		return false;
 	}
 
 	@Override
-	public boolean placeSlopeAt(ItemStack itemstack, EntityPlayer entityplayer,
-			World world, int x, int y, int z, int side, float hitX, float hitY,
-			float hitZ, int metadata) {
-		TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper.getTileEntity(world, x, y, z, ConfigurationLib.blockSlopes.getTileMapData(metadata));
+	public boolean placeSlopeAt(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+		TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper
+				.getTileEntity(world, x, y, z, ConfigurationLib.blockSlopes
+						.getTileMapData(metadata));
 		if (tileentity == null) {
 			return false;
 		}
-		//do all rotation calculations here
-		tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
-		//tileentity.setDropDamage(itemstack.getItemDamage());
-		//System.out.println("Rotation: " + this.rotation);
-		tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
-		int state = side != 0 && (side == 1 || (double)hitY <= 0.5D) ? 0 : 0 | 4 ;
-		
+		// do all rotation calculations here
+		tileentity.setSlopeIndex((short) MaterialsLib
+				.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
+		// tileentity.setDropDamage(itemstack.getItemDamage());
+		// System.out.println("Rotation: " + this.rotation);
+		tileentity
+				.setRotation(MathHelper
+						.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
+		int state = side != 0 && (side == 1 || (double) hitY <= 0.5D) ? 0 : 0 | 4;
+
 		if (tileentity.getRotation() == 0) {
 			tileentity.setRotation(2 | state);
-		}else if (tileentity.getRotation() == 1) {
+		} else if (tileentity.getRotation() == 1) {
 			tileentity.setRotation(1 | state);
-		}else if (tileentity.getRotation() == 2) {
+		} else if (tileentity.getRotation() == 2) {
 			tileentity.setRotation(3 | state);
-		}else if (tileentity.getRotation() == 3) {
+		} else if (tileentity.getRotation() == 3) {
 			tileentity.setRotation(0 | state);
 		}
-		//System.out.println("Rotation: " + this.rotation);
+		// System.out.println("Rotation: " + this.rotation);
 		tileentity.onInventoryChanged();
-		//tileentity.onBlockPlacedBy(itemstack, entityplayer);
+		// tileentity.onBlockPlacedBy(itemstack, entityplayer);
 		return true;
 	}
 
@@ -69,11 +76,13 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 	}
 
 	@Override
-	public void addCreativeItems(int baseDMG, CreativeTabs tab, List itemList,
-			int matIndex) {
-		
-		itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, baseDMG + matIndex));
-		
+	public void addCreativeItems(int baseDMG, CreativeTabs tab, List itemList, int matIndex) {
+
+		itemList.add(new ItemStack(
+				ConfigurationLib.blockSlopes,
+				1,
+				baseDMG + matIndex));
+
 	}
 
 	@Override
@@ -85,6 +94,5 @@ public class OblicSlopesPlacement implements ISlopePlacement {
 	public String getTabDisplayName() {
 		return "Oblic Slopes";
 	}
-
 
 }

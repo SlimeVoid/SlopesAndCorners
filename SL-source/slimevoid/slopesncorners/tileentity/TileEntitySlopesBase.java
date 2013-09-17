@@ -25,76 +25,78 @@ import slimevoidlib.tileentity.TileEntityBase;
 import slimevoidlib.util.helpers.ItemHelper;
 
 public class TileEntitySlopesBase extends TileEntityBase {
-	
-	private short slopeIndex;
-	
+
+	private short	slopeIndex;
+
 	public TileEntitySlopesBase() {
 		super();
 	}
-	
+
 	public void setSlopeIndex(short slopeIndex) {
 		this.slopeIndex = slopeIndex;
 	}
-	
+
 	public int getMaterial() {
 		return MaterialsLib.damageToMaterialValue(this.getSlopeIndex());
 	}
-	
+
 	public short getSlopeIndex() {
 		return this.slopeIndex;
 	}
-	
+
 	@Override
 	public int getExtendedBlockID() {
-		return BlockLib.getBlockDamage(this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord), this.getSlopeIndex());
+		return BlockLib.getBlockDamage(this.worldObj
+				.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord), this
+				.getSlopeIndex());
 	}
-	
+
 	@Override
 	public int getLightValue() {
 		Block block = MaterialsLib.getBlock(this.getMaterial());
-		return block != null? Block.lightValue[block.blockID] : 0;
+		return block != null ? Block.lightValue[block.blockID] : 0;
 	}
 
 	@Override
 	public int getRotatedSide(int side) {
-		
-		switch (rotation%4) {
+
+		switch (rotation % 4) {
 		case 0:
-			switch (side){
-			case 2: //north
+			switch (side) {
+			case 2: // north
 				return 4; // to west
-			case 3: //south
+			case 3: // south
 				return 5; // to east
-			case 4: //west
+			case 4: // west
 				return 3; // to south
-			case 5: //east
+			case 5: // east
 				return 2; // to north
 			default:
 				return side;
 			}
 		case 1:
-			switch (side){
-			case 2://north
-				return 5; //to east
-			case 3://south
-				return 4; //to west
-			case 4://west
-				return 2; //to north
-			case 5: //east
-				return 3; //to south
+			switch (side) {
+			case 2:// north
+				return 5; // to east
+			case 3:// south
+				return 4; // to west
+			case 4:// west
+				return 2; // to north
+			case 5: // east
+				return 3; // to south
 			default:
 				return side;
 			}
 		case 2:
-			switch (side){
-			case 2://north
-				return 3; //to south
-			case 3://south
-				return 2; //to north
-			case 4://west
-				return 5; //to east
-			case 5: //east
-				return 4; //to west
+			switch (side) {
+			case 2:// north
+				return 3; // to south
+			case 3:// south
+				return 2; // to north
+			case 4:// west
+				return 5; // to east
+			case 5: // east
+				return 4; // to west
 			default:
 				return side;
 			}
@@ -161,7 +163,10 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		Block block = Block.blocksList[blockStack.itemID];
 		float hardness = this.getBlockHardness(blockBase);
 		if (!ForgeHooks.canHarvestBlock(block, entityplayer, metadata)) {
-			float speed = ForgeEventFactory.getBreakSpeed(entityplayer, block, metadata, 1.0F);
+			float speed = ForgeEventFactory.getBreakSpeed(	entityplayer,
+															block,
+															metadata,
+															1.0F);
 			return (speed < 0 ? 0 : speed) / hardness / 100F;
 		} else {
 			return entityplayer.getCurrentPlayerStrVsBlock(	block,
@@ -172,7 +177,15 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public float getExplosionResistance(Entity entity, double explosionX, double explosionY, double explosionZ, BlockBase blockBase) {
-		return MaterialsLib.getBlock(this.getMaterial()).getExplosionResistance(entity, this.worldObj, this.xCoord, this.yCoord, this.zCoord, explosionX, explosionY, explosionZ);
+		return MaterialsLib.getBlock(this.getMaterial())
+				.getExplosionResistance(entity,
+										this.worldObj,
+										this.xCoord,
+										this.yCoord,
+										this.zCoord,
+										explosionX,
+										explosionY,
+										explosionZ);
 	}
 
 	@Override
@@ -183,30 +196,45 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
-		return MaterialsLib.getIconForSide(MaterialsLib.damageToMaterialValue(this.getSlopeIndex()), this.getRotatedSide(side));
+		return MaterialsLib.getIconForSide(MaterialsLib
+				.damageToMaterialValue(this.getSlopeIndex()), this
+				.getRotatedSide(side));
 	}
-	
+
 	@Override
 	public boolean addBlockDestroyEffects(BlockBase blockBase, int meta, EffectRenderer effectRenderer) {
-		return SlopesEntityDiggingFX.doBlockDestroyEffects(this.worldObj, this.xCoord, this.yCoord, this.zCoord, meta, effectRenderer, blockBase);
+		return SlopesEntityDiggingFX.doBlockDestroyEffects(	this.worldObj,
+															this.xCoord,
+															this.yCoord,
+															this.zCoord,
+															meta,
+															effectRenderer,
+															blockBase);
 	}
 
 	@Override
 	public boolean addBlockHitEffects(BlockBase blockBase, MovingObjectPosition target, EffectRenderer effectRenderer) {
-		return SlopesEntityDiggingFX.doBlockHitEffects(this.worldObj, target, effectRenderer, blockBase);
+		return SlopesEntityDiggingFX.doBlockHitEffects(	this.worldObj,
+														target,
+														effectRenderer,
+														blockBase);
 	}
-	
+
 	@Override
-	public int colorMultiplier(BlockBase blockBase){
-		return MaterialsLib.getBlock(this.getMaterial()).colorMultiplier(this.worldObj, this.xCoord, this.yCoord, this.zCoord);		 
+	public int colorMultiplier(BlockBase blockBase) {
+		return MaterialsLib.getBlock(this.getMaterial())
+				.colorMultiplier(	this.worldObj,
+									this.xCoord,
+									this.yCoord,
+									this.zCoord);
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 		this.slopeIndex = nbttagcompound.getShort(NBTLib.TILE_SLOPE_BLOCKID);
 	}
-	
+
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);

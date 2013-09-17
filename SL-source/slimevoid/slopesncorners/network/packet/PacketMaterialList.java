@@ -12,7 +12,7 @@ public class PacketMaterialList extends PacketUpdate {
 		super(PacketIds.LOGIN);
 		this.setChannel(CoreLib.MOD_CHANNEL);
 	}
-	
+
 	public PacketMaterialList(String[] materialList) {
 		super(PacketIds.LOGIN, new PacketPayload(0, 0, materialList.length, 0));
 		this.setChannel(CoreLib.MOD_CHANNEL);
@@ -24,7 +24,7 @@ public class PacketMaterialList extends PacketUpdate {
 			this.payload.setStringPayload(i, materialList[i]);
 		}
 	}
-	
+
 	public String[] getMaterialList() {
 		String[] list = new String[this.payload.getStringSize()];
 		for (int i = 0; i < list.length; i++) {
@@ -38,6 +38,5 @@ public class PacketMaterialList extends PacketUpdate {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }

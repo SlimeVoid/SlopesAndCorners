@@ -13,12 +13,12 @@ import net.minecraft.util.Icon;
 
 public class MaterialsLib {
 
-	public static final int minimumlength = 50;
-	private static ArrayList<ItemStack> materials =  new ArrayList<ItemStack>();
-	private static ArrayList<String> descs = new ArrayList<String>();
-	private static ArrayList<IMaterialHandler> materialHandlers = new ArrayList<IMaterialHandler>();
-	private static HashMap<List<Integer>, Integer> materialIndex = new HashMap<List<Integer>, Integer>();
-	public static int brickIndex = 5;
+	public static final int							minimumlength		= 50;
+	private static ArrayList<ItemStack>				materials			= new ArrayList<ItemStack>();
+	private static ArrayList<String>				descs				= new ArrayList<String>();
+	private static ArrayList<IMaterialHandler>		materialHandlers	= new ArrayList<IMaterialHandler>();
+	private static HashMap<List<Integer>, Integer>	materialIndex		= new HashMap<List<Integer>, Integer>();
+	public static int								brickIndex			= 5;
 
 	public static int getSize() {
 		return materials.size();
@@ -60,9 +60,11 @@ public class MaterialsLib {
 		addMaterial(Block.planks, 3, "Jungle Plank");
 		addMaterial(Block.sandStone, 1, "Chisled Sandstone");
 		for (int i = 0; i < 16; i++) {
-			addMaterial(Block.cloth, i,
-					(new StringBuilder()).append(ItemDye.dyeColorNames[15-i])
-							.append(" Wool").toString());
+			addMaterial(Block.cloth,
+						i,
+						(new StringBuilder())
+								.append(ItemDye.dyeColorNames[15 - i])
+								.append(" Wool").toString());
 		}
 		addMaterial(Block.sandStone, 2, "Smooth Sandstone");
 		addMaterial(Block.wood, 3, "Jungle Wood");
@@ -95,21 +97,23 @@ public class MaterialsLib {
 		if (block != null) {
 			addMaterial(block, md, desc);
 		} else {
-			throw new IndexOutOfBoundsException("Block ID: " + blockId + " is not a valid block");
+			throw new IndexOutOfBoundsException(
+					"Block ID: " + blockId + " is not a valid block");
 		}
 	}
-	
+
 	public static void addMaterial(Block bl, String desc) {
 		addMaterial(bl, 0, desc);
 	}
-	
+
 	public static void addMaterial(Block bl, int md, String desc) {
 		ItemStack ist = new ItemStack(bl, 1, md);
 		materials.add(ist);
 		descs.add(desc);
-		materialIndex.put(
-				Arrays.asList(new Integer[] { Integer.valueOf(bl.blockID),
-						Integer.valueOf(md) }), Integer.valueOf(materials.size()));
+		materialIndex.put(	Arrays.asList(new Integer[] {
+									Integer.valueOf(bl.blockID),
+									Integer.valueOf(md) }),
+							Integer.valueOf(materials.size()));
 		IMaterialHandler imh;
 		for (Iterator i$ = materialHandlers.iterator(); i$.hasNext(); imh
 				.addMaterialReference(materials.size())) {
@@ -256,13 +260,13 @@ public class MaterialsLib {
 	}
 
 	public static Icon getIconForSide(int n, int side) {
-		n = n % materials.size();		
+		n = n % materials.size();
 		ItemStack ist = getItemStack(n);
-		if (ist ==null){
-			return Block.stone.getIcon(side,0);
+		if (ist == null) {
+			return Block.stone.getIcon(side, 0);
 		}
-		return Block.blocksList[ist.itemID].getIcon(side, ist.getItemDamage());		
-		
+		return Block.blocksList[ist.itemID].getIcon(side, ist.getItemDamage());
+
 	}
 
 	public static int damageToMaterialValue(int dmg) {
@@ -275,19 +279,19 @@ public class MaterialsLib {
 	}
 
 	public static Block getBlock(int n) {
-		n = n % materials.size();	
-			ItemStack ist = materials.get(n);
-			return Block.blocksList[ist.itemID];		
+		n = n % materials.size();
+		ItemStack ist = materials.get(n);
+		return Block.blocksList[ist.itemID];
 	}
 
 	public static int getBlockDmg(int n) {
-		n = n % materials.size();	
-			ItemStack ist = materials.get(n);
-			return ist.getItemDamage();		
+		n = n % materials.size();
+		ItemStack ist = materials.get(n);
+		return ist.getItemDamage();
 	}
 
 	public static String getName(int n) {
-		n = n % materials.size();	
+		n = n % materials.size();
 		ItemStack bl = getItemStack(n);
 		String name = getBlock(n).getUnlocalizedName();
 		if (name.endsWith(".name")) {
@@ -296,12 +300,12 @@ public class MaterialsLib {
 		if (getBlockDmg(n) > 0) {
 			// add damage to name for better localization
 			name += "." + getBlockDmg(n);
-		}	
+		}
 		return name;
 	}
 
 	public static String getDesc(int n) {
-		n = n % materials.size();	
-			return descs.get(n);		
+		n = n % materials.size();
+		return descs.get(n);
 	}
 }

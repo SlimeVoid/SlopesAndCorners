@@ -20,8 +20,7 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		modid = CoreLib.MOD_ID,
 		name = CoreLib.MOD_NAME,
 		version = CoreLib.MOD_VERSION,
-		dependencies = CoreLib.MOD_DEPENDENCIES
-	)
+		dependencies = CoreLib.MOD_DEPENDENCIES)
 @NetworkMod(
 		clientSideRequired = true,
 		serverSideRequired = false,
@@ -31,33 +30,31 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 		serverPacketHandlerSpec = @SidedPacketHandler(
 				channels = { CoreLib.MOD_CHANNEL },
 				packetHandler = CommonPacketHandler.class),
-		connectionHandler = CommonProxy.class
-	)
-
+		connectionHandler = CommonProxy.class)
 public class SlopesNCorners {
 	@SidedProxy(
-			clientSide=CoreLib.CLIENT_PROXY,
-			serverSide=CoreLib.COMMON_PROXY)
-	public static ICommonProxy proxy; 
+			clientSide = CoreLib.CLIENT_PROXY,
+			serverSide = CoreLib.COMMON_PROXY)
+	public static ICommonProxy	proxy;
 
 	@EventHandler
 	public void slopesPreInit(FMLPreInitializationEvent event) {
-		
+
 		proxy.preInit();
-		
-		proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
+
+		proxy.registerConfigurationProperties(event
+				.getSuggestedConfigurationFile());
 	}
-	
+
 	@EventHandler
 	public void slopesPostInit(FMLPostInitializationEvent event) {
 		ConfigurationLib.registerBlocks();
 		proxy.registerRenderInformation();
 	}
-	
+
 	@EventHandler
-	public void registerCommand(FMLServerStartingEvent event)
-	{
+	public void registerCommand(FMLServerStartingEvent event) {
 		event.registerServerCommand(new ReInitMatsCommand());
 	}
-	
+
 }
