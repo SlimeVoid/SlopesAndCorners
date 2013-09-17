@@ -15,8 +15,8 @@ import slimevoid.slopesncorners.blocks.lib.PointSlopes;
 import slimevoid.slopesncorners.blocks.lib.SideSlopes;
 import slimevoid.slopesncorners.blocks.lib.Slopes;
 import slimevoid.slopesncorners.blocks.lib.TriPointCorners;
+import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
-import slimevoid.slopesncorners.events.PlaySlopeSoundEvent;
 import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
@@ -26,7 +26,6 @@ import slimevoid.slopesncorners.tileentity.TileEntitySideSlopes;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
 import slimevoid.slopesncorners.tileentity.TileEntityTriPointCorner;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -151,7 +150,6 @@ public class ConfigurationLib {
 										PointSlopes.instance.getPlacementHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingSprintingEvent());
 		MinecraftForge.EVENT_BUS.register(new StepSoundEvent());
-		MinecraftForge.EVENT_BUS.register(new PlaySlopeSoundEvent());
 
 	}
 

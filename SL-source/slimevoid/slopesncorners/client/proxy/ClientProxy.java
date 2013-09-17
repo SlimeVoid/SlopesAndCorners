@@ -2,6 +2,8 @@ package slimevoid.slopesncorners.client.proxy;
 
 import java.io.File;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import slimevoid.slopesncorners.client.network.ClientPacketHandler;
 import slimevoid.slopesncorners.client.render.BlockSlopesRenderer;
 import slimevoid.slopesncorners.client.render.handlers.BlockHalfSlopesRenderer;
@@ -13,6 +15,7 @@ import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.PacketLib;
+import slimevoid.slopesncorners.events.PlaySlopeSoundEvent;
 import slimevoid.slopesncorners.proxy.CommonProxy;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -23,6 +26,7 @@ public class ClientProxy extends CommonProxy {
 		super.preInit();
 		ClientPacketHandler.init();
 		PacketLib.registerClientPacketHandlers();
+		MinecraftForge.EVENT_BUS.register(new PlaySlopeSoundEvent());
 	}
 
 	@Override
