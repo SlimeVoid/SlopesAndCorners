@@ -1,6 +1,5 @@
 package slimevoid.slopesncorners.blocks;
 
-import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,8 +10,10 @@ import net.minecraft.world.IBlockAccess;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
+import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
+import slimevoidlib.sounds.SlimevoidStepSound;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -25,6 +26,7 @@ public class BlockSlopesBase extends BlockBase {
 
 	public BlockSlopesBase(int blockID, Material material, int maxTiles) {
 		super(blockID, material, maxTiles);
+		this.setStepSound(new SlimevoidStepSound(CoreLib.MOD_RESOURCES, 1.0F, 1.0F));
 	}
 
 	@Override
@@ -35,8 +37,7 @@ public class BlockSlopesBase extends BlockBase {
 	@Override
 	public CreativeTabs getCreativeTabToDisplayOn() {
 		if (Item.itemsList[this.blockID] != null) {
-			return ((ItemBlockSlope) Item.itemsList[this.blockID])
-					.getCreativeTabs()[0];
+			return ((ItemBlockSlope) Item.itemsList[this.blockID]).getCreativeTabs()[0];
 		} else {
 			return null;
 		}
@@ -54,8 +55,8 @@ public class BlockSlopesBase extends BlockBase {
 	}
 
 	public void registerPlacement(int md, ISlopePlacement isp) {
-		((ItemBlockSlope) Item.itemsList[this.blockID])
-				.registerPlacement(md, isp);
+		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(	md,
+																			isp);
 	}
 
 	@Override
