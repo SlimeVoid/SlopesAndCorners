@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
@@ -14,8 +15,8 @@ import slimevoid.slopesncorners.blocks.lib.PointSlopes;
 import slimevoid.slopesncorners.blocks.lib.SideSlopes;
 import slimevoid.slopesncorners.blocks.lib.Slopes;
 import slimevoid.slopesncorners.blocks.lib.TriPointCorners;
+import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
-import slimevoid.slopesncorners.events.PlaySlopeSoundEvent;
 import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoid.slopesncorners.tileentity.TileEntityHalfSlopes;
@@ -150,7 +151,6 @@ public class ConfigurationLib {
 										PointSlopes.instance.getPlacementHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingSprintingEvent());
 		MinecraftForge.EVENT_BUS.register(new StepSoundEvent());
-		MinecraftForge.EVENT_BUS.register(new PlaySlopeSoundEvent());
 
 	}
 
@@ -169,7 +169,7 @@ public class ConfigurationLib {
 			Integer blockDMG = custommats.split("-")[0].split("_").length == 1 ? 0 : Integer.parseInt(custommats.split("-")[0].split("_")[1]);
 			MaterialsLib.addMaterial(	blockId,
 										blockDMG,
-										custommats.split("-").length == 1 ? Item.itemsList[blockId].getItemStackDisplayName(new ItemStack(blockId, 1, blockDMG)) : custommats.split("-")[1]);
+										custommats.split("-").length == 1 ? Item.itemsList[blockId].getItemDisplayName(new ItemStack(blockId, 1, blockDMG)) : custommats.split("-")[1]);
 
 		}
 	}
