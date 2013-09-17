@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import slimevoidlib.util.helpers.ItemHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import slimevoidlib.util.helpers.ItemHelper;
 
 public class MaterialsLib {
 
@@ -20,7 +19,7 @@ public class MaterialsLib {
 	private static ArrayList<String>				descs				= new ArrayList<String>();
 	private static ArrayList<IMaterialHandler>		materialHandlers	= new ArrayList<IMaterialHandler>();
 	private static HashMap<List<Integer>, Integer>	materialIndex		= new HashMap<List<Integer>, Integer>();
-	public static int								brickIndex			= 5;
+	public static int								brickIndex			= 37;
 
 	public static int getSize() {
 		return materials.size();
@@ -29,48 +28,72 @@ public class MaterialsLib {
 	public static void initMaterials() {
 		descs.clear();
 		materials.clear();
-		addMaterial(Block.cobblestone, "Cobblestone");
-		addMaterial(Block.stone, "Stone");
-		addMaterial(Block.planks, "Oak Plank");
-		addMaterial(Block.sandStone, "Sandstone");
-		addMaterial(Block.cobblestoneMossy, "Moss Stone");
-		addMaterial(Block.brick, "Brick");
-		addMaterial(Block.obsidian, "Obsidian");
-		addMaterial(Block.glass, "Glass");
+		addMaterial(Block.stone, "Smooth Stone");
+		addMaterial(Block.grass, "Grass");
 		addMaterial(Block.dirt, "Dirt");
-		addMaterial(Block.blockClay, "Clay");
-		addMaterial(Block.bookShelf, "Bookshelf");
-		addMaterial(Block.netherrack, "Netherrack");
-		addMaterial(Block.wood, 0, "Oak Wood");
-		addMaterial(Block.wood, 1, "Spruce Wood");
-		addMaterial(Block.wood, 2, "Birch Wood");
-		addMaterial(Block.slowSand, "Soul Sand");
-		addMaterial(Block.stoneSingleSlab, "Polished Stone");
-		addMaterial(Block.blockIron, "Iron");
-		addMaterial(Block.blockGold, "Gold");
-		addMaterial(Block.blockDiamond, "Diamond");
-		addMaterial(Block.blockLapis, "Lapis Lazuli");
-		addMaterial(Block.blockSnow, "Snow");
-		addMaterial(Block.pumpkin, "Pumpkin");
-		addMaterial(Block.stoneBrick, 0, "Stone Brick");
-		addMaterial(Block.stoneBrick, 1, "Mossy Stone Brick");
-		addMaterial(Block.stoneBrick, 2, "Cracked Stone Brick");
-		addMaterial(Block.netherBrick, "Nether Brick");
-		addMaterial(Block.stoneBrick, 3, "Chisled Stone Brick");
+		addMaterial(Block.cobblestone, "Cobblestone");
+		addMaterial(Block.planks, "Oak Plank");
 		addMaterial(Block.planks, 1, "Spruce Plank");
 		addMaterial(Block.planks, 2, "Birch Plank");
 		addMaterial(Block.planks, 3, "Jungle Plank");
+		addMaterial(Block.sand, "Sand");
+		addMaterial(Block.gravel, "Gravel");
+		addMaterial(Block.wood, "Oak Wood");
+		addMaterial(Block.wood, 1, "Spruce Wood");
+		addMaterial(Block.wood, 2, "Birch Wood");
+		addMaterial(Block.wood, 3, "Jungle Wood");
+		addMaterial(Block.glass, "Glass");
+		addMaterial(Block.blockLapis, "Lapis");
+		addMaterial(Block.sandStone, "Sandstone");
 		addMaterial(Block.sandStone, 1, "Chisled Sandstone");
+		addMaterial(Block.sandStone, 2, "Smooth Sandstone");
 		for (int i = 0; i < 16; i++) {
 			addMaterial(Block.cloth,
 						i,
 						(new StringBuilder())
-								.append(ItemHelper.correctName(ItemDye.dyeColorNames[15 - i]))
+								.append(ItemHelper
+										.correctName(ItemDye.dyeColorNames[15 - i]))
 								.append(" Wool").toString());
 		}
-		addMaterial(Block.sandStone, 2, "Smooth Sandstone");
-		addMaterial(Block.wood, 3, "Jungle Wood");
-
+		addMaterial(Block.blockGold, "Gold");
+		addMaterial(Block.blockIron, "Iron");
+		addMaterial(Block.brick, "Brick");
+		addMaterial(Block.bookShelf, "Bookshelf");
+		addMaterial(Block.cobblestoneMossy, "Mossy Cobblestone");
+		addMaterial(Block.obsidian, "Obsidian");
+		addMaterial(Block.blockDiamond, "Diamond");
+		addMaterial(Block.ice, "Ice");
+		addMaterial(Block.blockSnow, "Snow");
+		addMaterial(Block.blockClay, "Clay");
+		addMaterial(Block.pumpkin, "Pumpkin");
+		addMaterial(Block.netherrack, "Netherrack");
+		addMaterial(Block.slowSand, "Soul Sand");
+		addMaterial(Block.glowStone, "Glowstone");
+		addMaterial(Block.pumpkinLantern, "Jack o'Lantern");
+		addMaterial(Block.stoneBrick, "Stone Brick");
+		addMaterial(Block.stoneBrick, 1, "Mossy Stone Brick");
+		addMaterial(Block.stoneBrick, 2, "Cracked Stone Brick");
+		addMaterial(Block.stoneBrick, 3, "Chisled Stone Brick");
+		addMaterial(Block.melon, "Melon");
+		addMaterial(Block.netherBrick, "NetherBrick");
+		addMaterial(Block.whiteStone, "End Stone");
+		addMaterial(Block.redstoneLampIdle, "Coal");
+		addMaterial(Block.blockEmerald, "Emerald");
+		addMaterial(Block.blockRedstone, "Redstone");
+		addMaterial(Block.blockNetherQuartz, "Quartz");
+		addMaterial(Block.blockNetherQuartz, 1, "Chisled Quartz");
+		addMaterial(Block.blockNetherQuartz, 2, "Pillar Quartz");
+		for (int i = 0; i < 16; i++) {
+			addMaterial(Block.stainedClay,
+						i,
+						(new StringBuilder())
+								.append(ItemHelper
+										.correctName(ItemDye.dyeColorNames[15 - i]))
+								.append(" Stained Clay").toString());
+		}
+		addMaterial(Block.hay, "Hay Bale");
+		addMaterial(Block.hardenedClay, "Hardened Clay");
+		addMaterial(Block.coalBlock, "Coal");
 	}
 
 	public static interface IMaterialHandler {
