@@ -15,7 +15,6 @@ import slimevoid.slopesncorners.blocks.lib.PointSlopes;
 import slimevoid.slopesncorners.blocks.lib.SideSlopes;
 import slimevoid.slopesncorners.blocks.lib.Slopes;
 import slimevoid.slopesncorners.blocks.lib.TriPointCorners;
-import slimevoid.slopesncorners.core.SlopesNCorners;
 import slimevoid.slopesncorners.events.LivingSprintingEvent;
 import slimevoid.slopesncorners.events.StepSoundEvent;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
@@ -36,7 +35,6 @@ public class ConfigurationLib {
 	public static BlockSlopesBase	blockSlopes;
 	public static int				blockSlopesID;
 	private static String[]			baseBlockIdsNDmgs;
-	@SideOnly(Side.CLIENT)
 	public static int				slopesRenderID;
 
 	// public static Material slopesMaterial;
