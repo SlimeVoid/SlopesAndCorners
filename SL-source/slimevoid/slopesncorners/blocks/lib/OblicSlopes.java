@@ -28,75 +28,71 @@ public class OblicSlopes {
 			String name = MaterialsLib.getName(i);
 			String desc = MaterialsLib.getDesc(i);
 
-			LanguageRegistry
-					.instance()
-					.addStringLocalization(	(new StringBuilder()).append(name)
-													.append(".oblic")
-													.append(".name").toString(),
-											(new StringBuilder()).append(desc)
-													.append(" Oblic")
-													.toString());
+			LanguageRegistry.instance().addStringLocalization(	(new StringBuilder()).append(name).append(".oblic").append(".name").toString(),
+																(new StringBuilder()).append(desc).append(" Oblic").toString());
 			ItemStack baseItem = MaterialsLib.getItemStack(i);
-			ItemStack stack = new ItemStack(
-					ConfigurationLib.blockSlopes,
-					3,
-					(BlockLib.BLOCK_OBLICS_ID << 12) + i);
-			GameRegistry.addShapedRecipe(stack.copy(), new Object[] {
-					"  B",
-					"BBB",
-					"B  ",
-					Character.valueOf('B'),
-					baseItem });
+			ItemStack stack = new ItemStack(ConfigurationLib.blockSlopes, 3, (BlockLib.BLOCK_OBLICS_ID << 12)
+																				+ i);
+			GameRegistry.addShapedRecipe(	stack.copy(),
+											new Object[] {
+													"  B",
+													"BBB",
+													"B  ",
+													Character.valueOf('B'),
+													baseItem });
 			stack.stackSize = 1;
-			GameRegistry.addShapelessRecipe(baseItem, stack, new ItemStack(
-					ConfigurationLib.blockSlopes,
-					1,
-					(BlockLib.BLOCK_TRIPOINT_ID << 12) + i));
+			GameRegistry.addShapelessRecipe(baseItem,
+											stack,
+											new ItemStack(ConfigurationLib.blockSlopes, 1, (BlockLib.BLOCK_TRIPOINT_ID << 12)
+																							+ i));
 		}
 	}
 
 	public class PlacementHandler implements IPlacementHandler {
 
 		@Override
-		public boolean onPlaceSlope(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int i) {
-			BlockHelper.playBlockPlaceNoise(world, x, y, z, MaterialsLib
-					.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
-			TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper
-					.getTileEntity(world, x, y, z, TileEntityOblicSlopes.class);
+		public boolean onPlaceBlock(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int i) {
+			BlockHelper.playBlockPlaceNoise(world,
+											x,
+											y,
+											z,
+											MaterialsLib.getBlock(itemstack.getItemDamage() & 0xfff).blockID);
+			TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper.getTileEntity(	world,
+																									x,
+																									y,
+																									z,
+																									TileEntityOblicSlopes.class);
 			if (tileentity != null) {
-				tileentity
-						.setSlopeIndex((short) MaterialsLib
-								.damageToMaterialValue(itemstack
-										.getItemDamage() & 0xfff));
+				tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
 				// tileentity.setDropDamage(itemstack.getItemDamage());
 				// System.out.println(tileentity.getSlopeIndex());
 			}
-			BlockHelper
-					.updateIndirectNeighbors(	world,
+			BlockHelper.updateIndirectNeighbors(world,
 												x,
 												y,
 												z,
 												ConfigurationLib.blockSlopes.blockID);
-			world.markBlockForUpdate(x, y, z);
+			world.markBlockForUpdate(	x,
+										y,
+										z);
 			return false;
 		}
 
 		@Override
-		public boolean placeSlopeAt(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-			TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper
-					.getTileEntity(world, x, y, z, ConfigurationLib.blockSlopes
-							.getTileMapData(metadata));
+		public boolean placeBlockAt(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+			TileEntityOblicSlopes tileentity = (TileEntityOblicSlopes) BlockHelper.getTileEntity(	world,
+																									x,
+																									y,
+																									z,
+																									ConfigurationLib.blockSlopes.getTileMapData(metadata));
 			if (tileentity == null) {
 				return false;
 			}
 			// do all rotation calculations here
-			tileentity.setSlopeIndex((short) MaterialsLib
-					.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
+			tileentity.setSlopeIndex((short) MaterialsLib.damageToMaterialValue(itemstack.getItemDamage() & 0xfff));
 			// tileentity.setDropDamage(itemstack.getItemDamage());
 			// System.out.println("Rotation: " + this.rotation);
-			tileentity
-					.setRotation(MathHelper
-							.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
+			tileentity.setRotation(MathHelper.floor_double((double) (entityplayer.rotationYaw * 4.0F / 360.0F)) & 3);
 			int state = side != 0 && (side == 1 || (double) hitY <= 0.5D) ? 0 : 0 | 4;
 
 			if (tileentity.getRotation() == 0) {
@@ -115,27 +111,20 @@ public class OblicSlopes {
 		}
 
 		@Override
-		public String getSlopeName(int i, int j) {
-			return null;
-		}
-
-		@Override
 		public void addCreativeItems(int baseDMG, CreativeTabs tab, List itemList, int matIndex) {
 
-			itemList.add(new ItemStack(
-					ConfigurationLib.blockSlopes,
-					1,
-					baseDMG + matIndex));
+			itemList.add(new ItemStack(ConfigurationLib.blockSlopes, 1, baseDMG
+																		+ matIndex));
 
 		}
 
 		@Override
-		public String getName() {
+		public String getUnlocalizedName() {
 			return "oblic";
 		}
 
 		@Override
-		public String getTabDisplayName() {
+		public String getLocalizedName() {
 			return "Oblic Slopes";
 		}
 	}
