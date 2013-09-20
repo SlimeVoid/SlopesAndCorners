@@ -2,21 +2,20 @@ package slimevoid.slopesncorners.blocks.lib;
 
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib.IMaterialHandler;
 import slimevoid.slopesncorners.tileentity.TileEntityOblicSlopes;
+import slimevoidlib.materials.api.IMaterialHandler;
+import slimevoidlib.materials.api.IPlacementHandler;
+import slimevoidlib.materials.lib.MaterialsLib;
 import slimevoidlib.util.helpers.BlockHelper;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class OblicSlopes {
 
@@ -56,7 +55,7 @@ public class OblicSlopes {
 		}
 	}
 
-	public class PlacementHandler implements ISlopePlacement {
+	public class PlacementHandler implements IPlacementHandler {
 
 		@Override
 		public boolean onPlaceSlope(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int i) {
@@ -145,7 +144,7 @@ public class OblicSlopes {
 		return new MaterialHandler();
 	}
 
-	public ISlopePlacement getPlacementHandler() {
+	public IPlacementHandler getPlacementHandler() {
 		return new PlacementHandler();
 	}
 }

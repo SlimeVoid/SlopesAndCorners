@@ -11,19 +11,15 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.Player;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.PacketLib;
-import slimevoid.slopesncorners.network.CommonPacketHandler;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
+import cpw.mods.fml.common.network.Player;
 
 public class CommonProxy implements ICommonProxy {
 
 	@Override
 	public void preInit() {
-		CommonPacketHandler.init();
-		PacketLib.registerPacketHandlers();
 	}
 
 	@Override
@@ -74,7 +70,6 @@ public class CommonProxy implements ICommonProxy {
 
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		PacketLib.sendMaterialList(player, netHandler, manager);
 	}
 
 	@Override

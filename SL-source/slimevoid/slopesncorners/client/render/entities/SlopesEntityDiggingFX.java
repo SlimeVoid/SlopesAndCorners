@@ -6,8 +6,8 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
+import slimevoidlib.materials.lib.MaterialsLib;
 
 public class SlopesEntityDiggingFX extends EntityDiggingFX {
 

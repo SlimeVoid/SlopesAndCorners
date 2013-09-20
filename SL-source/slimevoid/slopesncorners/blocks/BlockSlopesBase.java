@@ -7,15 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
-import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
+import slimevoidlib.materials.api.IPlacementHandler;
 import slimevoidlib.sounds.SlimevoidStepSound;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSlopesBase extends BlockBase {
 
@@ -53,7 +51,7 @@ public class BlockSlopesBase extends BlockBase {
 		return true;
 	}
 
-	public void registerPlacement(int md, ISlopePlacement isp) {
+	public void registerPlacement(int md, IPlacementHandler isp) {
 		((ItemBlockSlope) Item.itemsList[this.blockID]).registerPlacement(	md,
 																			isp);
 	}

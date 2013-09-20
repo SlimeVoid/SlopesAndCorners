@@ -10,8 +10,8 @@ import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
+import slimevoidlib.materials.lib.MaterialsLib;
 import slimevoidlib.util.helpers.BlockHelper;
 
 public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {

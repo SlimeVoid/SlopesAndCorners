@@ -14,9 +14,9 @@ import slimevoid.slopesncorners.client.render.handlers.BlockSlopesNCornersRender
 import slimevoid.slopesncorners.client.render.handlers.BlockTriCornersRenderer;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.PacketLib;
 import slimevoid.slopesncorners.events.PlaySlopeSoundEvent;
 import slimevoid.slopesncorners.proxy.CommonProxy;
+import slimevoidlib.materials.lib.PacketLib;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {

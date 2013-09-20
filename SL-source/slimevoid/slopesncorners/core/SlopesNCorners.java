@@ -1,12 +1,12 @@
 package slimevoid.slopesncorners.core;
 
 import slimevoid.slopesncorners.client.network.ClientPacketHandler;
-import slimevoid.slopesncorners.command.ReInitMatsCommand;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
-import slimevoid.slopesncorners.network.CommonPacketHandler;
 import slimevoid.slopesncorners.proxy.CommonProxy;
 import slimevoidlib.ICommonProxy;
+import slimevoidlib.materials.lib.ReInitMatsCommand;
+import slimevoidlib.materials.network.CommonPacketHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;

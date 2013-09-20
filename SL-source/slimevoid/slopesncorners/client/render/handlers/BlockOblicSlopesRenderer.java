@@ -9,7 +9,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoidlib.materials.lib.MaterialsLib;
 
 public class BlockOblicSlopesRenderer extends BlockSlopesRendererBase {
 

@@ -7,20 +7,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoidlib.materials.api.IPlacementHandler;
+import slimevoidlib.materials.lib.MaterialsLib;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ItemBlockSlope extends ItemBlock {
 
-	private ISlopePlacement	placers[];
+	private IPlacementHandler	placers[];
 	private CreativeTabs[]	tabs;
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
-		placers = new ISlopePlacement[BlockLib.MAX_TILES];
+		placers = new IPlacementHandler[BlockLib.MAX_TILES];
 		tabs = new CreativeTabs[BlockLib.MAX_TILES];
 		this.setMaxDamage(0);
 		this.setHasSubtypes(true);
@@ -140,7 +140,7 @@ public class ItemBlockSlope extends ItemBlock {
 		return damage >> 12;
 	}
 
-	public void registerPlacement(final int md, ISlopePlacement isp) {
+	public void registerPlacement(final int md, IPlacementHandler isp) {
 		this.placers[md] = isp;
 		this.tabs[md] = new CreativeTabs(isp.getName()) {
 			public ItemStack getIconItemStack() {

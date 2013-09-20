@@ -3,8 +3,8 @@ package slimevoid.slopesncorners.events;
 import java.util.Random;
 
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoid.slopesncorners.core.lib.MaterialsLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
+import slimevoidlib.materials.lib.MaterialsLib;
 import slimevoidlib.util.helpers.SlimevoidHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;

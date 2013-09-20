@@ -1,5 +1,7 @@
 package slimevoid.slopesncorners.core.lib;
 
+import slimevoidlib.materials.lib.MaterialsLib;
+
 public class BlockLib {
 
 	public static final int		MAX_DAMAGE				= 4096;
