@@ -17,8 +17,15 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 	@Override
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
 		if (raytracing) {
-			this.setOblicBounds(blockbase, this.rotation, raytraceFirstPhase);
-		} else blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			this.setOblicBounds(blockbase,
+								this.rotation,
+								raytraceFirstPhase);
+		} else blockbase.setBlockBounds(0.0F,
+										0.0F,
+										0.0F,
+										1.0F,
+										1.0F,
+										1.0F);
 
 	}
 
@@ -28,23 +35,21 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 		raytracing = true;
 
 		raytraceFirstPhase = true;
-		amovingobjectposition = blockBase
-				.superCollisionRayTrace(this.worldObj,
-										this.xCoord,
-										this.yCoord,
-										this.zCoord,
-										startVec,
-										endVec);
+		amovingobjectposition = blockBase.superCollisionRayTrace(	this.worldObj,
+																	this.xCoord,
+																	this.yCoord,
+																	this.zCoord,
+																	startVec,
+																	endVec);
 
 		if (amovingobjectposition == null) {
 			raytraceFirstPhase = false;
-			amovingobjectposition = blockBase
-					.superCollisionRayTrace(this.worldObj,
-											this.xCoord,
-											this.yCoord,
-											this.zCoord,
-											startVec,
-											endVec);
+			amovingobjectposition = blockBase.superCollisionRayTrace(	this.worldObj,
+																		this.xCoord,
+																		this.yCoord,
+																		this.zCoord,
+																		startVec,
+																		endVec);
 
 		}
 
@@ -52,13 +57,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockBase
-					.superCollisionRayTrace(this.worldObj,
-											this.xCoord,
-											this.yCoord,
-											this.zCoord,
-											startVec,
-											endVec);
+			amovingobjectposition = blockBase.superCollisionRayTrace(	this.worldObj,
+																		this.xCoord,
+																		this.yCoord,
+																		this.zCoord,
+																		startVec,
+																		endVec);
 		}
 		return amovingobjectposition;
 	}
@@ -66,7 +70,9 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 	@Override
 	public void addCollisionBoxesToList(BlockBase blockBase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int iDir = this.rotation;
-		setOblicBounds(blockBase, iDir, true);
+		setOblicBounds(	blockBase,
+						iDir,
+						true);
 		blockBase.superAddCollisionBoxesToList(	this.worldObj,
 												this.xCoord,
 												this.yCoord,
@@ -74,7 +80,9 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 												par5AxisAlignedBB,
 												par6List,
 												par7Entity);
-		setOblicBounds(blockBase, iDir, false);
+		setOblicBounds(	blockBase,
+						iDir,
+						false);
 		blockBase.superAddCollisionBoxesToList(	this.worldObj,
 												this.xCoord,
 												this.yCoord,
@@ -82,7 +90,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 												par5AxisAlignedBB,
 												par6List,
 												par7Entity);
-		blockBase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		blockBase.setBlockBounds(	0.0F,
+									0.0F,
+									0.0F,
+									1.0F,
+									1.0F,
+									1.0F);
 	}
 
 	private void setOblicBounds(BlockBase blockbase, int iDir, boolean firstPhase) {
@@ -93,7 +106,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														0.5F,
 														1.0F);
-			else blockbase.setBlockBounds(0.5F, 0.5F, 0.5F, 1.0F, 1.0F, 1.0F);
+			else blockbase.setBlockBounds(	0.5F,
+											0.5F,
+											0.5F,
+											1.0F,
+											1.0F,
+											1.0F);
 
 		} else if (iDir == 1) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
@@ -102,7 +120,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														0.5F,
 														1.0F);
-			else blockbase.setBlockBounds(0.0F, 0.5F, 0.0F, 0.5F, 1.0F, 0.5F);
+			else blockbase.setBlockBounds(	0.0F,
+											0.5F,
+											0.0F,
+											0.5F,
+											1.0F,
+											0.5F);
 
 		} else if (iDir == 2) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
@@ -111,7 +134,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														0.5F,
 														1.0F);
-			else blockbase.setBlockBounds(0.0F, 0.5F, 0.5F, 0.5F, 1.0F, 1.0F);
+			else blockbase.setBlockBounds(	0.0F,
+											0.5F,
+											0.5F,
+											0.5F,
+											1.0F,
+											1.0F);
 
 		} else if (iDir == 3) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
@@ -120,7 +148,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														0.5F,
 														1.0F);
-			else blockbase.setBlockBounds(0.5F, 0.5F, 0.0F, 1.0F, 1.0F, 0.5F);
+			else blockbase.setBlockBounds(	0.5F,
+											0.5F,
+											0.0F,
+											1.0F,
+											1.0F,
+											0.5F);
 		} else if (iDir == 4) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
 														0.5F,
@@ -128,7 +161,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														1.0F,
 														1.0F);
-			else blockbase.setBlockBounds(0.5F, 0.0F, 0.5F, 1.0F, 0.5F, 1.0F);
+			else blockbase.setBlockBounds(	0.5F,
+											0.0F,
+											0.5F,
+											1.0F,
+											0.5F,
+											1.0F);
 		} else if (iDir == 5) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
 														0.5F,
@@ -136,7 +174,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														1.0F,
 														1.0F);
-			else blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 0.5F, 0.5F, 0.5F);
+			else blockbase.setBlockBounds(	0.0F,
+											0.0F,
+											0.0F,
+											0.5F,
+											0.5F,
+											0.5F);
 		} else if (iDir == 6) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
 														0.5F,
@@ -144,7 +187,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														1.0F,
 														1.0F);
-			else blockbase.setBlockBounds(0.0F, 0.0F, 0.5F, 0.5F, 0.5F, 1.0F);
+			else blockbase.setBlockBounds(	0.0F,
+											0.0F,
+											0.5F,
+											0.5F,
+											0.5F,
+											1.0F);
 		} else if (iDir == 7) {
 			if (firstPhase) blockbase.setBlockBounds(	0.0F,
 														0.5F,
@@ -152,7 +200,12 @@ public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 														1.0F,
 														1.0F,
 														1.0F);
-			else blockbase.setBlockBounds(0.5F, 0.0F, 0.0F, 1.0F, 0.5F, 0.5F);
+			else blockbase.setBlockBounds(	0.5F,
+											0.0F,
+											0.0F,
+											1.0F,
+											0.5F,
+											0.5F);
 		}
 	}
 

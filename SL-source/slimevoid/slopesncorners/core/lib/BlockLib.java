@@ -13,7 +13,8 @@ public class BlockLib {
 	public static final int		BLOCK_HALF_SLOPE_ID		= 4;
 	public static final int		BLOCK_POINT_SLOPE_ID	= 5;
 
-	public static final String	DEFAULT_ICON			= CoreLib.MOD_RESOURCES + ":default";
+	public static final String	DEFAULT_ICON			= CoreLib.MOD_RESOURCES
+															+ ":default";
 
 	public static int getBlockDamage(int blockMetadata, short slopeIndex) {
 		return slopeIndex % MaterialsLib.getSize() + (blockMetadata << 12);

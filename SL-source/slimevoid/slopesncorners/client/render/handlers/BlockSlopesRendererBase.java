@@ -150,14 +150,16 @@ public abstract class BlockSlopesRendererBase implements
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int metadata, RenderBlocks renderer) {
-		TileEntitySlopesBase tile = (TileEntitySlopesBase) BlockHelper
-				.getTileEntity(	world,
-								x,
-								y,
-								z,
-								((BlockBase) block).getTileMapData(metadata));
+		TileEntitySlopesBase tile = (TileEntitySlopesBase) BlockHelper.getTileEntity(	world,
+																						x,
+																						y,
+																						z,
+																						((BlockBase) block).getTileMapData(metadata));
 		int iDir = tile.getRotation();
-		int l = block.colorMultiplier(world, x, y, z);
+		int l = block.colorMultiplier(	world,
+										x,
+										y,
+										z);
 		float f = (l >> 16 & 0xff) / 255F;
 		float f1 = (l >> 8 & 0xff) / 255F;
 		float f2 = (l & 0xff) / 255F;

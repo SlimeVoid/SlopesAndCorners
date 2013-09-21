@@ -19,7 +19,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 		name = CoreLib.MOD_NAME,
 		version = CoreLib.MOD_VERSION,
 		dependencies = CoreLib.MOD_DEPENDENCIES)
-@NetworkMod(clientSideRequired = true,serverSideRequired = false)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class SlopesNCorners {
 	@SidedProxy(
 			clientSide = CoreLib.CLIENT_PROXY,
@@ -31,8 +31,7 @@ public class SlopesNCorners {
 
 		proxy.preInit();
 
-		proxy.registerConfigurationProperties(event
-				.getSuggestedConfigurationFile());
+		proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
 	}
 
 	@PostInit
@@ -40,7 +39,5 @@ public class SlopesNCorners {
 		ConfigurationLib.registerBlocks();
 		proxy.registerRenderInformation();
 	}
-
-	
 
 }

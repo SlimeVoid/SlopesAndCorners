@@ -16,7 +16,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class ItemBlockSlope extends ItemBlock {
 
 	private IPlacementHandler	placers[];
-	private CreativeTabs[]	tabs;
+	private CreativeTabs[]		tabs;
 
 	public ItemBlockSlope(int itemId) {
 		super(itemId);
@@ -56,7 +56,13 @@ public class ItemBlockSlope extends ItemBlock {
 										hitZ,
 										metadata);
 		} else {
-			placers[hb].onPlaceBlock(stack, player, world, x, y, z, side);
+			placers[hb].onPlaceBlock(	stack,
+										player,
+										world,
+										x,
+										y,
+										z,
+										side);
 			return placers[hb].placeBlockAt(stack,
 											player,
 											world,
@@ -79,7 +85,13 @@ public class ItemBlockSlope extends ItemBlock {
 			System.out.println("No Placer Registered!!!");
 			return false;
 		} else {
-			return placers[hb].onPlaceBlock(ist, player, world, i, j, k, l);
+			return placers[hb].onPlaceBlock(ist,
+											player,
+											world,
+											i,
+											j,
+											k,
+											l);
 		}
 	}
 
@@ -93,14 +105,13 @@ public class ItemBlockSlope extends ItemBlock {
 		int lb = hb & 0xfff;
 		hb >>= 12;
 		String stub = getSlopeName(hb);
-		String name;		
+		String name;
 		name = MaterialsLib.getName(lb);
 		if (name == null) {
 			throw new IndexOutOfBoundsException();
 		} else {
-			return (new StringBuilder()).append(name).append(".")
-						.append(stub).toString();
-		}				
+			return (new StringBuilder()).append(name).append(".").append(stub).toString();
+		}
 	}
 
 	private int gethbindex(int hb) {
@@ -133,16 +144,14 @@ public class ItemBlockSlope extends ItemBlock {
 		this.placers[md] = isp;
 		this.tabs[md] = new CreativeTabs(isp.getUnlocalizedName()) {
 			public ItemStack getIconItemStack() {
-				return new ItemStack(
-						ConfigurationLib.blockSlopes,
-						1,
-						(md * 4096) + MaterialsLib.brickIndex);
+				return new ItemStack(ConfigurationLib.blockSlopes, 1, (md * 4096)
+																		+ MaterialsLib.brickIndex);
 			}
 		};
-		LanguageRegistry.instance()
-				.addStringLocalization(	"itemGroup." + isp.getUnlocalizedName(),
-										"en_US",
-										isp.getLocalizedName());
+		LanguageRegistry.instance().addStringLocalization(	"itemGroup."
+																	+ isp.getUnlocalizedName(),
+															"en_US",
+															isp.getLocalizedName());
 
 	}
 
@@ -151,7 +160,10 @@ public class ItemBlockSlope extends ItemBlock {
 		for (int i = 0; i < placers.length; i++) {
 			if (placers[i] == null || (tab != null && !tabs[i].equals(tab))) continue;
 			for (int mi = 0; mi < MaterialsLib.getSize(); mi++) {
-				placers[i].addCreativeItems(i * 4096, tab, list, mi);
+				placers[i].addCreativeItems(i * 4096,
+											tab,
+											list,
+											mi);
 			}
 		}
 	}

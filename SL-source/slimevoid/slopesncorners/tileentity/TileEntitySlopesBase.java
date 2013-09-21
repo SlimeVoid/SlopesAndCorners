@@ -47,9 +47,10 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public int getExtendedBlockID() {
-		return BlockLib.getBlockDamage(this.worldObj
-				.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord), this
-				.getSlopeIndex());
+		return BlockLib.getBlockDamage(	this.worldObj.getBlockMetadata(	this.xCoord,
+																		this.yCoord,
+																		this.zCoord),
+										this.getSlopeIndex());
 	}
 
 	@Override
@@ -124,22 +125,22 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		if (block == null) {
 			return false;
 		}
-		if (ForgeHooks.canHarvestBlock(block, player, metadata) && !player.capabilities.isCreativeMode) {
-			ArrayList blockDropped = blockBase
-					.getBlockDropped(	this.worldObj,
-										this.xCoord,
-										this.yCoord,
-										this.zCoord,
-										this.getBlockMetadata(),
-										EnchantmentHelper
-												.getFortuneModifier(player));
+		if (ForgeHooks.canHarvestBlock(	block,
+										player,
+										metadata)
+			&& !player.capabilities.isCreativeMode) {
+			ArrayList blockDropped = blockBase.getBlockDropped(	this.worldObj,
+																this.xCoord,
+																this.yCoord,
+																this.zCoord,
+																this.getBlockMetadata(),
+																EnchantmentHelper.getFortuneModifier(player));
 			ItemStack itemstack;
-			for (Iterator stack = blockDropped.iterator(); stack.hasNext(); ItemHelper
-					.dropItem(	this.worldObj,
-								this.xCoord,
-								this.yCoord,
-								this.zCoord,
-								itemstack))
+			for (Iterator stack = blockDropped.iterator(); stack.hasNext(); ItemHelper.dropItem(this.worldObj,
+																								this.xCoord,
+																								this.yCoord,
+																								this.zCoord,
+																								itemstack))
 				itemstack = (ItemStack) stack.next();
 
 		}
@@ -163,7 +164,9 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		int metadata = blockStack.getItemDamage();
 		Block block = Block.blocksList[blockStack.itemID];
 		float hardness = this.getBlockHardness(blockBase);
-		if (!ForgeHooks.canHarvestBlock(block, entityplayer, metadata)) {
+		if (!ForgeHooks.canHarvestBlock(block,
+										entityplayer,
+										metadata)) {
 			float speed = ForgeEventFactory.getBreakSpeed(	entityplayer,
 															block,
 															metadata,
@@ -172,21 +175,21 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		} else {
 			return entityplayer.getCurrentPlayerStrVsBlock(	block,
 															true,
-															metadata) / hardness / 30F;
+															metadata)
+					/ hardness / 30F;
 		}
 	}
 
 	@Override
 	public float getExplosionResistance(Entity entity, double explosionX, double explosionY, double explosionZ, BlockBase blockBase) {
-		return MaterialsLib.getBlock(this.getMaterial())
-				.getExplosionResistance(entity,
-										this.worldObj,
-										this.xCoord,
-										this.yCoord,
-										this.zCoord,
-										explosionX,
-										explosionY,
-										explosionZ);
+		return MaterialsLib.getBlock(this.getMaterial()).getExplosionResistance(entity,
+																				this.worldObj,
+																				this.xCoord,
+																				this.yCoord,
+																				this.zCoord,
+																				explosionX,
+																				explosionY,
+																				explosionZ);
 	}
 
 	@Override
@@ -197,21 +200,20 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public Icon getBlockTexture(int x, int y, int z, int metadata, int side) {
-		return MaterialsLib.getIconForSide(MaterialsLib
-				.damageToMaterialValue(this.getSlopeIndex()), this
-				.getRotatedSide(side));
+		return MaterialsLib.getIconForSide(	MaterialsLib.damageToMaterialValue(this.getSlopeIndex()),
+											this.getRotatedSide(side));
 	}
 
 	@Override
 	public boolean addBlockDestroyEffects(BlockBase blockBase, int meta, EffectRenderer effectRenderer) {
-/*		Block block = MaterialsLib.getBlock(this.getMaterial());
-		FMLClientHandler.instance().getClient().sndManager
-				.playSound(	block.stepSound.getBreakSound(),
-							(float) this.xCoord + 0.5F,
-							(float) this.yCoord + 0.5F,
-							(float) this.zCoord + 0.5F,
-							(block.stepSound.getVolume() + 1.0F) / 2.0F,
-							block.stepSound.getPitch() * 0.8F);*/
+		/*
+		 * Block block = MaterialsLib.getBlock(this.getMaterial());
+		 * FMLClientHandler.instance().getClient().sndManager .playSound(
+		 * block.stepSound.getBreakSound(), (float) this.xCoord + 0.5F, (float)
+		 * this.yCoord + 0.5F, (float) this.zCoord + 0.5F,
+		 * (block.stepSound.getVolume() + 1.0F) / 2.0F,
+		 * block.stepSound.getPitch() * 0.8F);
+		 */
 		return SlopesEntityDiggingFX.doBlockDestroyEffects(	this.worldObj,
 															this.xCoord,
 															this.yCoord,
@@ -223,14 +225,14 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public boolean addBlockHitEffects(BlockBase blockBase, MovingObjectPosition target, EffectRenderer effectRenderer) {
-/*		Block block = MaterialsLib.getBlock(this.getMaterial());
-		FMLClientHandler.instance().getClient().sndManager
-				.playSound(	block.stepSound.getStepSound(),
-							(float) this.xCoord + 0.5F,
-							(float) this.yCoord + 0.5F,
-							(float) this.zCoord + 0.5F,
-							(block.stepSound.getVolume() + 1.0F) / 8.0F,
-							block.stepSound.getPitch() * 0.5F);*/
+		/*
+		 * Block block = MaterialsLib.getBlock(this.getMaterial());
+		 * FMLClientHandler.instance().getClient().sndManager .playSound(
+		 * block.stepSound.getStepSound(), (float) this.xCoord + 0.5F, (float)
+		 * this.yCoord + 0.5F, (float) this.zCoord + 0.5F,
+		 * (block.stepSound.getVolume() + 1.0F) / 8.0F,
+		 * block.stepSound.getPitch() * 0.5F);
+		 */
 		return SlopesEntityDiggingFX.doBlockHitEffects(	this.worldObj,
 														target,
 														effectRenderer,
@@ -239,11 +241,10 @@ public class TileEntitySlopesBase extends TileEntityBase {
 
 	@Override
 	public int colorMultiplier(BlockBase blockBase) {
-		return MaterialsLib.getBlock(this.getMaterial())
-				.colorMultiplier(	this.worldObj,
-									this.xCoord,
-									this.yCoord,
-									this.zCoord);
+		return MaterialsLib.getBlock(this.getMaterial()).colorMultiplier(	this.worldObj,
+																			this.xCoord,
+																			this.yCoord,
+																			this.zCoord);
 	}
 
 	@Override
@@ -255,6 +256,7 @@ public class TileEntitySlopesBase extends TileEntityBase {
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
-		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID, this.slopeIndex);
+		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID,
+								this.slopeIndex);
 	}
 }

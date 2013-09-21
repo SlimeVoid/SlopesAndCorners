@@ -41,7 +41,7 @@ public class ConfigurationLib {
 
 	public static void CommonConfig(File configFile) {
 		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
-		
+
 		configuration = new Configuration(configFile);
 
 		configuration.load();

@@ -26,9 +26,16 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 	@Override
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
 		if (raytracing) {
-			setSlopesBounds(blockbase, raytraceheight, this.rotation);
+			setSlopesBounds(blockbase,
+							raytraceheight,
+							this.rotation);
 		} else {
-			blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			blockbase.setBlockBounds(	0.0F,
+										0.0F,
+										0.0F,
+										1.0F,
+										1.0F,
+										1.0F);
 		}
 	}
 
@@ -41,16 +48,24 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 		for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
 			raytraceheight = i;
 			// setBlockBoundsBasedOnState(world,x,y,z);
-			amovingobjectposition = blockbase
-					.superCollisionRayTrace(world, x, y, z, startVec, endVec);
+			amovingobjectposition = blockbase.superCollisionRayTrace(	world,
+																		x,
+																		y,
+																		z,
+																		startVec,
+																		endVec);
 
 		}
 		raytracing = false;
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockbase
-					.superCollisionRayTrace(world, x, y, z, startVec, endVec);
+			amovingobjectposition = blockbase.superCollisionRayTrace(	world,
+																		x,
+																		y,
+																		z,
+																		startVec,
+																		endVec);
 		}
 
 		return amovingobjectposition;
@@ -64,13 +79,20 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 										par6List,
 										par7Entity);
 
-		blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		blockbase.setBlockBounds(	0.0F,
+									0.0F,
+									0.0F,
+									1.0F,
+									1.0F,
+									1.0F);
 	}
 
 	public void addSlopesCollisionBoxesToList(BlockBase blockbase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int iDir = this.rotation;
 		for (int i = 1; i <= 16; i++) {
-			setSlopesBounds(blockbase, i, iDir);
+			setSlopesBounds(blockbase,
+							i,
+							iDir);
 			blockbase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -85,7 +107,12 @@ public class TileEntityHalfSlopes extends TileEntitySlopesBase {
 
 	private void setSlopesBounds(BlockBase blockbase, int i, int iDir) {
 		if ((i >= 6 && iDir < 4) || (i < 6 && iDir >= 4)) {
-			blockbase.setBlockBounds(0, 0, 0, 0, 0, 0);
+			blockbase.setBlockBounds(	0,
+										0,
+										0,
+										0,
+										0,
+										0);
 			return;
 		}
 

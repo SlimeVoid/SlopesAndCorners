@@ -18,10 +18,17 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 	public void setBlockBoundsBasedOnState(BlockBase blockbase) {
 		if (raytracing) {
 
-			setSideSlopeBounds(blockbase, raytraceheight, this.getRotation());
+			setSideSlopeBounds(	blockbase,
+								raytraceheight,
+								this.getRotation());
 
 		} else {
-			blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			blockbase.setBlockBounds(	0.0F,
+										0.0F,
+										0.0F,
+										1.0F,
+										1.0F,
+										1.0F);
 		}
 
 	}
@@ -32,25 +39,23 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 		raytracing = true;
 		for (int i = 1; i <= 16 && amovingobjectposition == null; i++) {
 			raytraceheight = i;
-			amovingobjectposition = blockBase
-					.superCollisionRayTrace(this.worldObj,
-											this.xCoord,
-											this.yCoord,
-											this.zCoord,
-											startVec,
-											endVec);
+			amovingobjectposition = blockBase.superCollisionRayTrace(	this.worldObj,
+																		this.xCoord,
+																		this.yCoord,
+																		this.zCoord,
+																		startVec,
+																		endVec);
 		}
 		raytracing = false;
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockBase
-					.superCollisionRayTrace(this.worldObj,
-											this.xCoord,
-											this.yCoord,
-											this.zCoord,
-											startVec,
-											endVec);
+			amovingobjectposition = blockBase.superCollisionRayTrace(	this.worldObj,
+																		this.xCoord,
+																		this.yCoord,
+																		this.zCoord,
+																		startVec,
+																		endVec);
 		}
 		return amovingobjectposition;
 	}
@@ -59,7 +64,9 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 	public void addCollisionBoxesToList(BlockBase blockBase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int iDir = this.getRotation();
 		for (int i = 1; i <= 16; i++) {
-			setSideSlopeBounds(blockBase, i, iDir);
+			setSideSlopeBounds(	blockBase,
+								i,
+								iDir);
 			blockBase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -68,7 +75,12 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 													par6List,
 													par7Entity);
 		}
-		blockBase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		blockBase.setBlockBounds(	0.0F,
+									0.0F,
+									0.0F,
+									1.0F,
+									1.0F,
+									1.0F);
 	}
 
 	private void setSideSlopeBounds(BlockBase blockbase, int i, int iDir) {
@@ -129,7 +141,6 @@ public class TileEntitySideSlopes extends TileEntitySlopesBase {
 
 		return result;
 	}
-	
 
 	@Override
 	public int getRotatedSide(int side) {

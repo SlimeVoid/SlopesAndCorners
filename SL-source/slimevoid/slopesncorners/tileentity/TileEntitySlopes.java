@@ -76,12 +76,21 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 									GetIntCorneriDir(),
 									raytraceFirstPhase);
 			} else if (GetCorneriDir() > -1) {
-				setCornersBounds(blockbase, raytraceheight, GetCorneriDir());
+				setCornersBounds(	blockbase,
+									raytraceheight,
+									GetCorneriDir());
 			} else {
-				setSlopesBounds(blockbase, raytraceheight, this.rotation);
+				setSlopesBounds(blockbase,
+								raytraceheight,
+								this.rotation);
 			}
 		} else {
-			blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			blockbase.setBlockBounds(	0.0F,
+										0.0F,
+										0.0F,
+										1.0F,
+										1.0F,
+										1.0F);
 		}
 	}
 
@@ -95,18 +104,21 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 			raytraceheight = i;
 			raytraceFirstPhase = true;
 			// setBlockBoundsBasedOnState(world,x,y,z);
-			amovingobjectposition = blockbase
-					.superCollisionRayTrace(world, x, y, z, startVec, endVec);
+			amovingobjectposition = blockbase.superCollisionRayTrace(	world,
+																		x,
+																		y,
+																		z,
+																		startVec,
+																		endVec);
 
 			if (amovingobjectposition != null && this.GetIntCorneriDir() > -1) {
 				raytraceFirstPhase = false;
-				amovingobjectposition = blockbase
-						.superCollisionRayTrace(world,
-												x,
-												y,
-												z,
-												startVec,
-												endVec);
+				amovingobjectposition = blockbase.superCollisionRayTrace(	world,
+																			x,
+																			y,
+																			z,
+																			startVec,
+																			endVec);
 
 			}
 		}
@@ -114,8 +126,12 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 		// if anything gets hit use the full bounding box to determine intended
 		// side
 		if (amovingobjectposition != null) {
-			amovingobjectposition = blockbase
-					.superCollisionRayTrace(world, x, y, z, startVec, endVec);
+			amovingobjectposition = blockbase.superCollisionRayTrace(	world,
+																		x,
+																		y,
+																		z,
+																		startVec,
+																		endVec);
 		}
 
 		return amovingobjectposition;
@@ -142,13 +158,20 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 											par7Entity);
 		}
 
-		blockbase.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		blockbase.setBlockBounds(	0.0F,
+									0.0F,
+									0.0F,
+									1.0F,
+									1.0F,
+									1.0F);
 	}
 
 	public void addSlopesCollisionBoxesToList(BlockBase blockbase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		int iDir = this.rotation;
 		for (int i = 1; i <= 16; i++) {
-			setSlopesBounds(blockbase, i, iDir);
+			setSlopesBounds(blockbase,
+							i,
+							iDir);
 			blockbase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -163,7 +186,9 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 
 	public void addCornersCollisionBoxesToList(BlockBase blockbase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity, int iDir) {
 		for (int i = 1; i <= 16; i++) {
-			setCornersBounds(blockbase, i, iDir);
+			setCornersBounds(	blockbase,
+								i,
+								iDir);
 			blockbase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -177,7 +202,10 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 
 	public void addIntCornersCollisionBoxesToList(BlockBase blockbase, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity, int iDir) {
 		for (int i = 1; i <= 16; i++) {
-			setIntCornersBounds(blockbase, i, iDir, true);
+			setIntCornersBounds(blockbase,
+								i,
+								iDir,
+								true);
 			blockbase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -185,7 +213,10 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 													par5AxisAlignedBB,
 													par6List,
 													par7Entity);
-			setIntCornersBounds(blockbase, i, iDir, false);
+			setIntCornersBounds(blockbase,
+								i,
+								iDir,
+								false);
 			blockbase.superAddCollisionBoxesToList(	this.worldObj,
 													this.xCoord,
 													this.yCoord,
@@ -210,56 +241,72 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 		TileEntity tileentity;
 		switch (iDir) {
 		case 0:
-			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x - 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 3) result = 3;
 				if (((TileEntitySlopes) tileentity).rotation == 2) result = 0;
 			}
 			break;
 		case 1:
-			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x + 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 3) result = 1;
 				if (((TileEntitySlopes) tileentity).rotation == 2) result = 2;
 			}
 			break;
 		case 2:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z - 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 1) result = 2;
 				if (((TileEntitySlopes) tileentity).rotation == 0) result = 0;
 			}
 			break;
 		case 3:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z + 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 1) result = 1;
 				if (((TileEntitySlopes) tileentity).rotation == 0) result = 3;
 			}
 			break;
 		case 4:
-			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x - 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 7) result = 7;
 				if (((TileEntitySlopes) tileentity).rotation == 6) result = 4;
 			}
 			break;
 		case 5:
-			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x + 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 7) result = 5;
 				if (((TileEntitySlopes) tileentity).rotation == 6) result = 6;
 			}
 			break;
 		case 6:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z - 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 5) result = 6;
 				if (((TileEntitySlopes) tileentity).rotation == 4) result = 4;
 			}
 			break;
 		case 7:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z + 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 5) result = 5;
 				if (((TileEntitySlopes) tileentity).rotation == 4) result = 7;
@@ -281,56 +328,72 @@ public class TileEntitySlopes extends TileEntitySlopesBase {
 		TileEntity tileentity;
 		switch (iDir) {
 		case 0:
-			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x + 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 3) result = 3;
 				if (((TileEntitySlopes) tileentity).rotation == 2) result = 0;
 			}
 			break;
 		case 1:
-			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x - 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 3) result = 1;
 				if (((TileEntitySlopes) tileentity).rotation == 2) result = 2;
 			}
 			break;
 		case 2:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z + 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 1) result = 2;
 				if (((TileEntitySlopes) tileentity).rotation == 0) result = 0;
 			}
 			break;
 		case 3:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z - 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 1) result = 1;
 				if (((TileEntitySlopes) tileentity).rotation == 0) result = 3;
 			}
 			break;
 		case 4:
-			tileentity = iblockaccess.getBlockTileEntity(x + 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x + 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 7) result = 7;
 				if (((TileEntitySlopes) tileentity).rotation == 6) result = 4;
 			}
 			break;
 		case 5:
-			tileentity = iblockaccess.getBlockTileEntity(x - 1, y, z);
+			tileentity = iblockaccess.getBlockTileEntity(	x - 1,
+															y,
+															z);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 7) result = 5;
 				if (((TileEntitySlopes) tileentity).rotation == 6) result = 6;
 			}
 			break;
 		case 6:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z + 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z + 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 5) result = 6;
 				if (((TileEntitySlopes) tileentity).rotation == 4) result = 4;
 			}
 			break;
 		case 7:
-			tileentity = iblockaccess.getBlockTileEntity(x, y, z - 1);
+			tileentity = iblockaccess.getBlockTileEntity(	x,
+															y,
+															z - 1);
 			if (tileentity instanceof TileEntitySlopes) {
 				if (((TileEntitySlopes) tileentity).rotation == 5) result = 5;
 				if (((TileEntitySlopes) tileentity).rotation == 4) result = 7;

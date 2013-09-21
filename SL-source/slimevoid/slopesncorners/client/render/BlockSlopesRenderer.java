@@ -17,7 +17,8 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 
 	public void registerSlopeRenderer(int metadata, ISimpleBlockRenderingHandler renderer) {
 		if (!slopeRenderers.containsKey(metadata)) {
-			slopeRenderers.put(metadata, renderer);
+			slopeRenderers.put(	metadata,
+								renderer);
 		}
 	}
 
@@ -48,14 +49,14 @@ public class BlockSlopesRenderer implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		if (modelId == ConfigurationLib.slopesRenderID) {
 			if (block instanceof BlockSlopesBase) {
-				int metadata = world.getBlockMetadata(x, y, z);
-				TileEntitySlopesBase tileentity = (TileEntitySlopesBase) BlockHelper
-						.getTileEntity(	world,
-										x,
-										y,
-										z,
-										((BlockSlopesBase) block)
-												.getTileMapData(metadata));
+				int metadata = world.getBlockMetadata(	x,
+														y,
+														z);
+				TileEntitySlopesBase tileentity = (TileEntitySlopesBase) BlockHelper.getTileEntity(	world,
+																									x,
+																									y,
+																									z,
+																									((BlockSlopesBase) block).getTileMapData(metadata));
 				if (tileentity != null) {
 					ISimpleBlockRenderingHandler handler = getSlopeRenderer(metadata);
 					if (handler != null) {

@@ -39,9 +39,8 @@ public class ClientProxy extends CommonProxy {
 											new BlockHalfSlopesRenderer());
 		renderHandler.registerSlopeRenderer(BlockLib.BLOCK_POINT_SLOPE_ID,
 											new BlockPointSlopesRenderer());
-		RenderingRegistry
-				.registerBlockHandler(	ConfigurationLib.slopesRenderID,
-										renderHandler);
+		RenderingRegistry.registerBlockHandler(	ConfigurationLib.slopesRenderID,
+												renderHandler);
 	}
 
 	@Override
