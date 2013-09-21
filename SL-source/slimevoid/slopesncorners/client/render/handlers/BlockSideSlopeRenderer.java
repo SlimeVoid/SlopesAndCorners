@@ -9,8 +9,8 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
+import slimevoid.materialslib.lib.MaterialsLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoidlib.materials.lib.MaterialsLib;
 
 public class BlockSideSlopeRenderer extends BlockSlopesRendererBase {
 	@Override

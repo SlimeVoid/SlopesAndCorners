@@ -1,6 +1,6 @@
 package slimevoid.slopesncorners.core.lib;
 
-import slimevoidlib.materials.lib.MaterialsLib;
+import slimevoid.materialslib.lib.MaterialsLib;
 
 public class BlockLib {
 

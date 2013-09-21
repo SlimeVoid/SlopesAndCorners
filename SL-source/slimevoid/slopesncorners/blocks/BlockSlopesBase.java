@@ -7,12 +7,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import slimevoid.materialslib.api.IPlacementHandler;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
-import slimevoidlib.materials.api.IPlacementHandler;
 import slimevoidlib.sounds.SlimevoidStepSound;
 
 public class BlockSlopesBase extends BlockBase {

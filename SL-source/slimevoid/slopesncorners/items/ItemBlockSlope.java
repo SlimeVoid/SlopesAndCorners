@@ -7,10 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import slimevoid.materialslib.api.IPlacementHandler;
+import slimevoid.materialslib.lib.MaterialsLib;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
-import slimevoidlib.materials.api.IPlacementHandler;
-import slimevoidlib.materials.lib.MaterialsLib;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ItemBlockSlope extends ItemBlock {
