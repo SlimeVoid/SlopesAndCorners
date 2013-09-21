@@ -1,35 +1,38 @@
 @echo off
 
-set programdir="C:\Programming"
-set packagedir="%programdir%\Packages"
-set repodir="%programdir%\Repositories"
-set forgedir="%repodir%\MinecraftForge-1.5.2"
-set fmldir="%forgedir%\fml"
-set mcpdir="%forgedir%\mcp"
-set euryscore="%repodir%\EurysCore-FML"
+set programdir=C:\Programming\Minecraft\1.5.2
+set packagedir=%programdir%\Packages
+set repodir=%programdir%\Git
+set forgedir=%programdir%\Forge
+set fmldir=%forgedir%\fml
+set mcpdir=%forgedir%\mcp
+set slimelib=%repodir%\SlimevoidLibrary
+set matlib=%repodir%\MaterialsLibrary
 set slopes="%repodir%\SlopesAndCorners"
 cd %mcpdir%
 
-if not exist %slopes% GOTO :ECFAIL
-GOTO :EC
+if not exist %slopes% GOTO :SLFAIL
+GOTO :SL
 
-:EC
-if not exist %euryscore% GOTO :ECFAIL
+:SL
+if not exist %slimelib% GOTO :SLFAIL
+if not exist %matlib% GOTO :SLFAIL
 if exist %mcpdir%\src GOTO :COPYSRC
-GOTO :ECFAIL
+GOTO :SLFAIL
 
 :COPYSRC
 if not exist "%mcpdir%\src-work" GOTO :CREATESRC
-GOTO :ECFAIL
+GOTO :SLFAIL
 
 :CREATESRC
 mkdir "%mcpdir%\src-work"
 xcopy "%mcpdir%\src\*.*" "%mcpdir%\src-work\" /S
-if exist "%mcpdir%\src-work" GOTO :COPYEC
-GOTO :ECFAIL
+if exist "%mcpdir%\src-work" GOTO :SLCOPY
+GOTO :SLFAIL
 
-:COPYEC
-xcopy "%euryscore%\SV-common\*.*" "%mcpdir%\src\minecraft\" /S
+:SLCOPY
+xcopy "%slimelib%\SV-common\*.*" "%mcpdir%\src\minecraft\" /S
+xcopy "%matlib%\ML-source\*.*" "%mcpdir%\src\minecraft\" /S
 xcopy "%slopes%\SL-source\*.*" "%mcpdir%\src\minecraft\" /S
 pause
 call %mcpdir%\recompile.bat
@@ -38,7 +41,7 @@ echo Recompile and Reobf Completed Successfully
 pause
 
 :REPACKAGE
-if not exist "%mcpdir%\reobf" GOTO :ECFAIL
+if not exist "%mcpdir%\reobf" GOTO :SLFAIL
 if exist "%packagedir%\Slopes" (
 del "%packagedir%\Slopes\*.*" /S /Q
 rmdir "%packagedir%\Slopes" /S /Q
@@ -59,14 +62,14 @@ del "%mcpdir%\reobf" /S /Q
 if exist "%mcpdir%\src-old" rmdir "%mcpdir%\src-old" /S /Q
 if exist "%mcpdir%\reobf" rmdir "%mcpdir%\reobf" /S /Q
 echo Folder structure reset
-GOTO :ECCOMPLETE
+GOTO :SLCOMPLETE
 
-:ECFAIL
+:SLFAIL
 echo Could not compile Slopes
 pause
 GOTO :EOF
 
-:ECCOMPLETE
+:SLCOMPLETE
 echo Slopes completed compile successfully
 pause
 GOTO :EOF
