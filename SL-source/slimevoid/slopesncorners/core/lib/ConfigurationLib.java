@@ -64,7 +64,7 @@ public class ConfigurationLib {
 
 	public static void CommonConfig(File configFile) {
 		slopesRenderID = RenderingRegistry.getNextAvailableRenderId();
-		
+
 		configuration = new Configuration(configFile);
 
 		configuration.load();
@@ -111,30 +111,24 @@ public class ConfigurationLib {
 		MaterialsLib.addMaterialHandler(SideSlopes.instance.getMaterialHandler());
 		MaterialsLib.addMaterialHandler(TriPointCorners.instance.getMaterialHandler());
 		MaterialsLib.addMaterialHandler(PointSlopes.instance.getMaterialHandler());
-		GameRegistry.registerTileEntity(TileEntitySlopes.class,
-										"slope");
-		GameRegistry.registerTileEntity(TileEntitySideSlopes.class,
-										"side");
-		GameRegistry.registerTileEntity(TileEntityOblicSlopes.class,
-										"oblic");
-		GameRegistry.registerTileEntity(TileEntityTriPointCorner.class,
-										"tri");
-		GameRegistry.registerTileEntity(TileEntityHalfSlopes.class,
-										"halfSlope");
-		GameRegistry.registerTileEntity(TileEntityPointSlopes.class,
-										"pointSlope");
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_SLOPES_ID,
-											TileEntitySlopes.class);
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_SIDES_ID,
-											TileEntitySideSlopes.class);
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_OBLICS_ID,
-											TileEntityOblicSlopes.class);
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_TRIPOINT_ID,
-											TileEntityTriPointCorner.class);
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_HALF_SLOPE_ID,
-											TileEntityHalfSlopes.class);
-		blockSlopes.addTileEntityMapping(	BlockLib.BLOCK_POINT_SLOPE_ID,
-											TileEntityPointSlopes.class);
+		blockSlopes.addMapping(	BlockLib.BLOCK_SLOPES_ID,
+								TileEntitySlopes.class,
+								"slope");
+		blockSlopes.addMapping(	BlockLib.BLOCK_SIDES_ID,
+								TileEntitySideSlopes.class,
+								"side");
+		blockSlopes.addMapping(	BlockLib.BLOCK_OBLICS_ID,
+								TileEntityOblicSlopes.class,
+								"oblic");
+		blockSlopes.addMapping(	BlockLib.BLOCK_TRIPOINT_ID,
+								TileEntityTriPointCorner.class,
+								"tri");
+		blockSlopes.addMapping(	BlockLib.BLOCK_HALF_SLOPE_ID,
+								TileEntityHalfSlopes.class,
+								"halfSlope");
+		blockSlopes.addMapping(	BlockLib.BLOCK_POINT_SLOPE_ID,
+								TileEntityPointSlopes.class,
+								"pointSlope");
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_SLOPES_ID,
 										Slopes.instance.getPlacementHandler());
 		blockSlopes.registerPlacement(	BlockLib.BLOCK_SIDES_ID,

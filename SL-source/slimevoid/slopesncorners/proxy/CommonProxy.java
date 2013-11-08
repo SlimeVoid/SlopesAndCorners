@@ -11,12 +11,12 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.Player;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.PacketLib;
 import slimevoid.slopesncorners.network.CommonPacketHandler;
 import slimevoidlib.ICommonProxy;
 import slimevoidlib.IPacketHandling;
+import cpw.mods.fml.common.network.Player;
 
 public class CommonProxy implements ICommonProxy {
 
@@ -47,10 +47,6 @@ public class CommonProxy implements ICommonProxy {
 	}
 
 	@Override
-	public void registerTickHandler() {
-	}
-
-	@Override
 	public void registerRenderInformation() {
 	}
 
@@ -74,7 +70,9 @@ public class CommonProxy implements ICommonProxy {
 
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		PacketLib.sendMaterialList(player, netHandler, manager);
+		PacketLib.sendMaterialList(	player,
+									netHandler,
+									manager);
 	}
 
 	@Override
@@ -96,6 +94,18 @@ public class CommonProxy implements ICommonProxy {
 
 	@Override
 	public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login) {
+	}
+
+	@Override
+	public void registerTickHandlers() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void registerEventHandlers() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

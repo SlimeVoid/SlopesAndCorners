@@ -4,16 +4,16 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import slimevoid.slopesncorners.api.ISlopePlacement;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.MaterialsLib;
+import slimevoidlib.items.ItemBlockBase;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class ItemBlockSlope extends ItemBlock {
+public class ItemBlockSlope extends ItemBlockBase {
 
 	private ISlopePlacement	placers[];
 	private CreativeTabs[]	tabs;
@@ -56,7 +56,13 @@ public class ItemBlockSlope extends ItemBlock {
 										hitZ,
 										metadata);
 		} else {
-			placers[hb].onPlaceSlope(stack, player, world, x, y, z, side);
+			placers[hb].onPlaceSlope(	stack,
+										player,
+										world,
+										x,
+										y,
+										z,
+										side);
 			return placers[hb].placeSlopeAt(stack,
 											player,
 											world,
@@ -79,7 +85,13 @@ public class ItemBlockSlope extends ItemBlock {
 			System.out.println("No Placer Registered!!!");
 			return false;
 		} else {
-			return placers[hb].onPlaceSlope(ist, player, world, i, j, k, l);
+			return placers[hb].onPlaceSlope(ist,
+											player,
+											world,
+											i,
+											j,
+											k,
+											l);
 		}
 	}
 
@@ -99,14 +111,14 @@ public class ItemBlockSlope extends ItemBlock {
 			if (name == null) {
 				throw new IndexOutOfBoundsException();
 			} else {
-				return (new StringBuilder()).append(name).append(".")
-						.append(stub).toString();
+				return (new StringBuilder()).append(name).append(".").append(stub).toString();
 			}
 		}
 		if (placers[gethbindex(hb)] == null) {
 			throw new IndexOutOfBoundsException();
 		}
-		name = placers[hb].getSlopeName(hb, lb);
+		name = placers[hb].getSlopeName(hb,
+										lb);
 		if (name == null) {
 			throw new IndexOutOfBoundsException();
 		} else {
@@ -144,16 +156,14 @@ public class ItemBlockSlope extends ItemBlock {
 		this.placers[md] = isp;
 		this.tabs[md] = new CreativeTabs(isp.getName()) {
 			public ItemStack getIconItemStack() {
-				return new ItemStack(
-						ConfigurationLib.blockSlopes,
-						1,
-						(md * 4096) + MaterialsLib.brickIndex);
+				return new ItemStack(ConfigurationLib.blockSlopes, 1, (md * 4096)
+																		+ MaterialsLib.brickIndex);
 			}
 		};
-		LanguageRegistry.instance()
-				.addStringLocalization(	"itemGroup." + isp.getName(),
-										"en_US",
-										isp.getTabDisplayName());
+		LanguageRegistry.instance().addStringLocalization(	"itemGroup."
+																	+ isp.getName(),
+															"en_US",
+															isp.getTabDisplayName());
 
 	}
 
@@ -162,7 +172,10 @@ public class ItemBlockSlope extends ItemBlock {
 		for (int i = 0; i < placers.length; i++) {
 			if (placers[i] == null || (tab != null && !tabs[i].equals(tab))) continue;
 			for (int mi = 0; mi < MaterialsLib.getSize(); mi++) {
-				placers[i].addCreativeItems(i * 4096, tab, list, mi);
+				placers[i].addCreativeItems(i * 4096,
+											tab,
+											list,
+											mi);
 			}
 		}
 	}

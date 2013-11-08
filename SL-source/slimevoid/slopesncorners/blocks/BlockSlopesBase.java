@@ -14,8 +14,6 @@ import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.items.ItemBlockSlope;
 import slimevoidlib.blocks.BlockBase;
 import slimevoidlib.sounds.SlimevoidStepSound;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSlopesBase extends BlockBase {
 
@@ -66,6 +64,11 @@ public class BlockSlopesBase extends BlockBase {
 	@Override
 	public Icon getIcon(int side, int meta) {
 		return this.blockIcon;
+
+	}
+
+	public void setIcon(Icon icon) {
+		this.blockIcon = icon;
 
 	}
 }
