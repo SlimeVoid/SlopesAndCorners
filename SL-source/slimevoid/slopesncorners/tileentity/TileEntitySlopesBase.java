@@ -20,10 +20,10 @@ import slimevoid.slopesncorners.client.render.entities.SlopesEntityDiggingFX;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.NBTLib;
-import slimevoidlib.blocks.BlockBase;
-import slimevoidlib.tileentity.TileEntityBase;
-import slimevoidlib.util.helpers.ItemHelper;
-import cpw.mods.fml.client.FMLClientHandler;
+
+import com.slimevoid.library.blocks.BlockBase;
+import com.slimevoid.library.tileentity.TileEntityBase;
+import com.slimevoid.library.util.helpers.ItemHelper;
 
 public class TileEntitySlopesBase extends TileEntityBase {
 
@@ -258,5 +258,11 @@ public class TileEntitySlopesBase extends TileEntityBase {
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setShort(NBTLib.TILE_SLOPE_BLOCKID,
 								this.slopeIndex);
+	}
+
+	@Override
+	protected void addHarvestContents(ArrayList<ItemStack> harvestList) {
+		// TODO Auto-generated method stub
+
 	}
 }

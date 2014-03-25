@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 import slimevoid.materialslib.lib.MaterialsLib;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
-import slimevoidlib.util.helpers.BlockHelper;
+import com.slimevoid.library.util.helpers.BlockHelper;
 
 public class BlockSlopesNCornersRenderer extends BlockSlopesRendererBase {
 

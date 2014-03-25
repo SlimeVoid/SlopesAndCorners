@@ -13,7 +13,7 @@ import slimevoid.materialslib.lib.MaterialsLib;
 import slimevoid.slopesncorners.core.lib.BlockLib;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopes;
-import slimevoidlib.util.helpers.BlockHelper;
+import com.slimevoid.library.util.helpers.BlockHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import slimevoid.slopesncorners.blocks.BlockSlopesBase;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
-import slimevoidlib.util.helpers.BlockHelper;
+import com.slimevoid.library.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;

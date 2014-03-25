@@ -6,7 +6,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
-import slimevoidlib.util.helpers.BlockHelper;
+import com.slimevoid.library.util.helpers.BlockHelper;
 
 public class StepSoundEvent {
 

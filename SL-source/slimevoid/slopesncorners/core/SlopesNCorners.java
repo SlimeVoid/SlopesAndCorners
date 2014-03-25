@@ -3,7 +3,7 @@ package slimevoid.slopesncorners.core;
 import slimevoid.materialslib.lib.ReInitMatsCommand;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
-import slimevoidlib.ICommonProxy;
+import com.slimevoid.library.ICommonProxy;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;

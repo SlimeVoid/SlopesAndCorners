@@ -8,7 +8,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import slimevoid.slopesncorners.core.lib.ConfigurationLib;
 import slimevoid.slopesncorners.core.lib.CoreLib;
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
-import slimevoidlib.util.helpers.SlimevoidHelper;
+import com.slimevoid.library.util.helpers.SlimevoidHelper;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;

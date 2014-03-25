@@ -7,7 +7,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.ForgeDirection;
-import slimevoidlib.blocks.BlockBase;
+import com.slimevoid.library.blocks.BlockBase;
 
 public class TileEntityOblicSlopes extends TileEntitySlopesBase {
 	private boolean	raytracing;

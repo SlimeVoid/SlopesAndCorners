@@ -1,8 +1,8 @@
 package slimevoid.slopesncorners.client.render.handlers;
 
 import slimevoid.slopesncorners.tileentity.TileEntitySlopesBase;
-import slimevoidlib.blocks.BlockBase;
-import slimevoidlib.util.helpers.BlockHelper;
+import com.slimevoid.library.blocks.BlockBase;
+import com.slimevoid.library.util.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
